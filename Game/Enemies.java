@@ -38,6 +38,7 @@ class Louse extends Enemies {
             roll = false;
             addShield(amount);
         }
+        //check check
     }
 
     public void continuePattern() {
