@@ -42,6 +42,7 @@ class Louse extends Enemies {
 
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 타입별로 상태이상 부여하는 스킬 중 랜덤으로 사용
+        // 나중에 수정할필요 있음.
         int check = Rand.randInt(0, 1);
         if (check == 0) {
             if (type == 1) {
