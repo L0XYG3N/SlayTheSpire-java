@@ -29,7 +29,7 @@ public class TempUI extends JFrame {
         setLocationRelativeTo(null);
 
         for (int i = 0; i < game.player.cards.field.size(); i++) {
-            //버튼 생성용 코드, 뜯어고쳐야함
+            //버튼 생성용 코드, 임시, 
             String cardname = "card" + Integer.toString(i);
             cardArray.add(new JButton(cardname));
             jp.add(cardArray.get(i), BorderLayout.SOUTH);
@@ -45,7 +45,9 @@ public class TempUI extends JFrame {
         c.add(cardStatus, BorderLayout.NORTH);
         c.add(bossStatus, BorderLayout.EAST);
         c.add(playerStatus, BorderLayout.WEST);
+
         jp.add(turnEnd, BorderLayout.CENTER);
+
         turnEnd.addActionListener(new MyActionListener());
         
         updateLabel();
@@ -95,10 +97,10 @@ public class TempUI extends JFrame {
         userInfo += "Mana : " + Integer.toString(game.player.mana) + "<br>";
         playerStatus.setText(userInfo);
 
-        // String monsterInfo = "<html>";
-        // monsterInfo += "Name : " + game.enemy.name + "<br>";
-        // monsterInfo += "Health : " + Integer.toString(game.enemy.health) + "/" + Integer.toString(game.enemy.maxHealth) + "<br>";
-        // bossStatus.setText(monsterInfo);
+         String monsterInfo = "<html>";
+         monsterInfo += "Name : " + game.field.enemies[0].name + "<br>";
+         monsterInfo += "Health : " + Integer.toString(game.field.enemies[0].health) + "/" + Integer.toString(game.field.enemies[0].maxHealth) + "<br>";
+         bossStatus.setText(monsterInfo);
 
     }
 
@@ -107,26 +109,26 @@ public class TempUI extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             JButton b = (JButton) e.getSource();
-            // switch (b.getText()) {
-            //     case "card0":
-            //         game.player.useCard(0, game.enemy);
-            //         break;
-            //     case "card1":
-            //         game.player.useCard(1, game.enemy);
-            //         break;
-            //     case "card2":
-            //         game.player.useCard(2, game.enemy);
-            //         break;
-            //     case "card3":
-            //         game.player.useCard(3, game.enemy);
-            //         break;
-            //     case "card4":
-            //         game.player.useCard(4, game.enemy);
-            //         break;
-            //     case "End Turn":
-            //         game.turnEnd();
-            //         break;
-            // }
+            switch (b.getText()) {
+                case "card0":
+                    game.player.useCard(0, game.field.enemies[0]);
+                    break;
+                case "card1":
+                    game.player.useCard(1, game.field.enemies[0]);
+                    break;
+                case "card2":
+                    game.player.useCard(2, game.field.enemies[0]);
+                    break;
+                case "card3":
+                    game.player.useCard(3, game.field.enemies[0]);
+                    break;
+                case "card4":
+                    game.player.useCard(4, game.field.enemies[0]);
+                    break;
+                case "End Turn":
+                    game.turnEnd();
+                    break;
+            }
             updateLabel();
             // updateButton(); //카드 갯수에 맞게 버튼 초기화. 근데 작동 안되서 빼놓음
 
