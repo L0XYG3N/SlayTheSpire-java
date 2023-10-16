@@ -46,12 +46,16 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
 }
 
 class Strike extends Card {
+    private int damage;
+
     public Strike() {
         cost = 1;
         cardID = 2;
+        damage = 5;
     }
 
     public void use(BaseObject obj) {
+        Effects.attack(damage, obj);
     }
 
     public void upgrade() {

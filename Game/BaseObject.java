@@ -15,6 +15,7 @@ public class BaseObject {
     public void damage(int amount) {
         /*
          * 객체의 체력을 깎는 함수
+         * 방어막 수치가 있으면 방어막 먼저 깎고 남은 수치만큼 체력을 깎는다.
          */
 
         // amount += status.weakness.power;
@@ -40,5 +41,13 @@ public class BaseObject {
 
     public void addHealth(int amount) {
         health = Math.min(maxHealth, health + amount);
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }

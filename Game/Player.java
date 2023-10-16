@@ -7,7 +7,7 @@ public class Player extends BaseObject {
 
     public int[] potions; // 포션 인벤토리, 시간남으면 구현하기
     public int maxMana;
-    public int mana;
+    private int mana;
 
     public int weakenShield;
 
@@ -49,6 +49,10 @@ public class Player extends BaseObject {
     public void addMana(int amount) {
         // 마나 추가
         mana += amount;
+    }
+
+    public int getMana() {
+        return mana;
     }
 
 }

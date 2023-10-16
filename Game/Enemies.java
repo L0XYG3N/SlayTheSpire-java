@@ -6,6 +6,10 @@ public abstract class Enemies extends BaseObject {
     int dmg;
 
     abstract void continuePattern();
+
+    public String getName() {
+        return name;
+    }
 }
 
 class Rand {

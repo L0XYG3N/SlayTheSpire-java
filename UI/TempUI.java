@@ -16,28 +16,27 @@ public class TempUI extends JFrame {
     public JPanel jp;
 
     public TempUI() {
-        //UI 초기화 함수, 지금은 생성자에 다 때려박았지만 나중에 함수별로 정리해야함
+        // UI 초기화 함수, 지금은 생성자에 다 때려박았지만 나중에 함수별로 정리해야함
         initialize();
         game = Game.getInstance();
         jp = new JPanel();
         cardArray = new ArrayList<JButton>();
         Container c = getContentPane();
-        
+
         cardStatus = new JLabel();
         bossStatus = new JLabel();
         playerStatus = new JLabel();
         setLocationRelativeTo(null);
 
         for (int i = 0; i < game.player.cards.field.size(); i++) {
-            //버튼 생성용 코드, 임시, 
+            // 버튼 생성용 코드, 임시,
             String cardname = "card" + Integer.toString(i);
             cardArray.add(new JButton(cardname));
             jp.add(cardArray.get(i), BorderLayout.SOUTH);
             cardArray.get(i).addActionListener(new MyActionListener());
         }
-        //턴 종료 버튼, 항상 맨 아래 오른쪽에 붙어있게 하는 방법 찾아야함
+        // 턴 종료 버튼, 항상 맨 아래 오른쪽에 붙어있게 하는 방법 찾아야함
         JButton turnEnd = new JButton("End Turn");
-
 
         c.setLayout(new BorderLayout());
 
@@ -49,7 +48,7 @@ public class TempUI extends JFrame {
         jp.add(turnEnd, BorderLayout.CENTER);
 
         turnEnd.addActionListener(new MyActionListener());
-        
+
         updateLabel();
         setVisible(true);
     }
@@ -93,14 +92,17 @@ public class TempUI extends JFrame {
         cardStatus.setText(cardstatus);
 
         String userInfo = "<html>";
-        userInfo += "Health : " + Integer.toString(game.player.health) + "/" + Integer.toString(game.player.maxHealth) + "<br>";
-        userInfo += "Mana : " + Integer.toString(game.player.mana) + "<br>";
+        userInfo += "Health : " + Integer.toString(game.player.getHealth()) + "/"
+                + Integer.toString(game.player.getMaxHealth())
+                + "<br>";
+        userInfo += "Mana : " + Integer.toString(game.player.getMana()) + "<br>";
         playerStatus.setText(userInfo);
 
-         String monsterInfo = "<html>";
-         monsterInfo += "Name : " + game.field.enemies[0].name + "<br>";
-         monsterInfo += "Health : " + Integer.toString(game.field.enemies[0].health) + "/" + Integer.toString(game.field.enemies[0].maxHealth) + "<br>";
-         bossStatus.setText(monsterInfo);
+        String monsterInfo = "<html>";
+        monsterInfo += "Name : " + game.field.enemies[0].getName() + "<br>";
+        monsterInfo += "Health : " + Integer.toString(game.field.enemies[0].health) + "/"
+                + Integer.toString(game.field.enemies[0].maxHealth) + "<br>";
+        bossStatus.setText(monsterInfo);
 
     }
 
