@@ -45,18 +45,15 @@ class Rand {
     }
 }
 
-class Louse extends Enemies {
-    private int type;
+class Louse_Red extends Enemies {
     private boolean roll;
 
-    public Louse() {
-        // 공벌레의 타입 결정, 타입마다 패턴이 다름
-        type = Rand.randInt(0, 1);
-
+    public Louse_Red() {
         health = Rand.randInt(10, 15);
-        name = "공벌레";
-        dmg = 5;
-        moveSet = new int[]{60,40};
+        maxHealth = health;
+        name = "빨간 공벌레";
+        dmg = Rand.randInt(5,7);
+        moveSet = new int[]{75,25};
 
         setNextMove();
 
@@ -74,20 +71,55 @@ class Louse extends Enemies {
     }
 
     public void continuePattern() {
-        // 공벌레의 패턴 진행, 공격 스킬과 타입별로 상태이상 부여하는 스킬 중 정해진 확률대로 사용
+        // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
         if (nextMove == 0) {
-            if (type == 1) {
-                Effects.addStatus(this, STATUS.STRENGTH, 3, 5);
-            } else if (type == 0) {
-                Effects.addStatus(Player.getInstance(), STATUS.FEAR, 3, 2);
-            }
-        } else {
             int damage = dmg + status.strength.power;
             Effects.attack(damage, Player.getInstance());
+        } else if (nextMove == 1){
+            Effects.addStatus(this, STATUS.STRENGTH, 3, 5);
         }
         setNextMove();
     }
 }
+
+class Louse_Green extends Enemies {
+    private boolean roll;
+
+    public Louse_Green() {
+
+        health = Rand.randInt(11, 17);
+        name = "초록 공벌레";
+        dmg = Rand.randInt(5,7);
+        moveSet = new int[]{75,25};
+
+        setNextMove();
+
+        // 몸 말기 스킬 사용중
+        roll = true;
+    }
+
+    public void damage(int amount) {
+        super.damage(amount);
+        // 데미지를 받을 시 몸 말기 스킬이 끝나고 해당 효과 발생
+        if (roll) {
+            roll = false;
+            addShield(amount);
+        }
+    }
+
+    public void continuePattern() {
+        // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
+        if (nextMove == 0) {
+            int damage = dmg + status.strength.power;
+            Effects.attack(damage, Player.getInstance());
+        } else if (nextMove == 1){
+            Effects.addStatus(Player.getInstance(), STATUS.FEAR, 3, 2);
+        }
+        setNextMove();
+    }
+}
+
+
 /*
 class Slime extends Enemies {
     // 슬라임, 사이즈(소,중,대), 타입(가시,산)

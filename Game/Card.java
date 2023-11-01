@@ -25,7 +25,7 @@ public abstract class Card {
     public int getCardID() {
         return cardID;
     }
-
+    
 }
 
 class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
