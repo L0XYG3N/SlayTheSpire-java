@@ -3,19 +3,45 @@ package Game;
 public abstract class Enemies extends BaseObject {
     // 보스용 추상 클래스
     public String name;
+    //   
+    public int nextMove;
+    public int [] moveSet;
     int dmg;
+
+    public void setNextMove() {
+        nextMove = Rand.getNumByProbability(moveSet);
+    }
 
     abstract void continuePattern();
 
     public String getName() {
         return name;
     }
+
 }
 
 class Rand {
     // a에서 b까지의 랜덤 int 리턴하는 함수(b 포함)
     public static int randInt(int a, int b) {
         return (int) Math.random() * ((b + 1) - a) + a;
+    }
+
+    // 각 인덱스가 나올 확률을 변수로 가진 배열을 받아 확률에 따라 int값을 리턴하는 함수
+    // 리턴되는 값은 입력 배열의 사이즈 값보다 작거나 같다
+    public static int getNumByProbability(int[] prob) {
+        double [] probSum = new double[prob.length];
+        probSum[0] = prob[0];
+        for(int i = 1; i < prob.length;i++) {
+            probSum[i] = probSum[i-1]+prob[i];
+        }
+
+        double decision = Math.random();
+        for(int i = 0; i < prob.length;i++) {
+            if(decision < probSum[i]) {
+                return i;
+            }
+        }
+        return prob.length-1;
     }
 }
 
@@ -30,6 +56,9 @@ class Louse extends Enemies {
         health = Rand.randInt(10, 15);
         name = "공벌레";
         dmg = 5;
+        moveSet = new int[]{60,40};
+
+        setNextMove();
 
         // 몸 말기 스킬 사용중
         roll = true;
@@ -45,10 +74,8 @@ class Louse extends Enemies {
     }
 
     public void continuePattern() {
-        // 공벌레의 패턴 진행, 공격 스킬과 타입별로 상태이상 부여하는 스킬 중 랜덤으로 사용
-        // 나중에 수정할필요 있음.
-        int check = Rand.randInt(0, 1);
-        if (check == 0) {
+        // 공벌레의 패턴 진행, 공격 스킬과 타입별로 상태이상 부여하는 스킬 중 정해진 확률대로 사용
+        if (nextMove == 0) {
             if (type == 1) {
                 Effects.addStatus(this, STATUS.STRENGTH, 3, 5);
             } else if (type == 0) {
@@ -58,15 +85,16 @@ class Louse extends Enemies {
             int damage = dmg + status.strength.power;
             Effects.attack(damage, Player.getInstance());
         }
+        setNextMove();
     }
 }
-
+/*
 class Slime extends Enemies {
     // 슬라임, 사이즈(소,중,대), 타입(가시,산)
 
     private int size; // 1~3, higher is bigger
     private int type; // 0: spike slime, 1: acid slime
-
+    
     public Slime(int size, int type) {
         this.size = size;
         this.type = type;
@@ -104,6 +132,7 @@ class Slime extends Enemies {
             }
         }
         health = maxHealth;
+        moveSet = new int[]{30,40,30};
     }
 
     public int getSize() {
@@ -191,3 +220,4 @@ class JawWorm extends Enemies {
         }
     }
 }
+*/

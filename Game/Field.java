@@ -12,7 +12,7 @@ public class Field {
 
     private Field() {
         // enemies = new Enemies[5]; // 필드에 최대 5마리의 몬스터가 나타날 예정
-        initStage(2);
+        initStage(3);
     }
 
     public void initStage(int stageID) {
