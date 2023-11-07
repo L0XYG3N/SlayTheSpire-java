@@ -1,6 +1,6 @@
 package Game;
 
-public abstract class Enemies extends BaseObject {
+public abstract class Monster extends BaseObject {
     // 보스용 추상 클래스
     public String name;
     //   
@@ -45,7 +45,7 @@ class Rand {
     }
 }
 
-class Louse_Red extends Enemies {
+class Louse_Red extends Monster {
     private boolean roll;
 
     public Louse_Red() {
@@ -82,7 +82,7 @@ class Louse_Red extends Enemies {
     }
 }
 
-class Louse_Green extends Enemies {
+class Louse_Green extends Monster {
     private boolean roll;
 
     public Louse_Green() {

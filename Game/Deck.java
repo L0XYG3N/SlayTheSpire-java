@@ -6,15 +6,15 @@ public class Deck {
     // 필드, 무덤, 덱 3가지 카드의 ArrayList
     public ArrayList<Card> field;
     public ArrayList<Card> deck;
-    public ArrayList<Card> dead;
+    public ArrayList<Card> discard;
 
-    // deck에서 카드를 뽑을때 뽑는 카드의 개수, 상황에 따라 바뀔수 있음
+    // deck에서 카드를 뽑을때 뽑는 카드의 개수. 상황에 따라 바뀔수 있음
     public int drawCount;
 
     public Deck() {
         field = new ArrayList<Card>();
         deck = new ArrayList<Card>();
-        dead = new ArrayList<Card>();
+        discard = new ArrayList<Card>();
         initializeDeck();
         drawCount = 5;
     }
@@ -34,7 +34,7 @@ public class Deck {
             if (card.ethereal) {
                 card.exhausted = true;
             }
-            dead.add(card);
+            discard.add(card);
         }
         field.clear();
 
@@ -57,7 +57,7 @@ public class Deck {
 
     public void refillDeck() {
         // 무덤에 있는 카드를 하나씩 deck으로 옮기는 함수, 카드가 소멸 상태이면 건너뛴다.
-        for (Card card : dead) {
+        for (Card card : discard) {
             if (!card.exhausted)
                 deck.add(card);
         }

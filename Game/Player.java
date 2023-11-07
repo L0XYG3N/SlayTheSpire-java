@@ -8,7 +8,7 @@ public class Player extends BaseObject {
     public int[] potions; // 포션 인벤토리, 시간남으면 구현하기
     public int maxMana;
     private int mana;
-
+    public int coins;
     public int weakenShield;
 
     // 싱글톤 기법
@@ -21,6 +21,7 @@ public class Player extends BaseObject {
         mana = maxMana;
         maxHealth = 70;
         health = maxHealth;
+        coins=0;
     }
 
     public static Player getInstance() {
@@ -37,7 +38,7 @@ public class Player extends BaseObject {
         // 카드 사용 후 필드에서 삭제하고 무덤에 넣기, 소멸 기능 구현안됨
         card.use(obj);
         cards.field.remove(index);
-        cards.dead.add(card);
+        cards.discard.add(card);
         return true;
     }
 
@@ -54,5 +55,11 @@ public class Player extends BaseObject {
     public int getMana() {
         return mana;
     }
+
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+
 
 }

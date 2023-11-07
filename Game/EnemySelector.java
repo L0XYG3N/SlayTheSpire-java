@@ -1,12 +1,12 @@
 package Game;
 
 public class EnemySelector {
-    public static Enemies[] getEnemies(int stageID) {
+    public static Monster[] getEnemies(int stageID) {
         /*
          * 정해진 대로 적을 생성해주는 클래스.
          * 스테이지 id별로 적 배열을 생성해 리턴한다.
          */
-        Enemies[] enemyList = new Enemies[5];
+        Monster[] enemyList = new Monster[5];
         switch (stageID) {
             case 1:
                 // enemyList[0] = new Cultist();

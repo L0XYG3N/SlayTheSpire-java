@@ -1,6 +1,7 @@
 package UI;
 
 import Game.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +19,7 @@ public class TempUI extends JFrame {
     public TempUI() {
         // UI 초기화 함수, 지금은 생성자에 다 때려박았지만 나중에 함수별로 정리해야함
         initialize();
-        game = Game.getInstance();
+        
         jp = new JPanel();
         cardArray = new ArrayList<JButton>();
         Container c = getContentPane();
@@ -26,7 +27,7 @@ public class TempUI extends JFrame {
         cardStatus = new JLabel();
         bossStatus = new JLabel();
         playerStatus = new JLabel();
-        setLocationRelativeTo(null);
+        
 
         for (int i = 0; i < game.player.cards.field.size(); i++) {
             // 버튼 생성용 코드, 임시,
@@ -39,14 +40,14 @@ public class TempUI extends JFrame {
         JButton turnEnd = new JButton("End Turn");
 
         c.setLayout(new BorderLayout());
-
+        //c.setLayout(null);
         c.add(jp, BorderLayout.SOUTH);
         c.add(cardStatus, BorderLayout.NORTH);
         c.add(bossStatus, BorderLayout.EAST);
         c.add(playerStatus, BorderLayout.WEST);
 
         jp.add(turnEnd, BorderLayout.CENTER);
-
+        //c.add(new CardPane(700,400)); 카드테스트
         turnEnd.addActionListener(new MyActionListener());
 
         updateLabel();
@@ -58,6 +59,9 @@ public class TempUI extends JFrame {
         setLayout(null);
         setSize(1366, 768);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        game = Game.getInstance();
     }
 
     public void updateButton() {
@@ -138,3 +142,4 @@ public class TempUI extends JFrame {
     }
 
 }
+
