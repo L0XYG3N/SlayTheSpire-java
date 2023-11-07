@@ -13,8 +13,8 @@ import Game.CardGetter;
 // 카드 외형 보여주는 클래스
 public class CardPane extends JLayeredPane{
     private int originalX, originalY;
-    public static int CARD_WIDTH = 150;
-    public static int CARD_HEIGHT = 220;
+    public static final int WIDTH = 150;
+    public static final int HEIGHT = 220;
     private Card card;
     
     public CardPane(int cardX, int cardY, Card card) {
@@ -25,14 +25,14 @@ public class CardPane extends JLayeredPane{
 
             setFont(new Font("Inter", Font.PLAIN, 24));
             setOpaque(true);
-            setBounds(cardX, cardY, CARD_WIDTH, CARD_HEIGHT);
-            setSize(CARD_WIDTH,CARD_HEIGHT);
+            setBounds(cardX, cardY, WIDTH, HEIGHT);
+            setSize(WIDTH,HEIGHT);
 
             /*
             class cardAppear extends Thread {
                 public void run() {
                     int currentX = originalX;
-                    int currentY = originalY + CARD_HEIGHT;
+                    int currentY = originalY + HEIGHT;
                     while(currentY >= originalY) {
                         
                         currentY -= 2;
@@ -64,16 +64,16 @@ public class CardPane extends JLayeredPane{
         private int titleHeight;
         private int descriptionWidth;
         private int descriptionHeight;
-        private final int border_width = CARD_HEIGHT / 20;
+        private final int border_width = HEIGHT / 20;
 
         private final int titleDescrSeparate = (int)(border_width * 0.9);
 
         private void initComponentSize() {
-            titleWidth = CARD_WIDTH - border_width * 2;
-            titleHeight = CARD_HEIGHT / 8;
+            titleWidth = WIDTH - border_width * 2;
+            titleHeight = HEIGHT / 8;
     
-            descriptionWidth = CARD_WIDTH - 4 * border_width;
-            descriptionHeight = (int)(CARD_HEIGHT / 3);
+            descriptionWidth = WIDTH - 4 * border_width;
+            descriptionHeight = (int)(HEIGHT / 3);
         }
 
         TitledBorder costBorder;

@@ -6,6 +6,8 @@ import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import UI.Pane.DefaultPaneGetter;
+
 
 public class MainFrame extends JFrame{
     public static final int SCREEN_WIDTH = 1366;
@@ -27,19 +29,17 @@ public class MainFrame extends JFrame{
         setLayout(null);
         setVisible(true);
 
-        layeredPane = new JLayeredPane();
-        layeredPane.setLocation(0,0);
-        layeredPane.setSize(size);
-        layeredPane.setMaximumSize(size);
-        layeredPane.setMinimumSize(size);
-        layeredPane.setPreferredSize(size);
-        layeredPane.setLayout(null);
-        //layeredPane.setBackground(배경);
-        layeredPane.setEnabled(true);
-        layeredPane.setVisible(true);
-        layeredPane.setOpaque(true);
+        layeredPane = DefaultPaneGetter.getNewJLayeredPane();
 
+        
         this.add(layeredPane);
+    }
+
+    public void updatePane(JLayeredPane newPane) {
+        this.remove(layeredPane);
+        layeredPane = newPane;
+        this.add(layeredPane);
+        revalidate();
     }
 
     public void addComponent(Component comp, int layer) {

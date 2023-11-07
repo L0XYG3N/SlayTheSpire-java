@@ -91,7 +91,7 @@ class Louse_Green extends Monster {
         name = "초록 공벌레";
         dmg = Rand.randInt(5,7);
         moveSet = new int[]{75,25};
-
+        maxHealth = health;
         setNextMove();
 
         // 몸 말기 스킬 사용중
