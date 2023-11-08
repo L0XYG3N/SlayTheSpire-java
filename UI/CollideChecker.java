@@ -1,8 +1,6 @@
 package UI;
 
-import java.awt.Dimension;
 
-import Game.Monster;
 import UI.Pane.CardPane;
 import UI.Pane.MonsterPane;
 import UI.Pane.PlayerPane;
@@ -61,15 +59,11 @@ public class CollideChecker {
     public static boolean isCollidedWith(CardPane card, MonsterPane enemy) {
         int x1 = card.getX();
         int y1 = card.getY();
-        int x2 = x1 + CardPane.WIDTH;
-        int y2 = y1 + CardPane.HEIGHT;
 
-        int x3 = enemy.getX();
-        int y3 = enemy.getY();
-        int x4 = x3 + MonsterPane.WIDTH;
-        int y4 = y3 + MonsterPane.HEIGHT;
+        int x2 = enemy.getX();
+        int y2 = enemy.getY();
 
-        if(x1 + CardPane.WIDTH >= x3 && x1 <= x3 + MonsterPane.WIDTH && y1 + CardPane.HEIGHT >= y3 && y1 <= y3 + MonsterPane.HEIGHT)
+        if(x1 + CardPane.WIDTH >= x2 && x1 <= x2 + MonsterPane.WIDTH && y1 + CardPane.HEIGHT >= y2 && y1 <= y2 + MonsterPane.HEIGHT)
         {
             return true;
         }

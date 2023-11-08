@@ -5,8 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 import java.awt.*;
+import java.util.ArrayList;
 
-import Game.Card;
 import Game.CardGetter;
 import Game.Field;
 import Game.Monster;
@@ -18,6 +18,7 @@ public class BattlePane extends JLayeredPane{
     public JButton endTurnButton;
     private Player player = Player.getInstance();
     public static MonsterPane[] monsters = new MonsterPane[5];
+    public ArrayList<CardPane> cards;
 
     public BattlePane() {
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
@@ -55,6 +56,7 @@ public class BattlePane extends JLayeredPane{
 
 
         //카드 삽입
+        //cards = new ArrayList<CardPane>()
         updateCardPane();
         
 

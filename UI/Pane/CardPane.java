@@ -67,7 +67,7 @@ public class CardPane extends JLayeredPane{
         private int descriptionHeight;
         private final int border_width = HEIGHT / 20;
 
-        private final int titleDescrSeparate = (int)(border_width * 0.9);
+        
 
         private void initComponentSize() {
             titleWidth = WIDTH - border_width * 2;
@@ -97,13 +97,17 @@ public class CardPane extends JLayeredPane{
             );
 
             LineBorder lineBorder = new LineBorder(cardColor, border_width);
+
             String cost = Integer.toString(this.card.getCost());
             costBorder = new TitledBorder(lineBorder, cost);
+
             Font costFont = new Font("Roman", Font.PLAIN, 18); // cost font
             costBorder.setTitleFont(costFont);
             costBorder.setTitleColor(Color.WHITE); 
+
             CompoundBorder cardExBorder = new CompoundBorder(eb, costBorder);
             BorderLayout borderLayout = new BorderLayout(border_width, border_width);
+
             this.setBorder(cardExBorder);
             this.setLayout(borderLayout);
 
@@ -165,17 +169,16 @@ public class CardPane extends JLayeredPane{
             LineBorder imageLineBorder = new LineBorder(titleColor, 5);
             TitledBorder imageBorder = new TitledBorder(
                     imageLineBorder,
-                    "cardType",
+                    "카드타입",
                     TitledBorder.CENTER,
                     TitledBorder.BOTTOM
             );
             Font typeFont = new Font("ROMAN", Font.PLAIN, 10);
             imageBorder.setTitleColor(Color.WHITE);
-            // imageBorder.setTitlePosition(TitledBorder.BOTTOM, TitledBorder.CENTER);
             imageBorder.setTitleFont(typeFont);
             cardImage.setBorder(imageBorder);
-            this.add(cardImage, BorderLayout.CENTER);
 
+            this.add(cardImage, BorderLayout.CENTER);
             
 
             this.setVisible(true);

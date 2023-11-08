@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Deck {
     // 필드, 무덤, 덱 3가지 카드의 ArrayList
@@ -15,11 +16,14 @@ public class Deck {
         field = new ArrayList<Card>();
         deck = new ArrayList<Card>();
         discard = new ArrayList<Card>();
-        initializeDeck();
+
         drawCount = 5;
+
+        initialize();
+        
     }
 
-    private void initializeDeck() {
+    private void initialize() {
         // 초반 15개의 카드를 deck에 넣는 함수
 
         // 테스트용 코드, 나중에 삭제할 것
@@ -28,6 +32,19 @@ public class Deck {
         }
         field.add(new Strike());
     }
+
+    /*
+    public void shuffle() {
+        int n = deck.size();
+        for (int i = n - 1; i > 0; i--) {	//	덱 ArrayList의 크기만큼 섞음
+    		int randomIndex = Random.nextInt(i + 1);
+    		
+    		Card temp = deck.get(i);
+    		deck.set(i, deck.get(randomIndex));
+    		deck.set(randomIndex, temp);
+    	}
+    }
+    */
 
     public void turnEnd() {
         for (Card card : field) {
