@@ -6,6 +6,7 @@ import javax.swing.text.*;
 
 import java.awt.*;
 import UI.Listener.CardPaneListener;
+import Game.BaseObject;
 import Game.Card;
 import Game.CardGetter;
 
@@ -15,7 +16,7 @@ public class CardPane extends JLayeredPane{
     private int originalX, originalY;
     public static final int WIDTH = 150;
     public static final int HEIGHT = 220;
-    private Card card;
+    public final Card card;
     
     public CardPane(int cardX, int cardY, Card card) {
             originalX = cardX;
@@ -194,6 +195,13 @@ public class CardPane extends JLayeredPane{
         public void moveBack() {
             moveTo(originalX, originalY);
         }
+
+        public void useCard(BaseObject obj) {
+            card.use(obj);
+            getParent().remove(this);
+            
+        }
+
 
         //테스트용 실행 코드
         public static void main(String [] args) {

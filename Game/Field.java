@@ -16,7 +16,7 @@ public class Field {
     }
 
     public void initStage(int stageID) {
-        enemies = EnemySelector.getEnemies(stageID);
+        enemies = MonsterSelector.getEnemies(stageID);
     }
 
     public static Field getInstance() {

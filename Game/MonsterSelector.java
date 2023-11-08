@@ -1,6 +1,6 @@
 package Game;
 
-public class EnemySelector {
+public class MonsterSelector {
     public static Monster[] getEnemies(int stageID) {
         /*
          * 정해진 대로 적을 생성해주는 클래스.

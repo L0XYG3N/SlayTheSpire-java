@@ -8,6 +8,8 @@ public class CardGetter {
         switch(id) {
             case 1:
                 return new AttackCard();
+            case 2:
+                return new Strike();
             default:
                 return new TestCard();
                 

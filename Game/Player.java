@@ -22,6 +22,7 @@ public class Player extends BaseObject {
         maxHealth = 70;
         health = maxHealth;
         coins=0;
+        status = new BuffStatus();
     }
 
     public static Player getInstance() {

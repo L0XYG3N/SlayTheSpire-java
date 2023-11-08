@@ -21,7 +21,9 @@ public class Effects {
 
     // 상태이상을 부여하는 함수, 특정 상태에 강도와 지속시간을 부여한다
     public static void addStatus(BaseObject target, STATUS stat, int power, int duration) {
+        /*
         switch (stat) {
+        
             case STRENGTH:
                 target.status.strength.duration = duration;
                 target.status.strength.power = power;
@@ -52,6 +54,7 @@ public class Effects {
                 target.status.steelArmor.power = power;
                 break;
         }
+        */
     }
 
     public static void weakenShield(int duration) {

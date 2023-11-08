@@ -6,9 +6,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 import java.awt.*;
 
-import Game.BaseObject;
+import Game.Card;
 import Game.CardGetter;
 import Game.Field;
+import Game.Monster;
 import Game.Player;
 import UI.MainFrame;
 
@@ -16,7 +17,7 @@ public class BattlePane extends JLayeredPane{
     public JLabel manaPanel;
     public JButton endTurnButton;
     private Player player = Player.getInstance();
-    public EnemyPane[] monsters = new EnemyPane[5];
+    public static MonsterPane[] monsters = new MonsterPane[5];
 
     public BattlePane() {
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
@@ -29,6 +30,8 @@ public class BattlePane extends JLayeredPane{
         setEnabled(true);
         setVisible(true);
         setOpaque(true);
+
+        
 
     
         //턴 종료 버튼
@@ -51,23 +54,33 @@ public class BattlePane extends JLayeredPane{
         add(manaPanel,JLayeredPane.MODAL_LAYER);
 
 
-        //카드 테스트
-        for(int i = 0; i < 6;i++) {
-            add(new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(-1)),JLayeredPane.MODAL_LAYER);
-        }
-        PlayerPane p = new PlayerPane();
+        //카드 삽입
+        updateCardPane();
+        
 
         for(int i = 0; i < 5;i++) {
-            BaseObject monster;
+            Monster monster;
             monster = Field.getInstance().enemies[i];
             if(monster != null) {
-                monsters[i] = new EnemyPane(475+i*(EnemyPane.WIDTH + 10),180, monster);
+                monsters[i] = new MonsterPane(475+i*(MonsterPane.WIDTH + 10),180, monster, i);
                 add(monsters[i],JLayeredPane.MODAL_LAYER);
             }
         }
 
-        add(p, JLayeredPane.MODAL_LAYER);
+        PlayerPane playerPane = new PlayerPane();
+        add(playerPane, JLayeredPane.MODAL_LAYER);
+
+
         add(new CardDeckPane(), JLayeredPane.MODAL_LAYER);
         add(new CardDiscardPane(), JLayeredPane.MODAL_LAYER);
+    }
+
+    public void updateCardPane() {
+        int cardCount = player.cards.field.size();
+        cardCount = Math.min(6,cardCount);
+        for(int i = 0; i < cardCount;i++) {
+            int cardID = player.cards.field.get(i).getCardID();
+            add(new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID)),JLayeredPane.MODAL_LAYER);
+        }
     }
 }

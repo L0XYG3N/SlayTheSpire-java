@@ -5,6 +5,7 @@ public abstract class Monster extends BaseObject {
     public String name;
     //   
     public int nextMove;
+
     public int [] moveSet;
     int dmg;
 
@@ -54,7 +55,7 @@ class Louse_Red extends Monster {
         name = "빨간 공벌레";
         dmg = Rand.randInt(5,7);
         moveSet = new int[]{75,25};
-
+        status = new BuffStatus();
         setNextMove();
 
         // 몸 말기 스킬 사용중
@@ -73,7 +74,7 @@ class Louse_Red extends Monster {
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
         if (nextMove == 0) {
-            int damage = dmg + status.strength.power;
+            int damage = dmg; //+ status.strength.power;
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1){
             Effects.addStatus(this, STATUS.STRENGTH, 3, 5);
@@ -91,6 +92,7 @@ class Louse_Green extends Monster {
         name = "초록 공벌레";
         dmg = Rand.randInt(5,7);
         moveSet = new int[]{75,25};
+        status = new BuffStatus();
         maxHealth = health;
         setNextMove();
 
@@ -110,7 +112,7 @@ class Louse_Green extends Monster {
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
         if (nextMove == 0) {
-            int damage = dmg + status.strength.power;
+            int damage = dmg;// + status.strength.power;
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1){
             Effects.addStatus(Player.getInstance(), STATUS.FEAR, 3, 2);

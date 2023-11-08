@@ -46,12 +46,14 @@ public abstract class Card {
 
 class TestCard extends Card {
     private int damage;
+    private int damageOrigin;
 
 
     public TestCard() {
         cost = 1;
         cardID = 1;
-        damage = 3;
+        damageOrigin = 3;
+        damage = damageOrigin;
 
         cardName = "디버그 카드";
         cardDescription = "디버그 카드.\n적에게 데미지 " + damage + " 부여";
@@ -59,6 +61,7 @@ class TestCard extends Card {
 
     public void use(BaseObject obj) {
         Effects.attack(damage, obj);
+        System.out.println("damage " + damage + " dealt to an monster, health remain : " + obj.health);
     }
 
     public void upgrade() {
@@ -69,11 +72,15 @@ class TestCard extends Card {
 
 class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
     private int damage;
+    private int damageOrigin;
 
     public AttackCard() {
         cost = 1;
         cardID = 1;
-        damage = 3;
+        damageOrigin = 3;
+        damage = damageOrigin;
+        cardName = "공격";
+        cardDescription = "피해를 "+damage+" 줍니다.";
     }
 
     public void use(BaseObject obj) {
@@ -86,11 +93,15 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
 
 class Strike extends Card {
     private int damage;
+    private int damageOrigin;
 
     public Strike() {
         cost = 1;
         cardID = 2;
-        damage = 5;
+        damageOrigin = 6;
+        damage = damageOrigin;
+        cardName = "타격";
+        cardDescription = "피해를 "+damage+" 줍니다.";
     }
 
     public void use(BaseObject obj) {
@@ -98,6 +109,7 @@ class Strike extends Card {
     }
 
     public void upgrade() {
+
     }
 }
 

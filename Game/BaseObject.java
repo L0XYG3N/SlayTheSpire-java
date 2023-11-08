@@ -10,15 +10,15 @@ public class BaseObject {
 
     public int shield; // 캐릭터의 방어막
 
-    public Status status; // 캐릭터의 상태(힘,취약 등등의 스탯이 담겨있다.)
-
+    //public Status status; // 캐릭터의 상태(힘,취약 등등의 스탯이 담겨있다.)
+    public BuffStatus status;
     public void damage(int amount) {
         /*
          * 객체의 체력을 깎는 함수
          * 방어막 수치가 있으면 방어막 먼저 깎고 남은 수치만큼 체력을 깎는다.
          */
 
-        // amount += status.weakness.power;
+        amount += status.weakness.power;
         // 취약의 수치만큼 데미지 증가
 
         if (shield > 0) {
@@ -27,6 +27,7 @@ public class BaseObject {
                 return;
             } else {
                 amount -= shield;
+                shield = 0;
                 health -= amount;
                 return;
             }
@@ -49,5 +50,9 @@ public class BaseObject {
 
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    public int getShield() {
+        return shield;
     }
 }
