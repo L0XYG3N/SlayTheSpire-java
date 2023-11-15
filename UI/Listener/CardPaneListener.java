@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLayeredPane;
 
 import Game.*;
-import Game.Card.CardTarget;
-import UI.*;
 import UI.Pane.*;
 import Util.CollideChecker;
 
@@ -38,16 +36,13 @@ public class CardPaneListener extends MouseAdapter {
                 selectPlayer();
                 break;
         }
-
-
-        
-
         pane.repaint();
     }
 
     public void mouseReleased(MouseEvent evt) {
         JLayeredPane collidedPane;
         Container c;
+
         try {
             c = pane.getParent();
         } catch(Exception ex) {
@@ -55,6 +50,7 @@ public class CardPaneListener extends MouseAdapter {
         }
 
         switch(pane.card.getCardTarget()) {
+            // 카드의 사용 타겟을 확인 후 카드에 맞는 코드 실행
             case ENEMY:
                 collidedPane = CollideChecker.getCollidedMonster(pane, BattlePane.monsters);
                 if(highlighted != -1)
@@ -81,6 +77,7 @@ public class CardPaneListener extends MouseAdapter {
     }
     
     private void selectEnemy() {
+        // 카드 옮길때 해당되는 적이 카드에 닿으면 적 배경색 바꿔서 하이라이트하는 함수
         MonsterPane collided = CollideChecker.getCollidedMonster(pane, BattlePane.monsters);
         if(collided != null) {
             if(highlighted != -1) 

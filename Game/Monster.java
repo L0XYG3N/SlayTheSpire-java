@@ -18,7 +18,6 @@ public abstract class Monster extends BaseObject {
     public String getName() {
         return name;
     }
-
 }
 
 class Rand {

@@ -56,6 +56,11 @@ public class GUI{
         frame.repaint();
     }
 
-
+    public static void updateScreen() {
+        battlePane.drawMonsters();
+        //mainMenuPane.
+        //battlePane.
+        
+    }
 
 }

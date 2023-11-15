@@ -207,6 +207,8 @@ class Bash extends Card {
         cardName = "강타";
         cardDescription = "피해를 " + damage + " 줍니다.<br>" + 
                           "<font color='orange'>취약</font>을 " + effectDuration +" 부여합니다.";
+
+        imagePath = "Img/red/attack/bash.png";
     }
 
     public void use(BaseObject obj) {
@@ -259,6 +261,7 @@ class BodySlam extends Card {
         cardName = "몸통 박치기";
         cardDescription = "현재 <font color='orange'>방어도</font> 만큼의<br>피해를 줍니다.";
         cardType = CardType.ATTACK;
+        imagePath = "Img/red/attack/body_slam.png";
     }
     
     public void use(BaseObject obj) {
@@ -317,6 +320,8 @@ class Defend extends Card {
 
         cardName = "수비";
         cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다.";
+
+        imagePath = "Img/red/skill/defend.png";
 
     }
 

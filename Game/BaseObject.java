@@ -45,6 +45,7 @@ public class BaseObject {
     }
 
     public int getHealth() {
+        health = Math.max(health,0);
         return health;
     }
 

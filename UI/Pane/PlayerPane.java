@@ -6,7 +6,7 @@ import Game.Player;
 
 public class PlayerPane extends JLayeredPane{
 
-    public Player player;
+    private Player player;
     public static final int WIDTH = 180;
     public static final int HEIGHT = 250;
     public static final int barHeight = 15;

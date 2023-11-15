@@ -17,13 +17,14 @@ public class CardPane extends JLayeredPane{
     public static final int WIDTH = 150;
     public static final int HEIGHT = 220;
     public final Card card;
+    public final boolean moveAble;
     
-    public CardPane(int cardX, int cardY, Card card) {
+    public CardPane(int cardX, int cardY, Card card, boolean moveAble) {
         originalX = cardX;
         originalY = cardY;
         
         this.card = card;
-
+        this.moveAble = moveAble;
         setFont(new Font("Inter", Font.PLAIN, 24));
         setOpaque(true);
         setBounds(cardX, cardY, WIDTH, HEIGHT);
@@ -50,9 +51,12 @@ public class CardPane extends JLayeredPane{
         카드 생성시 등장 애니메이션, 추후수정
         */
 
-        CardPaneListener listener = new CardPaneListener(this);
-        addMouseListener(listener);
-        addMouseMotionListener(listener);
+        if(moveAble) {
+            CardPaneListener listener = new CardPaneListener(this);
+            addMouseListener(listener);
+            addMouseMotionListener(listener);
+        }
+        
 
         initCardPane();
     }
@@ -137,24 +141,7 @@ public class CardPane extends JLayeredPane{
         description.setOpaque(true);
         description.setHorizontalAlignment(SwingConstants.CENTER);
         description.setVerticalAlignment(SwingConstants.TOP);
-        //description.setDragEnabled(false);
-        //description.setEditable(false);
-
-
-        
-        // 카드 설명란이 클릭되도 카드 자체를 클릭한것처럼 작동하게 함
-        // 카드 설명란 클릭했을때 버벅임, 수정할 방법 찾아야함
-        // description.addMouseListener(this.getMouseListeners()[0]);
-        // description.addMouseMotionListener(this.getMouseMotionListeners()[0]);
-
         description.setFont(new Font("", Font.PLAIN, 11));
-
-        
-        // StyledDocument doc = description.getStyledDocument();
-        // SimpleAttributeSet center = new SimpleAttributeSet();
-        // StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        // doc.setParagraphAttributes(0, doc.getLength(), center, false);
-        
         description.setText(this.card.getDescription());
 
         description.setPreferredSize(new Dimension(

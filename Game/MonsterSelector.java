@@ -1,6 +1,4 @@
-package Util;
-
-import Game.Monster;
+package Game;
 
 public class MonsterSelector {
     public static Monster[] getEnemies(int stageID) {

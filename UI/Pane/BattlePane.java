@@ -23,6 +23,7 @@ public class BattlePane extends JLayeredPane{
     private JLabel manaPanel;
     private JButton endTurnButton;
     private PlayerPane playerPane;
+    private CardDeckPane cardDeckPane = new CardDeckPane(this);
 
     public BattlePane() {
         // Pane 초기 세팅
@@ -80,7 +81,7 @@ public class BattlePane extends JLayeredPane{
         add(playerPane, JLayeredPane.MODAL_LAYER);
 
 
-        add(new CardDeckPane(), JLayeredPane.MODAL_LAYER);
+        add(cardDeckPane, JLayeredPane.MODAL_LAYER);
         add(new CardDiscardPane(), JLayeredPane.MODAL_LAYER);
     }
 
@@ -91,7 +92,7 @@ public class BattlePane extends JLayeredPane{
         cardCount = Math.min(6,cardCount);
         for(int i = 0; i < cardCount;i++) {
             int cardID = player.cards.field.get(i).getCardID();
-            CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID));
+            CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID), true);
             add(c,JLayeredPane.MODAL_LAYER);
             drawnCards.add(c);
         }
