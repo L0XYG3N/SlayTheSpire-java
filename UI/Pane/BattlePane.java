@@ -5,22 +5,27 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import Game.CardGetter;
-import Game.Field;
-import Game.Monster;
-import Game.Player;
+import Game.*;
 import UI.MainFrame;
 
 public class BattlePane extends JLayeredPane{
-    public JLabel manaPanel;
-    public JButton endTurnButton;
     private Player player = Player.getInstance();
+    private Game game = Game.getInstance();
+    
+    private ArrayList<CardPane> drawnCards;
+
     public static MonsterPane[] monsters = new MonsterPane[5];
-    public ArrayList<CardPane> cards;
+
+    private JLabel manaPanel;
+    private JButton endTurnButton;
+    private PlayerPane playerPane;
 
     public BattlePane() {
+        // Pane 초기 세팅
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);
         setSize(size);
@@ -41,6 +46,14 @@ public class BattlePane extends JLayeredPane{
         endTurnButton.setFocusable(false);
         endTurnButton.setBounds(1150,460,150,40);
         endTurnButton.setBackground(Color.lightGray);
+        endTurnButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                game.turnEnd();
+                updateCardPane();
+                playerPane.updateLabel();
+                
+            }
+        });
         add(endTurnButton,JLayeredPane.MODAL_LAYER);
 
         //마나 패널
@@ -55,21 +68,15 @@ public class BattlePane extends JLayeredPane{
         add(manaPanel,JLayeredPane.MODAL_LAYER);
 
 
-        //카드 삽입
-        //cards = new ArrayList<CardPane>()
+        //카드
+        drawnCards = new ArrayList<CardPane>();
         updateCardPane();
         
-
-        for(int i = 0; i < 5;i++) {
-            Monster monster;
-            monster = Field.getInstance().enemies[i];
-            if(monster != null) {
-                monsters[i] = new MonsterPane(475+i*(MonsterPane.WIDTH + 10),180, monster, i);
-                add(monsters[i],JLayeredPane.MODAL_LAYER);
-            }
-        }
-
-        PlayerPane playerPane = new PlayerPane();
+        //몬스터
+        drawMonsters();
+        
+        //플레이어
+        playerPane = new PlayerPane();
         add(playerPane, JLayeredPane.MODAL_LAYER);
 
 
@@ -78,11 +85,33 @@ public class BattlePane extends JLayeredPane{
     }
 
     public void updateCardPane() {
+        clearCardPane();
+
         int cardCount = player.cards.field.size();
         cardCount = Math.min(6,cardCount);
         for(int i = 0; i < cardCount;i++) {
             int cardID = player.cards.field.get(i).getCardID();
-            add(new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID)),JLayeredPane.MODAL_LAYER);
+            CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID));
+            add(c,JLayeredPane.MODAL_LAYER);
+            drawnCards.add(c);
+        }
+    }
+
+    public void clearCardPane() {
+        for(CardPane c : drawnCards) {
+            remove(c);
+        }
+        drawnCards.clear();
+    }
+
+    public void drawMonsters() {
+        for(int i = 0; i < 5;i++) {
+            Monster monster;
+            monster = Field.getInstance().enemies[i];
+            if(monster != null) {
+                monsters[i] = new MonsterPane(475+i*(MonsterPane.WIDTH + 10),180, monster, i);
+                add(monsters[i],JLayeredPane.MODAL_LAYER);
+            }
         }
     }
 }

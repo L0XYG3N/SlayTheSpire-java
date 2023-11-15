@@ -1,5 +1,7 @@
-package UI;
+package Util;
 
+
+import javax.swing.JLayeredPane;
 
 import UI.Pane.CardPane;
 import UI.Pane.MonsterPane;
@@ -8,6 +10,9 @@ import UI.Pane.PlayerPane;
 public class CollideChecker {
 
     public static MonsterPane getCollidedMonster(CardPane card, MonsterPane [] enemy) {
+        // 카드와 충돌된 몬스터가 들어있는 JLayeredPane 리턴.
+        // 여러개의 적과 충돌됬을 경우 최대 2개의 적과 충돌할 수 있기 때문에
+        // 두 적 중 더 가까운 적을 리턴
         MonsterPane enemy1 = null;
         MonsterPane enemy2 = null;
 
@@ -36,35 +41,31 @@ public class CollideChecker {
         return (d1 < d2 ? enemy1 : enemy2);
     }
 
-    public static boolean isCollidedWith(CardPane card, PlayerPane player) {
+    public static boolean isCollidedWithPlayer(CardPane card) {
+        //카드와 플레이어의 충돌 체크 함수
         int x1 = card.getX();
         int y1 = card.getY();
-        int x2 = x1 + CardPane.WIDTH;
-        int y2 = y1 + CardPane.HEIGHT;
+        int x2 = PlayerPane.X;
+        int y2 = PlayerPane.Y;
 
-        int x3 = player.getX();
-        int y3 = player.getY();
-        int x4 = x3 + PlayerPane.WIDTH;
-        int y4 = y3 + PlayerPane.HEIGHT;
+        if(x1 + CardPane.WIDTH  >= x2 && x1 <= x2 + PlayerPane.WIDTH &&
+           y1 + CardPane.HEIGHT >= y2 && y1 <= y2 + PlayerPane.HEIGHT) {
+            return true;
+        }
 
-        if (x1 > x4 || x3 > x2)
-            return false;
-
-        if (y2 > y3 || y4 > y1)
-            return false;
-
-        return true;
+        return false;
     }
 
     public static boolean isCollidedWith(CardPane card, MonsterPane enemy) {
+        //카드와 몬스터의 충돌 체크 함수
         int x1 = card.getX();
         int y1 = card.getY();
 
         int x2 = enemy.getX();
         int y2 = enemy.getY();
 
-        if(x1 + CardPane.WIDTH >= x2 && x1 <= x2 + MonsterPane.WIDTH && y1 + CardPane.HEIGHT >= y2 && y1 <= y2 + MonsterPane.HEIGHT)
-        {
+        if(x1 + CardPane.WIDTH  >= x2 && x1 <= x2 + MonsterPane.WIDTH &&
+           y1 + CardPane.HEIGHT >= y2 && y1 <= y2 + MonsterPane.HEIGHT) {
             return true;
         }
 
@@ -82,6 +83,5 @@ public class CollideChecker {
 
         return (float)Math.sqrt(xLen*xLen+yLen*yLen);
     }
-
 
 }

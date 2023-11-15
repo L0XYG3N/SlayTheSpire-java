@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
+    private Random random;
+
     // 필드, 무덤, 덱 3가지 카드의 ArrayList
     public ArrayList<Card> field;
     public ArrayList<Card> deck;
@@ -16,7 +18,7 @@ public class Deck {
         field = new ArrayList<Card>();
         deck = new ArrayList<Card>();
         discard = new ArrayList<Card>();
-
+        random = new Random();
         drawCount = 5;
 
         initialize();
@@ -27,24 +29,27 @@ public class Deck {
         // 초반 15개의 카드를 deck에 넣는 함수
 
         // 테스트용 코드, 나중에 삭제할 것
-        for (int i = 0; i < 4; i++) {
-            field.add(new AttackCard());
-        }
+        field.add(new Bash());
+        field.add(new Defend());
         field.add(new Strike());
+        field.add(new BodySlam());
+        field.add(new Bash());
+        field.add(new Defend());
+        field.add(new Strike());
+        field.add(new BodySlam());
+
     }
 
-    /*
     public void shuffle() {
         int n = deck.size();
         for (int i = n - 1; i > 0; i--) {	//	덱 ArrayList의 크기만큼 섞음
-    		int randomIndex = Random.nextInt(i + 1);
+    		int randomIndex = random.nextInt(i + 1);
     		
     		Card temp = deck.get(i);
     		deck.set(i, deck.get(randomIndex));
     		deck.set(randomIndex, temp);
     	}
     }
-    */
 
     public void turnEnd() {
         for (Card card : field) {
@@ -56,8 +61,7 @@ public class Deck {
         field.clear();
 
         drawCard(drawCount);
-        // Player.getInstance().status.updateEffects();
-        // TODO 상태이상 업데이트 함수효과 구현하기
+        Player.getInstance().status.updateEffects();
     }
 
     public void drawCard(int cardCount) {
@@ -66,10 +70,10 @@ public class Deck {
             if (deck.isEmpty()) {
                 refillDeck();
             }
-            Card randCard = deck.remove((int) Math.random() * deck.size());
+            Card randCard = deck.remove(0);
             field.add(randCard);
-
         }
+
     }
 
     public void refillDeck() {
@@ -78,5 +82,7 @@ public class Deck {
             if (!card.exhausted)
                 deck.add(card);
         }
+        discard.clear();
+        shuffle();
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import Game.*;
+import Game.Field.endState;
 
 public class MonsterPane extends JLayeredPane{
     public static final int WIDTH = 160;
@@ -18,7 +19,7 @@ public class MonsterPane extends JLayeredPane{
     private JLabel currentHealthBar;
     private JLabel healthText;
     private JLabel shield;
-    
+    private Field field = Field.getInstance();
 
     public final int x, y;
 
@@ -55,7 +56,7 @@ public class MonsterPane extends JLayeredPane{
         add(currentHealthBar);
 
         //체력 텍스트
-        healthText = new JLabel("100/100",SwingConstants.CENTER);
+        healthText = new JLabel("",SwingConstants.CENTER);
         healthText.setFont(new Font("Arial",Font.PLAIN,15));
         healthText.setBounds(0, HEIGHT-barHeight, WIDTH, barHeight);
         healthText.setForeground(Color.white);
@@ -77,13 +78,18 @@ public class MonsterPane extends JLayeredPane{
     }
 
     public void updateLabel() {
-        
+        // 체력 텍스트, 체력바, 방어막 등 label 업데이트 함수
         int health = monster.getHealth();
         if(health<=0) {
             Container parent = getParent();
             parent.remove(this);
             BattlePane.monsters[arrayIndex] = null;
+            Field.getInstance().enemies[arrayIndex] = null;
             parent.repaint();
+
+            if(field.isBattleEnd()) {
+                field.endBattle(endState.BATTLEWIN);
+            }
             return;
         }
         int maxHealth = monster.getMaxHealth();
@@ -93,7 +99,6 @@ public class MonsterPane extends JLayeredPane{
 
         int shieldAmount = monster.getShield();
         shield.setText(Integer.toString(shieldAmount));
-
     }
 
     public Monster getMonster() {

@@ -1,56 +1,59 @@
 package UI;
 
 import UI.Pane.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-
-import Game.BaseObject;
-import Game.CardGetter;
-import Game.Field;
 import Game.Player;
-
-import java.awt.*;
 
 public class GUI{
     
     private Player player = Player.getInstance();
 
+    private static MainFrame frame;
+    private static BattlePane battlePane;
+    private static JLayeredPane shopPane;
+    private static MapPane mapPane;
+    private static MainMenuPane mainMenuPane;
 
-    
-    
-    public MainFrame frame;
-    public BattlePane battlePane;
-    public JLayeredPane shopPane;
-    public JLayeredPane mapPane;
+    public enum ScreenState {MAIN,BATTLE,SHOP,MAP}
 
-    
-    public CardDeckPane drawPane;
-    public CardDiscardPane discardPane;
     //public CardExhaustedPane exhaustedPane;
 
-    private TitledBorder drawBorder;
-    private TitledBorder discardBorder;
-    public final boolean debugMode;
+    public final boolean debugMode = false;
 
-    public GUI(boolean debugMode) {
+    public GUI() {
         initAllPanes();
         frame = new MainFrame();
-        frame.updatePane(battlePane);
-        this.debugMode = debugMode;
+        //frame.updatePane(battlePane);
+        
         
     }
 
-    public void initAllPanes() {
+    public static void initAllPanes() {
         battlePane = new BattlePane();
+        mainMenuPane = new MainMenuPane();
+        mapPane = new MapPane();
         /*
         shopPane = DefaultPaneGetter.getNewJLayeredPane();
-        mapPane = DefaultPaneGetter.getNewJLayeredPane();
         */
+    }
+
+    public static void changeScreen(ScreenState s) {
+        switch(s) {
+            case BATTLE:
+            frame.updatePane(battlePane);
+            break;
+            case SHOP:
+            frame.updatePane(shopPane);
+            break;
+            case MAP:
+            frame.updatePane(mapPane);
+            break;
+            case MAIN:
+            frame.updatePane(mainMenuPane);
+            break;
+        }
+        frame.repaint();
     }
 
 

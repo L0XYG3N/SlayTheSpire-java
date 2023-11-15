@@ -1,7 +1,7 @@
 package Game;
 
 public abstract class Monster extends BaseObject {
-    // 보스용 추상 클래스
+    // 몬스터용 추상 클래스
     public String name;
     //   
     public int nextMove;
@@ -46,16 +46,18 @@ class Rand {
     }
 }
 
-class Louse_Red extends Monster {
+class LouseRed extends Monster {
     private boolean roll;
+    public final int rollShield;
 
-    public Louse_Red() {
+    public LouseRed() {
         health = Rand.randInt(10, 15);
         maxHealth = health;
         name = "빨간 공벌레";
         dmg = Rand.randInt(5,7);
         moveSet = new int[]{75,25};
         status = new BuffStatus();
+        rollShield = Rand.randInt(3, 7);
         setNextMove();
 
         // 몸 말기 스킬 사용중
@@ -67,7 +69,7 @@ class Louse_Red extends Monster {
         // 데미지를 받을 시 몸 말기 스킬이 끝나고 해당 효과 발생
         if (roll) {
             roll = false;
-            addShield(amount);
+            addShield(rollShield);
         }
     }
 
@@ -83,10 +85,11 @@ class Louse_Red extends Monster {
     }
 }
 
-class Louse_Green extends Monster {
+class LouseGreen extends Monster {
     private boolean roll;
+    public final int rollShield;
 
-    public Louse_Green() {
+    public LouseGreen() {
 
         health = Rand.randInt(11, 17);
         name = "초록 공벌레";
@@ -94,6 +97,7 @@ class Louse_Green extends Monster {
         moveSet = new int[]{75,25};
         status = new BuffStatus();
         maxHealth = health;
+        rollShield = Rand.randInt(3, 7);
         setNextMove();
 
         // 몸 말기 스킬 사용중
@@ -105,7 +109,7 @@ class Louse_Green extends Monster {
         // 데미지를 받을 시 몸 말기 스킬이 끝나고 해당 효과 발생
         if (roll) {
             roll = false;
-            addShield(amount);
+            addShield(rollShield);
         }
     }
 
@@ -122,7 +126,7 @@ class Louse_Green extends Monster {
 }
 
 
-/*
+/* 사이즈와 타입 전부 개별 클래스로 만들 것, 그게 편함
 class Slime extends Enemies {
     // 슬라임, 사이즈(소,중,대), 타입(가시,산)
 

@@ -1,7 +1,7 @@
 package Game;
 
 enum STATUS {
-    STRENGTH, WEAKNESS, FEAR, DEXTERITY, REGENERATION, STEELARMOR
+    STRENGTH, VULNERABLE, FEAR, DEXTERITY, REGENERATION, STEELARMOR
 };
 
 public class Effects {
@@ -21,7 +21,6 @@ public class Effects {
 
     // 상태이상을 부여하는 함수, 특정 상태에 강도와 지속시간을 부여한다
     public static void addStatus(BaseObject target, STATUS stat, int power, int duration) {
-        /*
         switch (stat) {
         
             case STRENGTH:
@@ -29,9 +28,9 @@ public class Effects {
                 target.status.strength.power = power;
                 break;
 
-            case WEAKNESS:
-                target.status.weakness.duration = duration;
-                target.status.weakness.power = power;
+            case VULNERABLE:
+                target.status.vulnerable.duration = duration;
+                target.status.vulnerable.power = power;
                 break;
 
             case FEAR:
@@ -54,7 +53,6 @@ public class Effects {
                 target.status.steelArmor.power = power;
                 break;
         }
-        */
     }
 
     public static void weakenShield(int duration) {

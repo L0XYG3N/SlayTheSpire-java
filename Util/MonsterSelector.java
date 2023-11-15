@@ -1,4 +1,6 @@
-package Game;
+package Util;
+
+import Game.Monster;
 
 public class MonsterSelector {
     public static Monster[] getEnemies(int stageID) {
@@ -15,8 +17,8 @@ public class MonsterSelector {
                 //enemyList[0] = new JawWorm();
                 break;
             case 3:
-                enemyList[0] = new Louse_Red();
-                enemyList[1] = new Louse_Green();
+                enemyList[0] = new LouseRed();
+                enemyList[1] = new LouseGreen();
             case 4:
                 //enemyList[0] = new Slime(2, 0);
                 //enemyList[1] = new Slime(1, 0);
