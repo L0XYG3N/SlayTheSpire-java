@@ -1,8 +1,10 @@
 package Game;
 import UI.GUI;
+import UI.GUI.ScreenState;
 
 public class Field {
-    // 게임 내 몬스터 관련 정보는 여기에 저장될 예정임.
+    // 전투 중에 쓰이는 클래스.
+    // 전투 관련 정보(몬스터, 턴 수 등)는 여기에 저장될 예정임.
     private static Field instance = new Field();
     public int currentTurn;
     public Monster enemies[];
@@ -19,6 +21,7 @@ public class Field {
     public void initStage(int stageID) {
         currentTurn = 0;
         enemies = MonsterSelector.getEnemies(stageID);
+        Player.getInstance().cards.initBattle();
     }
 
     public static Field getInstance() {
@@ -32,9 +35,18 @@ public class Field {
                 break;
             case BATTLEWIN:
                 System.out.println("battle win");
-                initStage(3);
+                
+                //보상 띄우기
+                /*
+                 * 일반몹 : 10-20코인
+                 * 엘리트 : 25-35코인
+                 * 보스몹 : 95:105코인
+                 */
+
+                //
+
+                GUI.changeScreen(ScreenState.MAP);
                 GUI.updateScreen();
-                // 배틀 끝내고 획득할 카드 선택
                 break;
         }
     }

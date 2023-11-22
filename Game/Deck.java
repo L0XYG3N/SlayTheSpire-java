@@ -11,6 +11,9 @@ public class Deck {
     public ArrayList<Card> deck;
     public ArrayList<Card> discard;
 
+    // 가지고 있는 전체 카드 리스트
+    public ArrayList<Card> cardList;
+
     // deck에서 카드를 뽑을때 뽑는 카드의 개수. 상황에 따라 바뀔수 있음
     public int drawCount;
 
@@ -18,6 +21,7 @@ public class Deck {
         field = new ArrayList<Card>();
         deck = new ArrayList<Card>();
         discard = new ArrayList<Card>();
+        cardList = new ArrayList<Card>();
         random = new Random();
         drawCount = 5;
 
@@ -29,15 +33,37 @@ public class Deck {
         // 초반 15개의 카드를 deck에 넣는 함수
 
         // 테스트용 코드, 나중에 삭제할 것
-        field.add(new Bash());
-        field.add(new Defend());
-        field.add(new Strike());
-        field.add(new BodySlam());
-        field.add(new Bash());
-        field.add(new Defend());
-        field.add(new Strike());
-        field.add(new BodySlam());
 
+
+        cardList.add(new Bash());
+        cardList.add(new Defend());
+        cardList.add(new Strike());
+        cardList.add(new BodySlam());
+        cardList.add(new Bash());
+        cardList.add(new Defend());
+        cardList.add(new Strike());
+        cardList.add(new BodySlam());
+
+        for(Card card : cardList) {
+            field.add(card);
+        }
+    }
+
+    public void initBattle(){
+        //전투 시작시 호출되는 함수
+        //세 가지 arraylist를 전부 초기화한다.
+        discard.clear();
+        field.clear();
+        deck.clear();
+
+
+        for(Card card : cardList) {
+            deck.add(card);
+        }
+
+        shuffle();
+
+        drawCard(drawCount);
     }
 
     public void shuffle() {
@@ -70,8 +96,8 @@ public class Deck {
             if (deck.isEmpty()) {
                 refillDeck();
             }
-            Card randCard = deck.remove(0);
-            field.add(randCard);
+            Card c = deck.remove(0);
+            field.add(c);
         }
 
     }

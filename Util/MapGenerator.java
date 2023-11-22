@@ -1,22 +1,13 @@
 package Util;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-
-class MapNode {
-    public ArrayList<Integer> nextX = new ArrayList<Integer>();
-    public MapGenerator.MapLocation mapLocation;
-}
 
 public class MapGenerator {
-    
     public enum MapLocation {
         ENEMY, REST, TREASURE, MERCHANT, UNKNOWN, ELITE, BOSS
     };
 
     public static MapNode[][] generate() {
-        MapNode[][] tempMap = new MapNode[15][7];
+        MapNode[][] tempMap = new MapNode[16][7];
         for (int iter = 0; iter < 6; iter++) {
 
             int currentPosition = (int) (Math.random() * 7);
@@ -88,56 +79,16 @@ public class MapGenerator {
                     tempLocation = MapLocation.REST;
                 }
                 tempMap[floor][currentPosition].mapLocation = tempLocation;
-                tempMap[floor][currentPosition].nextX.add(nextPosition);
+                if(floor == 14) {
+                    tempMap[floor][currentPosition].nextX.add(3);
+                }else {
+                    tempMap[floor][currentPosition].nextX.add(nextPosition);
+                }
                 currentPosition = nextPosition;
             }
         }
+        tempMap[15][3] = new MapNode();
+        tempMap[15][3].mapLocation = MapLocation.BOSS;
         return tempMap;
     }
 }
-
-class MyPanel extends JPanel {
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        MapNode[][] map = MapGenerator.generate();
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (map[i][j] == null)
-                    continue;
-                switch (map[i][j].mapLocation) {
-                    case ENEMY:
-                        g.setColor(Color.RED);
-                        break;
-                    case MERCHANT:
-                        g.setColor(Color.CYAN);
-                        break;
-                    case UNKNOWN:
-                        g.setColor(Color.GRAY);
-                        break;
-                    case REST:
-                        g.setColor(Color.ORANGE);
-                        break;
-                    case ELITE:
-                        g.setColor(Color.PINK);
-                        break;
-                    case TREASURE:
-                        g.setColor(Color.YELLOW);
-                        break;
-                    case BOSS:
-                        g.setColor(Color.BLUE);
-                        break;
-                }
-                g.fillOval(j * 50 - 5 + 20, 670 - (i * 40) - 5, 10, 10);
-                g.setColor(Color.BLACK);
-                if (i == 14)
-                    continue;
-                for (int k = 0; k < map[i][j].nextX.size(); k++) {
-                    g.drawLine(j * 50 + 20, 670 - (i * 40), map[i][j].nextX.get(k) * 50 + 20, 670 - ((i + 1) * 40));
-                }
-
-            }
-
-        }
-    }
-}
-

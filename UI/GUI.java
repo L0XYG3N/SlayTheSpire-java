@@ -1,13 +1,13 @@
 package UI;
 
 import UI.Pane.*;
+import Util.MapGenerator.MapLocation;
 
 import javax.swing.*;
-import Game.Player;
+
+import Game.Field;
 
 public class GUI{
-    
-    private Player player = Player.getInstance();
 
     private static MainFrame frame;
     private static BattlePane battlePane;
@@ -54,6 +54,18 @@ public class GUI{
             break;
         }
         frame.repaint();
+    }
+
+    public static void startBattle(int floor, MapLocation loc) {
+        switch(loc) {
+            case BOSS:
+            case ENEMY:
+            case ELITE:
+            Field.getInstance().initStage(3);
+        }
+        changeScreen(ScreenState.BATTLE);
+        battlePane.initBattlePane();
+
     }
 
     public static void updateScreen() {

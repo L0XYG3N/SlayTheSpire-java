@@ -38,9 +38,6 @@ public class BattlePane extends JLayeredPane{
         setVisible(true);
         setOpaque(true);
 
-        
-
-    
         //턴 종료 버튼
         endTurnButton = new JButton("턴 종료");
         endTurnButton.setFont(new Font("Inter", Font.PLAIN, 24));
@@ -71,10 +68,10 @@ public class BattlePane extends JLayeredPane{
 
         //카드
         drawnCards = new ArrayList<CardPane>();
-        updateCardPane();
+        //updateCardPane();
         
         //몬스터
-        drawMonsters();
+        //drawMonsters();
         
         //플레이어
         playerPane = new PlayerPane();
@@ -83,6 +80,12 @@ public class BattlePane extends JLayeredPane{
 
         add(cardDeckPane, JLayeredPane.MODAL_LAYER);
         add(new CardDiscardPane(), JLayeredPane.MODAL_LAYER);
+    }
+
+    public void initBattlePane() {
+        updateCardPane();
+        drawMonsters();
+
     }
 
     public void updateCardPane() {

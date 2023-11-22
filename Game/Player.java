@@ -61,6 +61,8 @@ public class Player extends BaseObject {
         return maxMana;
     }
 
+    
+
 
 
 }
