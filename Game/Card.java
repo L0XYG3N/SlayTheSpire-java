@@ -1,8 +1,5 @@
 package Game;
 
-
-
-
 public abstract class Card {
     public enum CardType {
     ATTACK, SKILL, POWER

@@ -65,7 +65,7 @@ public class Effects {
     }
 
     public static Card copyCard(int cardID) {
-        return new AttackCard(); // TODO return a card based on cardID
+        return CardGetter.GetCardById(cardID);
     }
 
 }
