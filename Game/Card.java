@@ -2,7 +2,7 @@ package Game;
 
 public abstract class Card {
     public enum CardType {
-    ATTACK, SKILL, POWER
+        ATTACK, SKILL, POWER
     }
 
     public enum CardTarget {
@@ -15,15 +15,15 @@ public abstract class Card {
 
     protected CardType cardType;
 
-    protected int cardID;       // String 배열로부터 카드의 이름과 설명을 가져오기 위한 변수
+    protected int cardID; // String 배열로부터 카드의 이름과 설명을 가져오기 위한 변수
 
-    protected String cardName;     // 아니면 카드 자체에 이름 넣기, 이름 배열보다 이게 더 나을수도..?
+    protected String cardName; // 아니면 카드 자체에 이름 넣기, 이름 배열보다 이게 더 나을수도..?
     protected String cardDescription;
     protected String imagePath = "";
 
     protected boolean exhausted; // "소멸", 한번 사용시 현재 전투에서 더이상 이 카드가 나타나지 않음
     protected boolean ethereal; // "휘발성", 사용여부에 상관없이 무덤 덱으로 들어가는 순간 현재 전투에서 더이상 나타나지 않음
-    
+
     protected boolean isUpgrade;
 
     public abstract void use(BaseObject obj);
@@ -32,13 +32,21 @@ public abstract class Card {
 
     public abstract void updateDescription();
 
-    public int getCardID() {return cardID;}
+    public int getCardID() {
+        return cardID;
+    }
 
-    public int getCost() {return cost;}
+    public int getCost() {
+        return cost;
+    }
 
-    public String getCardName() {return cardName;}
+    public String getCardName() {
+        return cardName;
+    }
 
-    public String getImagePath() {return imagePath;}
+    public String getImagePath() {
+        return imagePath;
+    }
 
     public String getDescription() {
         updateDescription();
@@ -48,26 +56,30 @@ public abstract class Card {
         return front + cardDescription + back;
     }
 
-    
+    public Boolean isUpgraded() {
+        return isUpgrade;
+    }
 
-    public Boolean isUpgraded() {return isUpgrade;}
-    
-    public CardType getCardType() {return cardType;}
+    public CardType getCardType() {
+        return cardType;
+    }
 
     public String getCardTypeAsString() {
-        switch(this.cardType) {
+        switch (this.cardType) {
             default:
                 return "";
             case ATTACK:
                 return "공격";
-            case SKILL :
+            case SKILL:
                 return "스킬";
-            case POWER :
+            case POWER:
                 return "파워";
         }
     }
 
-    public CardTarget getCardTarget() {return cardTarget;}
+    public CardTarget getCardTarget() {
+        return cardTarget;
+    }
 
 }
 
@@ -81,8 +93,7 @@ class TestCard extends Card {
         cost = 1;
         cardID = -11;
         damageOrigin = 3;
-        damageUpgraded = 
-        damage = damageOrigin;
+        damageUpgraded = damage = damageOrigin;
 
         cardName = "디버그 카드";
         cardDescription = "디버그 카드.<br>적에게 데미지 " + damage + " 부여";
@@ -94,7 +105,7 @@ class TestCard extends Card {
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             damage = damageOrigin;
         } else {
             damage = damageUpgraded;
@@ -119,7 +130,7 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
         damageOrigin = 3;
         damage = damageOrigin;
         cardName = "공격";
-        cardDescription = "피해를 "+damage+" 줍니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.";
     }
 
     public void use(BaseObject obj) {
@@ -127,7 +138,7 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             damage = damageOrigin;
         } else {
             damage = damageUpgraded;
@@ -136,7 +147,7 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
     }
 
     public void updateDescription() {
-        cardDescription = "피해를 "+damage+" 줍니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.";
     }
 }
 
@@ -144,7 +155,6 @@ class Strike extends Card {
     private int damage;
     private int damageOrigin;
     private int damageUpgraded;
-    
 
     public Strike() {
         cardTarget = CardTarget.ENEMY;
@@ -154,7 +164,7 @@ class Strike extends Card {
         damageOrigin = 6;
         damage = damageOrigin;
         cardName = "타격";
-        cardDescription = "피해를 "+damage+" 줍니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.";
         imagePath = "Img/red/attack/strike.png";
         isUpgrade = false;
     }
@@ -164,7 +174,7 @@ class Strike extends Card {
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             damage = damageOrigin;
         } else {
             damage = damageUpgraded;
@@ -173,7 +183,7 @@ class Strike extends Card {
     }
 
     public void updateDescription() {
-        cardDescription = "피해를 "+damage+" 줍니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.";
     }
 }
 
@@ -182,7 +192,6 @@ class Bash extends Card {
     private int damage;
     private int damageOrigin;
     private int damageUpgraded;
-
 
     private int effectDuration;
     private int effectOrigin;
@@ -202,19 +211,19 @@ class Bash extends Card {
         effectDuration = effectOrigin;
 
         cardName = "강타";
-        cardDescription = "피해를 " + damage + " 줍니다.<br>" + 
-                          "<font color='orange'>취약</font>을 " + effectDuration +" 부여합니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.<br>" +
+                "<font color='orange'>취약</font>을 " + effectDuration + " 부여합니다.";
 
         imagePath = "Img/red/attack/bash.png";
     }
 
     public void use(BaseObject obj) {
         Effects.attack(damage, obj);
-        Effects.addStatus(Player.getInstance(), STATUS.VULNERABLE, 1, effectDuration);
+        Effects.addStatus(obj, STATUS.VULNERABLE, 1, effectDuration);
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             damage = damageOrigin;
             effectDuration = effectOrigin;
         } else {
@@ -225,8 +234,8 @@ class Bash extends Card {
     }
 
     public void updateDescription() {
-        cardDescription = "피해를 " + damage + " 줍니다.<br>" + 
-                          "<font color='orange'>취약</font>을 " + effectDuration +" 부여합니다.";
+        cardDescription = "피해를 " + damage + " 줍니다.<br>" +
+                "<font color='orange'>취약</font>을 " + effectDuration + " 부여합니다.";
     }
 }
 
@@ -260,14 +269,14 @@ class BodySlam extends Card {
         cardType = CardType.ATTACK;
         imagePath = "Img/red/attack/body_slam.png";
     }
-    
+
     public void use(BaseObject obj) {
         damage = Player.getInstance().getShield();
         Effects.attack(damage, obj);
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             this.cost = 1;
         } else {
             this.cost = 0;
@@ -292,7 +301,7 @@ class Clash extends Card {
     }
 
     public void toggleUpgrade() {
-        
+
     }
 
     public void updateDescription() {
@@ -303,7 +312,6 @@ class Defend extends Card {
     private int defend;
     private int defendOrigin;
     private int defendUpgraded;
-    
 
     public Defend() {
         cardTarget = CardTarget.PLAYER;
@@ -327,7 +335,7 @@ class Defend extends Card {
     }
 
     public void toggleUpgrade() {
-        if(isUpgrade) {
+        if (isUpgrade) {
             defend = defendOrigin;
         } else {
             defend = defendUpgraded;
