@@ -219,7 +219,7 @@ class Bash extends Card {
 
     public void use(BaseObject obj) {
         Effects.attack(damage, obj);
-        Effects.addStatus(obj, STATUS.VULNERABLE, 1, effectDuration);
+        Effects.addStatus(obj, STATUS.VULNERABLE, effectDuration);
     }
 
     public void toggleUpgrade() {

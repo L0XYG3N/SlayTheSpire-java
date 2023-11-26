@@ -19,8 +19,11 @@ public class BaseObject {
          * 방어막 수치가 있으면 방어막 먼저 깎고 남은 수치만큼 체력을 깎는다.
          */
 
-        // amount += status.vulnerable.power;
-        // 취약의 수치만큼 데미지 증가
+        if(status.vulnerable.stack > 0) {
+            // 취약 있으면 데미지 1.5배 적용
+            amount = (int)(amount * 1.5);
+        }
+        
 
         if (shield > 0) {
             if (shield >= amount) {

@@ -23,7 +23,7 @@ public abstract class Monster extends BaseObject {
 class Rand {
     // a에서 b까지의 랜덤 int 리턴하는 함수(b 포함)
     public static int randInt(int a, int b) {
-        return (int) Math.random() * ((b + 1) - a) + a;
+        return (int)(Math.random() * ((b + 1) - a)) + a;
     }
 
     // 각 인덱스가 나올 확률을 변수로 가진 배열을 받아 확률에 따라 int값을 리턴하는 함수
@@ -58,7 +58,7 @@ class LouseRed extends Monster {
         status = new BuffStatus();
         rollShield = Rand.randInt(3, 7);
         setNextMove();
-
+        
         // 몸 말기 스킬 사용중
         roll = true;
     }
@@ -78,8 +78,9 @@ class LouseRed extends Monster {
             int damage = dmg; // + status.strength.power;
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
-            Effects.addStatus(this, STATUS.STRENGTH, 3, 5);
+            Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
+        dmg = Rand.randInt(5, 7);
         setNextMove();
     }
 }
@@ -118,8 +119,9 @@ class LouseGreen extends Monster {
             int damage = dmg;// + status.strength.power;
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
-            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 3, 2);
+            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 3);
         }
+        dmg = Rand.randInt(5, 7);
         setNextMove();
     }
 }

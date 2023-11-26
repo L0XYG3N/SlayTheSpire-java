@@ -20,40 +20,36 @@ public class Effects {
     }
 
     // 상태이상을 부여하는 함수, 특정 상태에 강도와 지속시간을 부여한다
-    public static void addStatus(BaseObject target, STATUS stat, int power, int duration) {
+    public static void addStatus(BaseObject target, STATUS stat,int stack) {
         switch (stat) {
 
             case STRENGTH:
-                target.status.strength.duration = duration;
-                target.status.strength.power = power;
+                target.status.strength.stack = stack;
                 break;
 
             case VULNERABLE:
-                target.status.vulnerable.duration = duration;
-                target.status.vulnerable.power = power;
+                target.status.vulnerable.stack = stack;
                 break;
 
             case WEAK:
-                target.status.weak.duration = duration;
-                target.status.weak.power = power;
+                target.status.weak.stack = stack;
                 break;
 
             case DEXTERITY:
-                target.status.dexterity.duration = duration;
-                target.status.dexterity.power = power;
+                target.status.dexterity.stack = stack;
                 break;
 
             case REGENERATION:
-                target.status.regeneration.duration = duration;
-                target.status.regeneration.power = power;
+                target.status.regeneration.stack = stack;
                 break;
 
             case STEELARMOR:
-                target.status.steelArmor.duration = duration;
-                target.status.steelArmor.power = power;
+                target.status.steelArmor.stack = stack;
                 break;
         }
     }
+
+    
 
     public static void weakenShield(int duration) {
         // 손상 디버프, 지속시간동안 방어도 획득량 줄어듬
