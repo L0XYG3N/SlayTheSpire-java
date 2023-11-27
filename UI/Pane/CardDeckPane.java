@@ -9,11 +9,11 @@ public class CardDeckPane extends JLayeredPane{
     public static final int width = 160;
     public static final int height = 210;
 
-    public CardDeckPane(BattlePane parent) {
+    public CardDeckPane() {
         setBounds(20,635,75,75);
         setOpaque(true);
         setBackground(Color.YELLOW);
         setAlignmentX(Component.CENTER_ALIGNMENT); 
-        addMouseListener(new CardDeckPaneListener(this,parent));
+        addMouseListener(new CardDeckPaneListener(this));
     }
 }

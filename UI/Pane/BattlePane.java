@@ -15,6 +15,7 @@ import UI.MainFrame;
 public class BattlePane extends JLayeredPane{
     private Player player = Player.getInstance();
     private Game game = Game.getInstance();
+
     
     private ArrayList<CardPane> drawnCards;
 
@@ -23,9 +24,14 @@ public class BattlePane extends JLayeredPane{
     private JLabel manaPanel;
     private JButton endTurnButton;
     private PlayerPane playerPane;
-    private CardDeckPane cardDeckPane = new CardDeckPane(this);
+    private CardDeckPane cardDeckPane = new CardDeckPane();
+    private static BattlePane instance = new BattlePane();
 
-    public BattlePane() {
+    public static BattlePane getInstance() {
+        return instance;
+    }
+
+    private BattlePane() {
         // Pane 초기 세팅
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);
@@ -52,7 +58,7 @@ public class BattlePane extends JLayeredPane{
                 
             }
         });
-        add(endTurnButton,JLayeredPane.MODAL_LAYER);
+        add(endTurnButton,150);
 
         //마나 패널
 
@@ -63,7 +69,7 @@ public class BattlePane extends JLayeredPane{
         manaPanel.setOpaque(true);
         manaPanel.setBackground(Color.ORANGE);
 
-        add(manaPanel,JLayeredPane.MODAL_LAYER);
+        add(manaPanel,150);
 
 
         //카드
@@ -74,12 +80,14 @@ public class BattlePane extends JLayeredPane{
         //drawMonsters();
         
         //플레이어
-        playerPane = new PlayerPane();
-        add(playerPane, JLayeredPane.MODAL_LAYER);
+        playerPane = PlayerPane.getInstance();
+        add(playerPane, 150);
 
 
-        add(cardDeckPane, JLayeredPane.MODAL_LAYER);
-        add(new CardDiscardPane(), JLayeredPane.MODAL_LAYER);
+        add(cardDeckPane, 150);
+        add(new CardDiscardPane(), 150);
+
+
     }
 
     public void initBattlePane() {
@@ -92,10 +100,18 @@ public class BattlePane extends JLayeredPane{
         clearCardPane();
 
         int cardCount = player.cards.field.size();
-        cardCount = Math.min(6,cardCount);
+
         for(int i = 0; i < cardCount;i++) {
             int cardID = player.cards.field.get(i).getCardID();
-            CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID), true);
+            int x;
+            if(cardCount%2==0) {
+                x = MainFrame.SCREEN_WIDTH / 2 - (cardCount / 2 - i) * CardPane.WIDTH;
+            }else {
+                x = MainFrame.SCREEN_WIDTH / 2 - CardPane.WIDTH / 2 - (cardCount / 2 - i) * CardPane.WIDTH;
+            }
+            
+            //CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID), true);
+            CardPane c = new CardPane(x, 720-CardPane.HEIGHT, CardGetter.GetCardById(cardID), i , true);
             add(c,JLayeredPane.MODAL_LAYER);
             drawnCards.add(c);
         }
@@ -114,7 +130,7 @@ public class BattlePane extends JLayeredPane{
             monster = Field.getInstance().enemies[i];
             if(monster != null) {
                 monsters[i] = new MonsterPane(475+i*(MonsterPane.WIDTH + 10),180, monster, i);
-                add(monsters[i],JLayeredPane.MODAL_LAYER);
+                add(monsters[i],150);
             }
         }
     }

@@ -31,6 +31,14 @@ public class CardPaneListener extends MouseAdapter {
                 selectEnemy();
                 break;
             case ENEMYALL:
+                if(CollideChecker.getCollidedMonster(pane, BattlePane.monsters) != null) {
+                    for(int i = 0; i < 5;i++) {
+                    if(BattlePane.monsters[i] != null) {
+                        BattlePane.monsters[i].deHighlight();
+                    }
+                }
+                }
+                
                 break;
             case PLAYER:
                 selectPlayer();
@@ -42,6 +50,8 @@ public class CardPaneListener extends MouseAdapter {
     public void mouseReleased(MouseEvent evt) {
         JLayeredPane collidedPane;
         Container c;
+        BattlePane battlePane = BattlePane.getInstance();
+        PlayerPane playerPane = PlayerPane.getInstance();
 
         try {
             c = pane.getParent();
@@ -60,16 +70,27 @@ public class CardPaneListener extends MouseAdapter {
                     if(collidedMonster!= null) {
                         pane.useCard(collidedMonster);
                         ((MonsterPane)collidedPane).updateLabel();
+                        battlePane.updateCardPane();
                         c.repaint();
                         return;
                     }
                 }
                 break;
             case ENEMYALL:
+                for(int i = 0; i < 5;i++) {
+                    if(BattlePane.monsters[i] != null) {
+                        BattlePane.monsters[i].deHighlight();
+                        pane.useCard(Field.getInstance().enemies);
+                        battlePane.updateCardPane();
+                    }
+                }
                 break;
             case PLAYER:
                 if(CollideChecker.isCollidedWithPlayer(pane)) {
+                    playerPane.deHighlight();
                     pane.useCard(Player.getInstance());
+                    playerPane.updateLabel();
+                    battlePane.updateCardPane();
                     c.repaint();
                 }
         }
@@ -96,8 +117,12 @@ public class CardPaneListener extends MouseAdapter {
     }
 
     private void selectPlayer() {
+        PlayerPane playerPane = PlayerPane.getInstance();
+        
         if(CollideChecker.isCollidedWithPlayer(pane)) {
-            
+            playerPane.highlight();
+        } else {
+            playerPane.deHighlight();
         }
     }
 }

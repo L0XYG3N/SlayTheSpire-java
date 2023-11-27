@@ -19,7 +19,7 @@ public class GUI{
 
     //public CardExhaustedPane exhaustedPane;
 
-    public final boolean debugMode = false;
+    //public final boolean debugMode = false;
 
     public GUI() {
         initAllPanes();
@@ -30,7 +30,7 @@ public class GUI{
     }
 
     public static void initAllPanes() {
-        battlePane = new BattlePane();
+        battlePane = BattlePane.getInstance();
         mainMenuPane = new MainMenuPane();
         mapPane = new MapPane();
         /*

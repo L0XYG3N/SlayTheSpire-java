@@ -28,6 +28,8 @@ public abstract class Card {
 
     public abstract void use(BaseObject obj);
 
+    public void use(BaseObject [] obj){/* cardType이 ENEMYALL인 카드 전용, 상속 후 오버라이딩하여 사용할것 */};
+
     public abstract void toggleUpgrade();
 
     public abstract void updateDescription();

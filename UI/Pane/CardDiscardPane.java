@@ -1,6 +1,9 @@
 package UI.Pane;
 
 import javax.swing.*;
+
+import UI.Listener.CardDiscardPaneListener;
+
 import java.awt.*;
 
 public class CardDiscardPane extends JLayeredPane{
@@ -13,5 +16,6 @@ public class CardDiscardPane extends JLayeredPane{
         setOpaque(true);
         setBackground(Color.CYAN);
         setAlignmentX(Component.CENTER_ALIGNMENT); 
+        addMouseListener(new CardDiscardPaneListener(this));
     }
 }

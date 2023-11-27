@@ -1,6 +1,8 @@
 package UI.Listener;
 
 import java.awt.event.MouseAdapter;
+
+import UI.Pane.BattlePane;
 import UI.Pane.CardDiscardPane;
 
 public class CardDiscardPaneListener extends MouseAdapter{
