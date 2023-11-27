@@ -9,6 +9,8 @@ import UI.Listener.CardPaneListener;
 import Game.BaseObject;
 import Game.Card;
 import Game.CardGetter;
+import Game.Player;
+import Game.Card.CardTarget;
 
 
 // 카드 외형 보여주는 클래스
@@ -18,13 +20,16 @@ public class CardPane extends JLayeredPane{
     public static final int HEIGHT = 220;
     public final Card card;
     public final boolean moveAble;
+    public final int arrayIndex;
     
-    public CardPane(int cardX, int cardY, Card card, boolean moveAble) {
+    public CardPane(int cardX, int cardY, Card card,int arrayIndex, boolean moveAble) {
         originalX = cardX;
         originalY = cardY;
         
         this.card = card;
-        this.moveAble = moveAble;
+        this.moveAble = moveAble; // 단순 표시용 카드일 경우 false
+        this.arrayIndex = arrayIndex;   // 카드 사용시 field arrayList에서 뽑아서 discard에다가 집어넣기 위한 변수
+
         setFont(new Font("Inter", Font.PLAIN, 24));
         setOpaque(true);
         setBounds(cardX, cardY, WIDTH, HEIGHT);
@@ -198,8 +203,18 @@ public class CardPane extends JLayeredPane{
 
     public void useCard(BaseObject obj) {
         card.use(obj);
+
+        Player player = Player.getInstance();
+        Card c = player.cards.field.remove(arrayIndex);
+        player.cards.discard.add(c);
+
         getParent().remove(this);
-        
+
+    }
+
+    public void useCard(BaseObject [] obj) {
+        card.use(obj);
+        getParent().remove(this);
     }
 
 
