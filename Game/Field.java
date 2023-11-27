@@ -8,6 +8,7 @@ public class Field {
     private static Field instance = new Field();
     public int currentTurn;
     public Monster enemies[];
+    
 
     public enum endState {
     GAMEOVER, BATTLEWIN,
@@ -44,7 +45,7 @@ public class Field {
 
                 //
 
-                GUI.changeScreen(ScreenState.MAP);
+                GUI.changeScreen(ScreenState.REWARD);
                 GUI.updateScreen();
                 break;
         }

@@ -7,6 +7,7 @@ import UI.GUI;
 import UI.MapNodeButton;
 import UI.GUI.ScreenState;
 import UI.Pane.BattlePane;
+import UI.Pane.RewardPane;
 
 public class MapNodeButtonListener implements ActionListener{
     MapNodeButton button;
@@ -16,11 +17,20 @@ public class MapNodeButtonListener implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
+        RewardPane rewardPane = RewardPane.getInstance();
+
         switch(button.location) {
             case BOSS:
+                rewardPane.setGoldReward(3);
+                GUI.startBattle(button.floor,button.location);
+                break;
             case ELITE:
+                rewardPane.setGoldReward(2);
+                GUI.startBattle(button.floor,button.location);
+                break;
             case ENEMY:
-            GUI.startBattle(button.floor,button.location);
+                rewardPane.setGoldReward(1);
+                GUI.startBattle(button.floor,button.location);
                 break;
             case MERCHANT:
                 break;
@@ -31,5 +41,6 @@ public class MapNodeButtonListener implements ActionListener{
             case UNKNOWN:
                 break;
         }
+        button.node.visited = true;
     }
 }

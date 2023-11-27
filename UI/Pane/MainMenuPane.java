@@ -14,6 +14,7 @@ public class MainMenuPane extends JLayeredPane{
 
     JButton startGameButton;
     JButton mapButton;
+    JButton rewardButton;
 
     public MainMenuPane() {
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
@@ -44,6 +45,15 @@ public class MainMenuPane extends JLayeredPane{
         });
         mapButton.setBounds(350,100,200,50);
         add(mapButton);
+
+        rewardButton = new JButton("보상 화면");
+        rewardButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUI.changeScreen(ScreenState.REWARD);
+            }
+        });
+        rewardButton.setBounds(350,300,200,50);
+        add(rewardButton);
 
     }
 }

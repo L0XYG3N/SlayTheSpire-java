@@ -14,8 +14,9 @@ public class GUI{
     private static JLayeredPane shopPane;
     private static MapPane mapPane;
     private static MainMenuPane mainMenuPane;
+    private static RewardPane rewardPane;
 
-    public enum ScreenState {MAIN,BATTLE,SHOP,MAP}
+    public enum ScreenState {MAIN,BATTLE,SHOP,MAP,REWARD};
 
     //public CardExhaustedPane exhaustedPane;
 
@@ -33,6 +34,7 @@ public class GUI{
         battlePane = BattlePane.getInstance();
         mainMenuPane = new MainMenuPane();
         mapPane = new MapPane();
+        rewardPane = RewardPane.getInstance();
         /*
         shopPane = DefaultPaneGetter.getNewJLayeredPane();
         */
@@ -52,6 +54,8 @@ public class GUI{
             case MAIN:
             frame.updatePane(mainMenuPane);
             break;
+            case REWARD:
+            frame.updatePane(rewardPane);
         }
         frame.repaint();
     }

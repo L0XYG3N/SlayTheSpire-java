@@ -22,7 +22,7 @@ public class CardPane extends JLayeredPane{
     public final boolean moveAble;
     public final int arrayIndex;
     
-    public CardPane(int cardX, int cardY, Card card,int arrayIndex, boolean moveAble) {
+    public CardPane(int cardX, int cardY, Card card, int arrayIndex, boolean moveAble) {
         originalX = cardX;
         originalY = cardY;
         
@@ -34,27 +34,6 @@ public class CardPane extends JLayeredPane{
         setOpaque(true);
         setBounds(cardX, cardY, WIDTH, HEIGHT);
         setSize(WIDTH,HEIGHT);
-
-        /*
-        class cardAppear extends Thread {
-            public void run() {
-                int currentX = originalX;
-                int currentY = originalY + HEIGHT;
-                while(currentY >= originalY) {
-                    
-                    currentY -= 2;
-                    moveTo(currentX,currentY);
-                    try {
-                        Thread.sleep(1);
-                    } catch(InterruptedException e) {
-                        return;
-                    }
-                }
-            }
-        }
-        new cardAppear().start();
-        카드 생성시 등장 애니메이션, 추후수정
-        */
 
         if(moveAble) {
             CardPaneListener listener = new CardPaneListener(this);
@@ -179,7 +158,7 @@ public class CardPane extends JLayeredPane{
         imageBorder.setTitleColor(Color.WHITE);
         imageBorder.setTitleFont(typeFont);
         cardImage.setBorder(imageBorder);
-        this.setLayer(cardImage,2);
+        this.setLayer(cardImage,200);
         this.add(cardImage, BorderLayout.CENTER);
         
 
@@ -201,20 +180,37 @@ public class CardPane extends JLayeredPane{
         moveTo(originalX, originalY);
     }
 
-    public void useCard(BaseObject obj) {
-        card.use(obj);
+    public boolean useCard(BaseObject obj) {
 
         Player player = Player.getInstance();
+        int cost = card.getCost();
+        if(player.canTakeMana(cost) == false) return false;
+        player.takeMana(cost);
+
+        card.use(obj);
+
+        Card c = player.cards.field.remove(arrayIndex);
+        player.cards.discard.add(c);
+        
+
+        getParent().remove(this);
+        return true;
+    }
+
+    public boolean useCard(BaseObject [] obj) {
+        Player player = Player.getInstance();
+        int cost = card.getCost();
+
+        if(player.canTakeMana(cost) == false) return false;
+        player.takeMana(cost);
+
+        card.use(obj);
+
         Card c = player.cards.field.remove(arrayIndex);
         player.cards.discard.add(c);
 
         getParent().remove(this);
-
-    }
-
-    public void useCard(BaseObject [] obj) {
-        card.use(obj);
-        getParent().remove(this);
+        return true;
     }
 
 

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import Game.Card;
@@ -25,6 +26,7 @@ public class CardDeckPaneListener extends MouseAdapter{
     private ArrayList<CardPane> cards;
     JButton closeButton;
     boolean expanded;
+    JLabel cardCount;
 
     public CardDeckPaneListener(CardDeckPane pane) {
         this.pane = pane;

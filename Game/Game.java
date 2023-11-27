@@ -20,11 +20,12 @@ public class Game {
     }
 
     public void turnEnd() {
-        player.cards.turnEnd();
+        player.turnEnd();
         
         for (int i = 0; i < 5; i++) {
             if (field.enemies[i] != null) {
                 field.enemies[i].continuePattern();
+                field.enemies[i].status.updateEffects();
             }
         }
     }

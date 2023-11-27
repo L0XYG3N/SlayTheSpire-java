@@ -63,20 +63,14 @@ public class MapDrawingPanel extends JPanel {
                 int y = 670 - (i * yPadding) + yOffset;
 
 
-                MapNodeButton b = new MapNodeButton(i, gameMap.map[i][j].mapLocation);
+                MapNodeButton b = new MapNodeButton(i, gameMap.map[i][j].mapLocation, gameMap.map[i][j]);
                 b.setBounds(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
-
-                
 
                 btnList.add(b);
                 add(b);
 
-                
-                
-
                 g.fillOval(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
                 
-
                 if (i == 14) {
                     //보스한테 가는 선 그리기
                         g.drawLine(x, y, 3 * xPadding + xOffset, 670 - (int)(15.5 * yPadding)+yOffset);

@@ -19,6 +19,9 @@ public class CardPaneListener extends MouseAdapter {
     //private int dragOffsetX;
     //private int dragOffsetY;
     int highlighted = -1;
+    public void mousePressed(MouseEvent evt) {
+        BattlePane.getInstance().setLayer(pane,401);
+    }
 
     public void mouseDragged(MouseEvent evt) {
         pane.moveTo(
@@ -61,6 +64,7 @@ public class CardPaneListener extends MouseAdapter {
 
         switch(pane.card.getCardTarget()) {
             // 카드의 사용 타겟을 확인 후 카드에 맞는 코드 실행
+            // useCard()에서 false가 리턴되면 마나 부족으로 실행 실패한 것
             case ENEMY:
                 collidedPane = CollideChecker.getCollidedMonster(pane, BattlePane.monsters);
                 if(highlighted != -1)
@@ -68,7 +72,7 @@ public class CardPaneListener extends MouseAdapter {
                 if(collidedPane != null) {
                     Monster collidedMonster = ((MonsterPane)collidedPane).getMonster();
                     if(collidedMonster!= null) {
-                        pane.useCard(collidedMonster);
+                        if(pane.useCard(collidedMonster) == false) break;
                         ((MonsterPane)collidedPane).updateLabel();
                         battlePane.updateCardPane();
                         c.repaint();
@@ -80,21 +84,24 @@ public class CardPaneListener extends MouseAdapter {
                 for(int i = 0; i < 5;i++) {
                     if(BattlePane.monsters[i] != null) {
                         BattlePane.monsters[i].deHighlight();
-                        pane.useCard(Field.getInstance().enemies);
+
+                        if(pane.useCard(Field.getInstance().enemies) == false) break;
                         battlePane.updateCardPane();
+                        c.repaint();
                     }
                 }
                 break;
             case PLAYER:
                 if(CollideChecker.isCollidedWithPlayer(pane)) {
                     playerPane.deHighlight();
-                    pane.useCard(Player.getInstance());
+                    if(pane.useCard(Player.getInstance()) == false) break;
                     playerPane.updateLabel();
                     battlePane.updateCardPane();
                     c.repaint();
                 }
         }
         pane.moveBack();
+        battlePane.setLayer(pane,400);
     }
     
     private void selectEnemy() {

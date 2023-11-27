@@ -87,7 +87,6 @@ public class Deck {
         field.clear();
 
         drawCard(drawCount);
-        Player.getInstance().status.updateEffects();
     }
 
     public void drawCard(int cardCount) {

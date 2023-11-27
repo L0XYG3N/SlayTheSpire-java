@@ -13,11 +13,10 @@ import Game.*;
 import UI.MainFrame;
 
 public class BattlePane extends JLayeredPane{
+    private static BattlePane instance = new BattlePane();
+
     private Player player = Player.getInstance();
     private Game game = Game.getInstance();
-
-    
-    private ArrayList<CardPane> drawnCards;
 
     public static MonsterPane[] monsters = new MonsterPane[5];
 
@@ -25,7 +24,8 @@ public class BattlePane extends JLayeredPane{
     private JButton endTurnButton;
     private PlayerPane playerPane;
     private CardDeckPane cardDeckPane = new CardDeckPane();
-    private static BattlePane instance = new BattlePane();
+    private ArrayList<CardPane> drawnCards;
+    
 
     public static BattlePane getInstance() {
         return instance;
@@ -87,7 +87,7 @@ public class BattlePane extends JLayeredPane{
         add(cardDeckPane, 150);
         add(new CardDiscardPane(), 150);
 
-
+        
     }
 
     public void initBattlePane() {
@@ -111,10 +111,15 @@ public class BattlePane extends JLayeredPane{
             }
             
             //CardPane c = new CardPane(150 + i * (CardPane.WIDTH),720-CardPane.HEIGHT,CardGetter.GetCardById(cardID), true);
-            CardPane c = new CardPane(x, 720-CardPane.HEIGHT, CardGetter.GetCardById(cardID), i , true);
-            add(c,JLayeredPane.MODAL_LAYER);
-            drawnCards.add(c);
+            CardPane card = new CardPane(x, 720-CardPane.HEIGHT, CardGetter.GetCardById(cardID), i , true);
+            add(card);
+            setLayer(card,400);
+            drawnCards.add(card);
         }
+
+        setLayer(playerPane,100); 
+        
+        updateManaPanel();
     }
 
     public void clearCardPane() {
@@ -133,5 +138,9 @@ public class BattlePane extends JLayeredPane{
                 add(monsters[i],150);
             }
         }
+    }
+
+    public void updateManaPanel() {
+        manaPanel.setText(player.getMana() + "/" + player.getMaxMana());
     }
 }
