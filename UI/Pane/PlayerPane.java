@@ -18,7 +18,12 @@ public class PlayerPane extends JLayeredPane{
     private JLabel healthText;
     private JLabel shield;
 
-    public PlayerPane() {
+    private static PlayerPane instance = new PlayerPane();
+    public static PlayerPane getInstance() {
+        return instance;
+    }
+
+    private PlayerPane() {
         setBounds(X,Y,WIDTH,HEIGHT);
         setOpaque(true);
         setBackground(Color.GREEN);
@@ -41,7 +46,7 @@ public class PlayerPane extends JLayeredPane{
         add(currentHealthBar);
 
         //체력 텍스트
-        healthText = new JLabel("100/100",SwingConstants.CENTER);
+        healthText = new JLabel("",SwingConstants.CENTER);
         healthText.setFont(new Font("Arial",Font.PLAIN,15));
         healthText.setBounds(0, HEIGHT-barHeight, WIDTH, barHeight);
         healthText.setForeground(Color.white);
@@ -81,7 +86,14 @@ public class PlayerPane extends JLayeredPane{
             //게임오버 판정
             return;
         }
+    }
 
+    public void highlight() {
+        setBackground(new Color(0, 100, 0));
+    }
+
+    public void deHighlight() {
+        setBackground(Color.green);
     }
 
 
