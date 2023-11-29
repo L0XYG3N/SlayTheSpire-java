@@ -8,7 +8,7 @@ public class GameMap {
     public int currentFloor;
 
     public GameMap() {
-        map = MapGenerator.generate();
         currentFloor = 0;
+        map = MapGenerator.generate();
     }
 }

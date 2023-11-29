@@ -24,6 +24,7 @@ public class BattlePane extends JLayeredPane{
     private JButton endTurnButton;
     private PlayerPane playerPane;
     private CardDeckPane cardDeckPane = new CardDeckPane();
+    private CardDiscardPane discardPane = new CardDiscardPane();
     private ArrayList<CardPane> drawnCards;
     
 
@@ -84,8 +85,8 @@ public class BattlePane extends JLayeredPane{
         add(playerPane, 150);
 
 
+        add(discardPane, 151);
         add(cardDeckPane, 150);
-        add(new CardDiscardPane(), 150);
 
         
     }

@@ -10,6 +10,7 @@ public class Player extends BaseObject {
     private int mana;
     private int gold;
     public int weakenShield;
+    
 
     private int mapX,mapY;
 

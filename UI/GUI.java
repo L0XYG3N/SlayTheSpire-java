@@ -50,6 +50,7 @@ public class GUI{
             break;
             case MAP:
             frame.updatePane(mapPane);
+            mapPane.drawingPanel.repaint();
             break;
             case MAIN:
             frame.updatePane(mainMenuPane);

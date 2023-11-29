@@ -36,7 +36,7 @@ public class BuffStatus {
     public Stat weak; // 약화, stack동안 주는 데미지 25% 감소,
     public Stat dexterity; // 민첩, stack만큼 카드로부터 얻는 방어도 증가
     public Stat regeneration;// 재생, 턴이 끝날때마다 stack만큼 체력 회복 후 1 감소
-    public Stat steelArmor; // 판금갑옷, 턴이 끝날때 stack만큼 체력 회복 후 1 감소
+    public Stat steelArmor; // 판금갑옷, 턴이 끝날때 stack만큼 방어도 추가 후 1 감소
 
     public BuffStatus() {
         strength = new Stat(INTENSITY);

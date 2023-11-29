@@ -13,11 +13,28 @@ public abstract class Monster extends BaseObject {
         nextMove = Rand.getNumByProbability(moveSet);
     }
 
-    abstract void continuePattern();
+    public void continuePattern() {
+        if(status.regeneration.stack > 0) {
+            addHealth(status.regeneration.stack);
+        }
+        if(status.steelArmor.stack > 0) {
+            addShield(status.steelArmor.stack);
+        }
+    }
 
     public String getName() {
         return name;
     }
+
+    public int getCalculatedDamage() {
+        int damage = dmg;
+        damage += status.strength.stack;
+        if(status.weak.stack > 0) {
+            damage = (int)(damage * 0.25);
+        }
+        return damage;
+    }
+    
 }
 
 class Rand {
@@ -75,12 +92,19 @@ class LouseRed extends Monster {
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
         if (nextMove == 0) {
-            int damage = dmg; // + status.strength.power;
+            //데미지 계산
+            int damage = getCalculatedDamage();
+
             Effects.attack(damage, Player.getInstance());
+
+            //Effects.attack(getCalculatedDamage(), Player.getInstance());
         } else if (nextMove == 1) {
             Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
         dmg = Rand.randInt(5, 7);
+
+        
+        super.continuePattern();
         setNextMove();
     }
 }
@@ -116,12 +140,13 @@ class LouseGreen extends Monster {
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
         if (nextMove == 0) {
-            int damage = dmg;// + status.strength.power;
+            int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
             Effects.addStatus(Player.getInstance(), STATUS.WEAK, 3);
         }
         dmg = Rand.randInt(5, 7);
+        super.continuePattern();
         setNextMove();
     }
 }

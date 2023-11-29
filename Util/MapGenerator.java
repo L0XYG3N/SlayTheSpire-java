@@ -14,8 +14,34 @@ public class MapGenerator {
 
             for (int floor = 0; floor < 15; floor++) {
 
+                double randomValue = Math.random();
+                MapLocation tempLocation = MapLocation.UNKNOWN;
+
+                if (randomValue < 0.05) {
+                    tempLocation = MapLocation.MERCHANT;
+                } else if (randomValue < 0.17) {
+                    if (floor == 13)
+                        tempLocation = MapLocation.UNKNOWN;
+                    tempLocation = MapLocation.REST;
+                } else if (randomValue < 0.39) {
+                    tempLocation = MapLocation.UNKNOWN;
+                } else if (randomValue < 0.47) {
+                    tempLocation = MapLocation.ELITE;
+                } else {
+                    tempLocation = MapLocation.ENEMY;
+                }
+
+                
+                if (floor == 0) {
+                    tempLocation = MapLocation.ENEMY;
+                } else if (floor == 8) {
+                    tempLocation = MapLocation.TREASURE;
+                } else if (floor == 14) {
+                    tempLocation = MapLocation.REST;
+                }
+
                 if (tempMap[floor][currentPosition] == null) {
-                    tempMap[floor][currentPosition] = new MapNode();
+                    tempMap[floor][currentPosition] = new MapNode(tempLocation);
                 }
 
                 int nextDir;
@@ -55,29 +81,7 @@ public class MapGenerator {
                     }
                 }
 
-                double randomValue = Math.random();
-                MapLocation tempLocation = MapLocation.UNKNOWN;
-
-                if (randomValue < 0.05) {
-                    tempLocation = MapLocation.MERCHANT;
-                } else if (randomValue < 0.17) {
-                    if (floor == 13)
-                        tempLocation = MapLocation.UNKNOWN;
-                    tempLocation = MapLocation.REST;
-                } else if (randomValue < 0.39) {
-                    tempLocation = MapLocation.UNKNOWN;
-                } else if (randomValue < 0.47) {
-                    tempLocation = MapLocation.ELITE;
-                } else {
-                    tempLocation = MapLocation.ENEMY;
-                }
-                if (floor == 0) {
-                    tempLocation = MapLocation.ENEMY;
-                } else if (floor == 8) {
-                    tempLocation = MapLocation.TREASURE;
-                } else if (floor == 14) {
-                    tempLocation = MapLocation.REST;
-                }
+                
                 tempMap[floor][currentPosition].mapLocation = tempLocation;
                 if(floor == 14) {
                     tempMap[floor][currentPosition].nextX.add(3);
@@ -87,8 +91,7 @@ public class MapGenerator {
                 currentPosition = nextPosition;
             }
         }
-        tempMap[15][3] = new MapNode();
-        tempMap[15][3].mapLocation = MapLocation.BOSS;
+        tempMap[15][3] = new MapNode(MapLocation.BOSS);
         return tempMap;
     }
 }

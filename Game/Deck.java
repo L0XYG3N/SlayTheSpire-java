@@ -43,6 +43,14 @@ public class Deck {
         cardList.add(new Defend());
         cardList.add(new Strike());
         cardList.add(new BodySlam());
+        cardList.add(new Bash());
+        cardList.add(new Defend());
+        cardList.add(new Strike());
+        cardList.add(new BodySlam());
+        cardList.add(new Bash());
+        cardList.add(new Defend());
+        cardList.add(new Strike());
+        cardList.add(new BodySlam());
 
         for(Card card : cardList) {
             field.add(card);

@@ -23,7 +23,6 @@ public class BaseObject {
             // 취약 있으면 데미지 1.5배 적용
             amount = (int)(amount * 1.5);
         }
-        
 
         if (shield > 0) {
             if (shield >= amount) {
@@ -41,6 +40,8 @@ public class BaseObject {
     }
 
     public void addShield(int amount) {
+        amount += status.dexterity.getStack();
+
         shield += amount;
     }
 
@@ -60,4 +61,6 @@ public class BaseObject {
     public int getShield() {
         return shield;
     }
+
+
 }

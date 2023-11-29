@@ -63,13 +63,18 @@ public class MapDrawingPanel extends JPanel {
                 int y = 670 - (i * yPadding) + yOffset;
 
 
-                MapNodeButton b = new MapNodeButton(i, gameMap.map[i][j].mapLocation, gameMap.map[i][j]);
+                MapNodeButton b = new MapNodeButton(i, gameMap.map[i][j]);
+                
                 b.setBounds(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
+                
+                if(gameMap.currentFloor == 0 && i == 0) {
+                    b.setEnabled(true);
+                }
 
                 btnList.add(b);
                 add(b);
 
-                g.fillOval(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
+                //g.fillOval(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
                 
                 if (i == 14) {
                     //보스한테 가는 선 그리기

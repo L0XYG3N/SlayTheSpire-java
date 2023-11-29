@@ -51,7 +51,7 @@ public class RewardPane extends JLayeredPane{
         goldReward.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int gold = Integer.parseInt(goldReward.getText().split(" ")[2]);
-                System.out.println("get gold " + Integer.toString(gold));
+                System.out.println("get gold : " + Integer.toString(gold));
 
                 Player.getInstance().addGold(gold);
 

@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-import Game.Card;
-import Game.Field;
 import Game.Player;
 import UI.Pane.BattlePane;
 import UI.Pane.CardDeckPane;
@@ -21,7 +19,6 @@ import UI.Pane.CardPane;
 
 public class CardDeckPaneListener extends MouseAdapter{
     private CardDeckPane pane;
-    //private BattlePane screen;
     private JLayeredPane showCard;
     private ArrayList<CardPane> cards;
     JButton closeButton;
@@ -30,7 +27,6 @@ public class CardDeckPaneListener extends MouseAdapter{
 
     public CardDeckPaneListener(CardDeckPane pane) {
         this.pane = pane;
-        //screen = BattlePane.getInstance();
         showCard = new JLayeredPane();
         showCard.setBounds(0,0,1250,630);
         cards = new ArrayList<CardPane>();
@@ -56,7 +52,6 @@ public class CardDeckPaneListener extends MouseAdapter{
 
     private void close() {
         for(int i = 0; i < cards.size();i++) {
-            System.out.println(cards.get(i).card.getCardName());
             showCard.remove(cards.get(i));
         }
 
