@@ -1,7 +1,6 @@
 package UI.Pane;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 
 import javax.swing.*;
 
@@ -9,15 +8,12 @@ import UI.MainFrame;
 import UI.Listener.MapPaneListener;
 import Game.*;
 
-
 public class MapPane extends JLayeredPane{
 
     private GameMap gameMap;
 
     //선 그리기용 JPanel, paintComponent가 JLayeredPane에 없음
     public MapDrawingPanel drawingPanel;
-    
-
 
     public MapPane() {
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
@@ -37,8 +33,7 @@ public class MapPane extends JLayeredPane{
         addMouseListener(listener);
         addMouseMotionListener(listener);
         addMouseWheelListener(listener);
-
-
+        
         drawingPanel = new MapDrawingPanel(gameMap);
         add(drawingPanel);
     }

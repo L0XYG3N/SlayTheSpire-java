@@ -2,15 +2,12 @@ package UI.Pane;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.text.*;
 
 import java.awt.*;
 import UI.Listener.CardPaneListener;
 import Game.BaseObject;
 import Game.Card;
-import Game.CardGetter;
 import Game.Player;
-import Game.Card.CardTarget;
 
 
 // 카드 외형 보여주는 클래스

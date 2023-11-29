@@ -10,9 +10,6 @@ public class Player extends BaseObject {
     private int mana;
     private int gold;
     public int weakenShield;
-    
-
-    private int mapX,mapY;
 
     // 싱글톤 기법
     private static Player instance = new Player();

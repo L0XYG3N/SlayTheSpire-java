@@ -1,8 +1,5 @@
 package Util;
 
-
-import javax.swing.JLayeredPane;
-
 import UI.Pane.CardPane;
 import UI.Pane.MonsterPane;
 import UI.Pane.PlayerPane;

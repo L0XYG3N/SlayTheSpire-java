@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import Game.Player;
 import UI.GUI;
