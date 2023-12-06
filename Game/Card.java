@@ -28,7 +28,13 @@ public abstract class Card {
 
     public abstract void use(BaseObject obj);
 
-    public void use(BaseObject [] obj){/* cardType이 ENEMYALL인 카드 전용, 상속 후 오버라이딩하여 사용할것 */};
+    public void use(BaseObject [] obj){
+        for(int i = 0;i<5;i++) {
+            if(obj[i] != null) {
+                use(obj[i]);
+            }
+        }
+    };
 
     public abstract void toggleUpgrade();
 
@@ -159,7 +165,7 @@ class Strike extends Card {
     private int damageUpgraded;
 
     public Strike() {
-        cardTarget = CardTarget.ENEMY;
+        cardTarget = CardTarget.ENEMYALL;
         cardType = CardType.ATTACK;
         cost = 1;
         cardID = 1;

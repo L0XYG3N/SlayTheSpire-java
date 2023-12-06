@@ -210,6 +210,10 @@ public class CardPane extends JLayeredPane{
         return true;
     }
 
+    public Dimension getCoordinate() {
+        return new Dimension(originalX,originalY);
+    }
+
 
     //테스트용 실행 코드
     // public static void main(String [] args) {

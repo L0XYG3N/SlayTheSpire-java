@@ -21,7 +21,7 @@ public class Player extends BaseObject {
         mana = maxMana;
         maxHealth = 70;
         health = maxHealth;
-        gold=0;
+        gold=999;
         status = new BuffStatus();
     }
 
@@ -29,9 +29,27 @@ public class Player extends BaseObject {
         return instance;
     }
 
+    public void init() {
+        mana = maxMana;
+    }
+
+
     public void turnEnd() {
         mana = maxMana;
-        
+
+        // 방어막 초기화
+        shield = 0;
+
+        // 재생
+        if(status.regeneration.stack > 0) {
+            addHealth(status.regeneration.stack);
+        }
+
+        // 판금 갑옷
+        if(status.steelArmor.stack > 0) {
+            addShield(status.steelArmor.stack);
+        }
+
         status.updateEffects();
 
         cards.turnEnd();
@@ -82,6 +100,10 @@ public class Player extends BaseObject {
         gold+=amount;
     }
 
+    public boolean canTakeGold(int amount) {
+        return gold>=amount;
+    }
+
     public void takeGold(int amount) {
         gold-=amount;
     }
@@ -90,10 +112,12 @@ public class Player extends BaseObject {
         return gold;
     }
 
-    
-
-    
-
-
+    public void attack(int amount, BaseObject obj) {
+        amount +=  status.strength.stack;
+        if(status.weak.stack > 0) {
+            amount = (int)(amount * 0.75);
+        }
+        obj.damage(amount);
+    }
 
 }

@@ -7,6 +7,7 @@ import Game.Game;
 import Game.GameMap;
 import UI.GUI;
 import UI.MapNodeButton;
+import UI.GUI.ScreenState;
 import UI.Pane.RewardPane;
 
 public class MapNodeButtonListener implements ActionListener{
@@ -41,14 +42,19 @@ public class MapNodeButtonListener implements ActionListener{
                 GUI.startBattle(button.floor,button.node.mapLocation);
                 break;
             case MERCHANT:
+                GUI.changeScreen(ScreenState.SHOP);
                 break;
             case REST:
+                GUI.changeScreen(ScreenState.REST);
                 break;
             case TREASURE:
+                GUI.changeScreen(ScreenState.REST);
                 break;
             case UNKNOWN:
+                GUI.changeScreen(ScreenState.REST);
                 break;
         }
         button.node.visited = true;
+        Game.getInstance().gameMap.currentFloor++;
     }
 }

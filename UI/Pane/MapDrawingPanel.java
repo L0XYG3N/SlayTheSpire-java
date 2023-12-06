@@ -1,5 +1,6 @@
 package UI.Pane;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 
 import UI.MainFrame;
 import UI.MapNodeButton;
+import Util.MapGenerator.MapLocation;
 import Game.*;
 
 
@@ -19,7 +21,7 @@ public class MapDrawingPanel extends JPanel {
 
     
     //node draw size
-    public final int nodeX = 55;
+    public final int nodeX = 70;
     public final int nodeY = 30;
 
     ArrayList<MapNodeButton> btnList;
@@ -64,9 +66,10 @@ public class MapDrawingPanel extends JPanel {
 
 
                 MapNodeButton b = new MapNodeButton(i, gameMap.map[i][j]);
+                b.setFont(new Font("gothic",Font.PLAIN,11));
                 
                 b.setBounds(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
-                
+
                 if(gameMap.currentFloor == 0 && i == 0) {
                     b.setEnabled(true);
                 }
@@ -77,8 +80,9 @@ public class MapDrawingPanel extends JPanel {
                 //g.fillOval(x - nodeX/2 , y - nodeY/2, nodeX, nodeY);
                 
                 if (i == 14) {
-                    //보스한테 가는 선 그리기
+                    //보스
                         g.drawLine(x, y, 3 * xPadding + xOffset, 670 - (int)(15.5 * yPadding)+yOffset);
+                        
                         
                     continue;
                 }
@@ -89,6 +93,15 @@ public class MapDrawingPanel extends JPanel {
                 }
             }
         }
+
+        MapNodeButton boss = new MapNodeButton(15,gameMap.map[15][3]);
+        int bossX = 3 * 130 + MainFrame.SCREEN_WIDTH/2 - (130 * 6)/2;
+        int bossY = 670 - (int)(15.5 * 160) + (int)(scrollMeasure * (160 * 17 - MainFrame.SCREEN_HEIGHT));
+
+        boss.setBounds(bossX - nodeX/2 , bossY - nodeY/2, nodeX, nodeY);
+        btnList.add(boss);
+
+        add(boss);
 
     }
 }

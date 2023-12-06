@@ -36,10 +36,10 @@ public class CardPaneListener extends MouseAdapter {
             case ENEMYALL:
                 if(CollideChecker.getCollidedMonster(pane, BattlePane.monsters) != null) {
                     for(int i = 0; i < 5;i++) {
-                    if(BattlePane.monsters[i] != null) {
-                        BattlePane.monsters[i].deHighlight();
+                        if(BattlePane.monsters[i] != null) {
+                            BattlePane.monsters[i].highlight();
+                        }
                     }
-                }
                 }
                 
                 break;
@@ -84,10 +84,16 @@ public class CardPaneListener extends MouseAdapter {
                 for(int i = 0; i < 5;i++) {
                     if(BattlePane.monsters[i] != null) {
                         BattlePane.monsters[i].deHighlight();
-
-                        if(pane.useCard(Field.getInstance().enemies) == false) break;
-                        battlePane.updateCardPane();
-                        c.repaint();
+                    }
+                }
+                if(pane.useCard(Field.getInstance().enemies) == false) {
+                    break;
+                }
+                battlePane.updateCardPane();
+                c.repaint();
+                for(int i = 0; i < 5;i++) {
+                    if(BattlePane.monsters[i] != null) {
+                        BattlePane.monsters[i].updateLabel();
                     }
                 }
                 break;

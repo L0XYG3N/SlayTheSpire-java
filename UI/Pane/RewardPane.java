@@ -29,10 +29,15 @@ public class RewardPane extends JLayeredPane{
     }
 
     private RewardPane() {
-        
-
-        setSize(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
+        Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);
+        setSize(size);
+        setMaximumSize(size);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setLayout(null);
+        setEnabled(true);
+        setVisible(true);
         setBackground(Color.GRAY);
         setOpaque(true);
 

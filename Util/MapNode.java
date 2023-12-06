@@ -10,5 +10,6 @@ public class MapNode {
 	public MapNode(MapGenerator.MapLocation mapLocation) {
 		visited = false;
 		available = false;
+		this.mapLocation = mapLocation;
 	}
 }

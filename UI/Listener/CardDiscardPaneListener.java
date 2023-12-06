@@ -3,17 +3,19 @@ package UI.Listener;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
-
 import Game.Player;
 import UI.Pane.BattlePane;
 import UI.Pane.CardDiscardPane;
 import UI.Pane.CardPane;
+
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 public class CardDiscardPaneListener extends MouseAdapter{
@@ -23,6 +25,7 @@ public class CardDiscardPaneListener extends MouseAdapter{
     JButton closeButton;
     boolean expanded;
     JLabel cardCount;
+    double scrollMeasure = -1.0;
 
     public CardDiscardPaneListener(CardDiscardPane pane) {
         this.pane = pane;
@@ -40,12 +43,33 @@ public class CardDiscardPaneListener extends MouseAdapter{
 
     public void mousePressed(MouseEvent e) {
         if(!expanded) {
+            scrollMeasure = 0.0;
             pane.setBounds(50,50,1250,670);
             pane.add(showCard);
             BattlePane.getInstance().setLayer(pane,2000);
             pane.add(closeButton);
             showCards();
             expanded = true;
+        }
+    }
+
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if(expanded) {
+            int scrollDirection = e.getWheelRotation();
+
+            if(scrollDirection == -1) {
+                scrollMeasure = Math.min(0,scrollMeasure + 0.05);
+            }else if(scrollDirection == 1) {
+                scrollMeasure = Math.max(-1,scrollMeasure - 0.05);
+            }
+            for(int i = 0; i < cards.size();i++) {
+                CardPane card = cards.get(i);
+                Dimension dimension = card.getCoordinate();
+                int cardRow = cards.size()/7;
+                int X = (int)dimension.getWidth();
+                int Y = (int)(dimension.getHeight() + scrollMeasure * cardRow * CardPane.HEIGHT);
+                card.moveTo(X,Y);
+            }
         }
     }
 

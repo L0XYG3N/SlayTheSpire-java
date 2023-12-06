@@ -2,6 +2,7 @@ package Game;
 
 import Util.MapGenerator;
 import Util.MapNode;
+import Util.MapGenerator.MapLocation;
 
 public class GameMap {
     public MapNode [][] map;

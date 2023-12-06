@@ -1,5 +1,7 @@
 package Game;
 
+import Game.Card.CardType;
+
 public class CardGetter {
     //이거 어떻게 해야할지 모르겠는데... enum 하나 만들어서 카드별로 숫자매기고 매개변수를 enum으로 받을지 아니면 그냥 숫자로 받을지..
     public static Card GetCardById(int id) {
@@ -10,11 +12,11 @@ public class CardGetter {
             case 2:
                 return new Bash();
             case 3:
-                return new Anger();
+                //return new Anger();
             case 4:
                 return new BodySlam();
             case 5:
-                return new Clash();
+                //return new Clash();
             //100~200 : 스킬 카드
             case 100:
                 return new Defend();
@@ -26,5 +28,19 @@ public class CardGetter {
             default:
                 return new TestCard();
         }
+    }
+
+    public static Card getRandomCard(CardType type) {
+        switch(type) {
+            case ATTACK:
+                return GetCardById((int)(Math.random()*5)+1);
+
+            case SKILL:
+                return GetCardById(100);
+            case POWER:
+                return GetCardById(-1);
+
+        }
+        return new TestCard();
     }
 }

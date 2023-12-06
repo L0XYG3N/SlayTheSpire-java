@@ -16,6 +16,7 @@ public class Effects {
     }
 
     public static void addShield(int amount, BaseObject obj) {
+        
         obj.addShield(amount);
     }
 
@@ -52,7 +53,7 @@ public class Effects {
     
 
     public static void weakenShield(int duration) {
-        // 손상 디버프, 지속시간동안 방어도 획득량 줄어듬
+        // 손상 디버프, 지속시간동안 방어도 획득량 25%만큼 줄어듬
         Player.getInstance().weakenShield = duration;
     }
 

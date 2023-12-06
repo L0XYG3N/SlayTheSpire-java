@@ -40,13 +40,14 @@ public class BaseObject {
     }
 
     public void addShield(int amount) {
-        amount += status.dexterity.getStack();
+        amount += status.dexterity.stack;
 
         shield += amount;
     }
 
     public void addHealth(int amount) {
         health = Math.min(maxHealth, health + amount);
+        System.out.println(amount);
     }
 
     public int getHealth() {

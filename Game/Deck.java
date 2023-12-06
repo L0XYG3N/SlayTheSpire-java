@@ -63,7 +63,7 @@ public class Deck {
         discard.clear();
         field.clear();
         deck.clear();
-
+        Player.getInstance().init();
 
         for(Card card : cardList) {
             deck.add(card);

@@ -14,9 +14,15 @@ public abstract class Monster extends BaseObject {
     }
 
     public void continuePattern() {
+        // 방어막 초기화
+        shield = 0;
+
+        // 재생
         if(status.regeneration.stack > 0) {
             addHealth(status.regeneration.stack);
         }
+
+        // 판금 갑옷
         if(status.steelArmor.stack > 0) {
             addShield(status.steelArmor.stack);
         }
@@ -30,7 +36,7 @@ public abstract class Monster extends BaseObject {
         int damage = dmg;
         damage += status.strength.stack;
         if(status.weak.stack > 0) {
-            damage = (int)(damage * 0.25);
+            damage = (int)(damage * 0.75);
         }
         return damage;
     }

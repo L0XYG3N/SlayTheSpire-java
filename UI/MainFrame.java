@@ -6,7 +6,6 @@ import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-import UI.Pane.DefaultPaneGetter;
 
 
 public class MainFrame extends JFrame{
@@ -29,7 +28,7 @@ public class MainFrame extends JFrame{
         setLayout(null);
         setVisible(true);
 
-        layeredPane = DefaultPaneGetter.getNewJLayeredPane();
+        layeredPane = new JLayeredPane();
 
         
         this.add(layeredPane);

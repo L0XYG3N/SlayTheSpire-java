@@ -92,6 +92,7 @@ public class MapGenerator {
             }
         }
         tempMap[15][3] = new MapNode(MapLocation.BOSS);
+        System.out.println(tempMap[15][3].mapLocation);
         return tempMap;
     }
 }
