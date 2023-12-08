@@ -114,8 +114,10 @@ public class Player extends BaseObject {
     }
 
     public void attack(int amount, BaseObject obj) {
-        amount +=  status.strength.stack;
-        if(status.weak.stack > 0) {
+
+        amount +=  status.strength.stack; // 힘
+
+        if(status.weak.stack > 0) { // 약화
             amount = (int)(amount * 0.75);
         }
         obj.damage(amount);

@@ -28,6 +28,7 @@ public abstract class Card {
     protected boolean ethereal; // "휘발성", 사용여부에 상관없이 무덤 덱으로 들어가는 순간 현재 전투에서 더이상 나타나지 않음
 
     protected boolean isUpgrade;
+    protected static Player player = Player.getInstance();
 
     public abstract void use(BaseObject obj);
 
@@ -111,7 +112,7 @@ class TestCard extends Card {
     }
 
     public void use(BaseObject obj) {
-        Effects.attack(damage, obj);
+        player.attack(damage, obj);
         System.out.println("damage " + damage + " dealt to an monster, health remain : " + obj.health);
     }
 
@@ -145,7 +146,7 @@ class AttackCard extends Card { // 임시카드, 이후에 제대로 구현
     }
 
     public void use(BaseObject obj) {
-        Effects.attack(damage, obj);
+        player.attack(damage, obj);
     }
 
     public void toggleUpgrade() {
@@ -181,7 +182,7 @@ class Strike extends Card {
     }
 
     public void use(BaseObject obj) {
-        Effects.attack(damage, obj);
+        player.attack(damage, obj);
     }
 
     public void toggleUpgrade() {
@@ -229,7 +230,7 @@ class Bash extends Card {
     }
 
     public void use(BaseObject obj) {
-        Effects.attack(damage, obj);
+        player.attack(damage, obj);
         Effects.addStatus(obj, STATUS.VULNERABLE, effectDuration);
     }
 
@@ -283,7 +284,7 @@ class BodySlam extends Card {
 
     public void use(BaseObject obj) {
         damage = Player.getInstance().getShield();
-        Effects.attack(damage, obj);
+        player.attack(damage, obj);
     }
 
     public void toggleUpgrade() {
@@ -337,17 +338,8 @@ class Cleave extends Card {
         isUpgrade = false;
     }
 
-    public void use(BaseObject[] enemies) {
-    	for (BaseObject enemy : enemies) {
-            if (enemy != null && enemy instanceof Monster) {
-                // 각 적에게 데미지를 입히고 취약 상태를 부여
-                Effects.attack(damage, enemy);
-            }
-    	}
-    }
-
     public void use(BaseObject obj) {
-
+        player.attack(damage, obj);  
     }
 
     public void toggleUpgrade() {
@@ -392,7 +384,7 @@ class Clothesline extends Card {
 	 }
 	
 	 public void use(BaseObject obj) {
-	        Effects.attack(damage, obj);
+	        player.attack(damage, obj);
 	        Effects.addStatus(obj, STATUS.WEAK, effectDuration);
 	    }
 	
@@ -440,7 +432,7 @@ class Clothesline extends Card {
 	    }
 
 	    public void use(BaseObject obj) {
-	        Effects.attack(damage, obj);
+	        player.attack(damage, obj);
 	        Player.getInstance().addShield(defend);
 	        PlayerPane.getInstance().updateLabel();
 	    }
@@ -488,19 +480,9 @@ class Clothesline extends Card {
 	        imagePath = "Img/red/attack/thunder_clap.png";
 	    }
 
-	    public void use(BaseObject[] enemies) {
-	        for (BaseObject enemy : enemies) {
-	            if (enemy != null && enemy instanceof Monster) {
-	                // 각 적에게 데미지를 입히고 취약 상태를 부여
-	                Effects.attack(damage, enemy);
-	                Effects.addStatus(enemy, STATUS.VULNERABLE, effectDuration);
-	            }
-	        }
-	    }
-
-	    // 기존 use 메서드는 단일 적에게 데미지를 입히도록 재정의
-	    public void use(BaseObject obj) {
-	     
+	    public void use(BaseObject enemy) {
+            player.attack(damage, enemy);
+            Effects.addStatus(enemy, STATUS.VULNERABLE, effectDuration);
 	    }
 
 	    public void toggleUpgrade() {
@@ -541,7 +523,7 @@ class Clothesline extends Card {
 
 	    public void use(BaseObject obj) {
 	        Player.getInstance().loseHealth(health);
-	        Effects.attack(damage, obj);
+	        player.attack(damage, obj);
 	        PlayerPane.getInstance().updateLabel();
 	    }
 
@@ -597,7 +579,7 @@ class Clothesline extends Card {
 	    }
 
 	    public void use(BaseObject obj) {
-	        Effects.attack(damage, obj);
+	        player.attack(damage, obj);
 	        Effects.addStatus(obj, STATUS.WEAK, effectDurationWeak);
 	        Effects.addStatus(obj, STATUS.VULNERABLE, effectDurationVulnerable);
 	    }
@@ -642,7 +624,7 @@ class Clothesline extends Card {
 	    }
 
 	    public void use(BaseObject obj) {
-	        Effects.attack(damage, obj);
+	        player.attack(damage, obj);
 	    }
 
 	    public void toggleUpgrade() {
@@ -848,16 +830,9 @@ class IntimidateCard extends Card {
     }
 
     public void use(BaseObject obj) {
-    	
+    	Effects.addStatus(obj, STATUS.WEAK, effectDuration);
     }
-    public void use(BaseObject[] enemies) {
-        for (BaseObject enemy : enemies) {
-            if (enemy != null && enemy instanceof Monster) {
-                // 각 적에게 약화 상태를 부여
-                Effects.addStatus(enemy, STATUS.WEAK, effectDuration);
-            }
-        }
-    }
+    
 
     public void toggleUpgrade() {
         if (isUpgrade) {
@@ -901,18 +876,9 @@ class Shockwave extends Card {
         imagePath = "Img/red/skill/shockwave.png";
     }
     
-    public void use(BaseObject obj) {
-     
-    }
-
-    public void use(BaseObject[] enemies) {
-    	for (BaseObject enemy : enemies) {
-            if (enemy != null && enemy instanceof Monster) {
-                // 각 적에게 약화 상태를 부여
-                Effects.addStatus(enemy, STATUS.WEAK, effectDurationWeak);
-                Effects.addStatus(enemy, STATUS.VULNERABLE, effectDurationVulnerable);
-            }
-        }
+    public void use(BaseObject enemy) {
+        Effects.addStatus(enemy, STATUS.WEAK, effectDurationWeak);
+        Effects.addStatus(enemy, STATUS.VULNERABLE, effectDurationVulnerable);
     }
 
     public void toggleUpgrade() {
@@ -999,7 +965,7 @@ class Combust extends Card {
     public void use(BaseObject[] enemies) {
         for (BaseObject enemy : enemies) {
             if (enemy != null && enemy instanceof Monster) {
-                Effects.attack(damage, enemy);
+                player.attack(damage, enemy);
             }
         }
         Player.getInstance().loseHealth(1);
