@@ -47,7 +47,11 @@ public class BaseObject {
 
     public void addHealth(int amount) {
         health = Math.min(maxHealth, health + amount);
-        System.out.println(amount);
+    }
+
+    public void loseHealth(int amount) {
+        health -= amount;
+        // Add any additional logic for handling health loss, such as checking for defeat
     }
 
     public int getHealth() {
@@ -62,6 +66,4 @@ public class BaseObject {
     public int getShield() {
         return shield;
     }
-
-
 }

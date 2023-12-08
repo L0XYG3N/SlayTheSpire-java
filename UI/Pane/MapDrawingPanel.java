@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import UI.MainFrame;
 import UI.MapNodeButton;
-import Util.MapGenerator.MapLocation;
 import Game.*;
 
 

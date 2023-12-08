@@ -89,7 +89,7 @@ public class MonsterPane extends JLayeredPane{
 
             if(field.isBattleEnd()) {
                 field.endBattle(endState.BATTLEWIN);
-                System.out.println("going floor" + Game.getInstance().gameMap.currentFloor);
+                System.out.println("going floor " + Game.getInstance().gameMap.currentFloor);
             }
             return;
         }

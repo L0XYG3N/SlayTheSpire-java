@@ -24,6 +24,7 @@ public class Player extends BaseObject {
         gold=999;
         status = new BuffStatus();
     }
+    
 
     public static Player getInstance() {
         return instance;
