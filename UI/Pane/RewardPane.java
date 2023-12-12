@@ -8,16 +8,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 
+import Game.CardGetter;
 import Game.Player;
+import Game.Card.CardTarget;
+import Game.Card.CardType;
 import UI.GUI;
 import UI.MainFrame;
+import UI.RewardCardButton;
 import UI.GUI.ScreenState;
 
 public class RewardPane extends JLayeredPane{
     JButton goldReward;
-    JButton cardReward;
     JButton confirmButton;
+    RewardCardButton [] cardButton;
     Dimension buttonSize = new Dimension(200,30);
+
+    CardPane[] card;
 
     private static RewardPane instance = new RewardPane();
     public static RewardPane getInstance() {return instance;}
@@ -42,15 +48,18 @@ public class RewardPane extends JLayeredPane{
         setOpaque(true);
 
         goldReward = new JButton();
-        cardReward = new JButton();
         confirmButton = new JButton("확인");
         
-
+        cardButton = new RewardCardButton[3];
+        card = new CardPane[3];
 
         goldReward.setSize(buttonSize);
-        cardReward.setSize(buttonSize);
         confirmButton.setSize(buttonSize);
 
+        for(int i = 0; i < 3;i++) {
+            cardButton[i] = new RewardCardButton(MainFrame.SCREEN_WIDTH/2 + (i-1) * 200- 75,MainFrame.SCREEN_HEIGHT/5*2);
+            add(cardButton[i]);
+        }
         
         goldReward.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -69,15 +78,13 @@ public class RewardPane extends JLayeredPane{
             }
         });
 
-        goldReward.setLocation((int)(MainFrame.SCREEN_WIDTH/4-buttonSize.getWidth()/2),MainFrame.SCREEN_HEIGHT/3);
-        cardReward.setLocation((int)(MainFrame.SCREEN_WIDTH/4-buttonSize.getWidth()/2),MainFrame.SCREEN_HEIGHT/3*2);
+        goldReward.setLocation((int)(MainFrame.SCREEN_WIDTH/2-buttonSize.getWidth()/2),MainFrame.SCREEN_HEIGHT/3);
+            
         confirmButton.setLocation(MainFrame.SCREEN_WIDTH/3*2,600);
 
         add(goldReward);
-        add(cardReward);
         add(confirmButton);
-
-
+        
         setGoldReward(1);
     }
 
@@ -100,7 +107,13 @@ public class RewardPane extends JLayeredPane{
     }
 
     public void setRandomCardReward() {
+        // for(int i = 0; i < 3;i++) {
+        //     cardReward[i].remove(card[i]);
+        // }
+        for(int i = 0; i < 3;i++) {
+            cardButton[i].setCard(CardGetter.getRandomCard(CardType.ATTACK));
+            cardButton[i].setEnabled(true);
+        }
         
     }
-
 }

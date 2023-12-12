@@ -62,6 +62,7 @@ public class GUI{
             break;
             case REWARD:
             frame.updatePane(rewardPane);
+            rewardPane.setRandomCardReward();
             break;
             case REST:
             frame.updatePane(restPane);

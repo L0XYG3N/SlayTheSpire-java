@@ -53,6 +53,7 @@ public class Field {
                 //
 
                 GUI.changeScreen(ScreenState.REWARD);
+                
                 //GUI.updateScreen();
                 break;
         }

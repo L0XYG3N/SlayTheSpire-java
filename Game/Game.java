@@ -20,6 +20,8 @@ public class Game {
     }
 
     public void turnEnd() {
+        player.updatePlayerStatus();
+        
         for (int i = 0; i < 5; i++) {
             if (field.enemies[i] != null) {
                 field.enemies[i].continuePattern();
@@ -27,6 +29,7 @@ public class Game {
                 field.enemies[i].monsterIntention();
             }
         }
+
         player.turnEnd();
     }
 

@@ -68,10 +68,15 @@ public class Player extends BaseObject {
         if(status.steelArmor.stack > 0) {
             addShield(status.steelArmor.stack);
         }
+        cards.turnEnd();
+    }
 
+    public void updatePlayerStatus() {
         status.updateEffects();
 
-        cards.turnEnd();
+        // 손상
+        weakenShield = Math.max(0,--weakenShield);
+
     }
 
     // public boolean useCard(int index, BaseObject obj) {
