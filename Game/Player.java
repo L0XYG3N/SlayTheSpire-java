@@ -111,6 +111,9 @@ public class Player extends BaseObject {
     	super.addShield(amount);
     }
 
+    public void updateWeakenShield() {
+    	weakenShield = Math.max(0, --weakenShield);
+    }
     public void takeMana(int amount) {
         mana -= amount;
     }
@@ -154,6 +157,7 @@ public class Player extends BaseObject {
     }
 
     public void addCard(Card card) {
+        System.out.println(card.getCardName() + " 추가됨");
         cards.cardList.add(card);
     }
 

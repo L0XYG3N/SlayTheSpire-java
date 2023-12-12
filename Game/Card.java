@@ -605,7 +605,7 @@ class Clothesline extends Card {
        public Bludgeon() {
            cardTarget = CardTarget.ENEMY;
            cardType = CardType.ATTACK;
-           cost = 0;
+           cost = 3;
            cardID = 10;
            damageOrigin = 32;
            damageUpgraded = 42;
@@ -953,5 +953,47 @@ class Combust extends Card {
 
     public void updateDescription() {
        cardDescription = "턴 종료 시 체력을" + health +"<br>" + "잃고 적 전체에게 <br>" + "피해를 " + damage + " 줍니다.";
+    }
+}
+
+class Inflame extends Card {
+    private int strength;
+    private int strengthOrigin;
+    private int strengthUpgraded;
+
+    public Inflame() {
+        cardTarget = CardTarget.PLAYER;
+        cardType = CardType.POWER;
+        cost = 1;
+        cardID = 201;
+
+        strengthOrigin = 2;
+        strengthUpgraded = 3;
+        strength = strengthOrigin;
+
+        cardName = "발화";
+        cardDescription = "힘을 " + strength + " 얻습니다.";
+
+        imagePath = "Img/red/power/inflame.png";
+    }
+
+    public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
+        Effects.addStatus(obj, STATUS.STRENGTH, strength);
+    }
+
+    public void toggleUpgrade() {
+        if (isUpgrade) {
+            strength = strengthOrigin;
+        } else {
+            strength = strengthUpgraded;
+        }
+        isUpgrade = !isUpgrade;
+    }
+
+    public void updateDescription() {
+        cardDescription = "<font color='orange'>힘</font> 을" + strength + " 얻습니다.";
     }
 }

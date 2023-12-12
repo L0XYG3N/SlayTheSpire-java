@@ -86,7 +86,7 @@ public class GUI{
                    case 1:
                       Field.getInstance().initEasyStage(randomID1);
                    case 2:
-                      Field.getInstance().initStage(13);
+                      Field.getInstance().initStage(randomID2);
                 }
                 break;
              case REST, TREASURE, MERCHANT, UNKNOWN:

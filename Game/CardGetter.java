@@ -43,11 +43,12 @@ public class CardGetter {
                 return new Shockwave();
             case 105:
                 return new Barricade();
-
             //200~300 : 파워 카드
+
             case 200:
             	return new Combust();
-
+            case 201:
+            	return new Inflame();
             //1000 이상 : 방해 카드
 
             default:

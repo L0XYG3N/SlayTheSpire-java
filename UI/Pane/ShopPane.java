@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import Game.Card;
@@ -33,6 +34,14 @@ public class ShopPane extends JLayeredPane {
     ArrayList<JLabel> displayLabel = new ArrayList<JLabel>(); 
 
     private ShopPane() {
+    	
+    	// 배경 이미지 추가 - 승훈
+    	ImageIcon backgroundImage = new ImageIcon("resource/shop.png"); // 실제 이미지 경로로 대체하세요
+    	JLabel backgroundLabel = new JLabel(backgroundImage);
+    	backgroundLabel.setBounds(0, 0, MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
+    	add(backgroundLabel);
+    	setLayer(backgroundLabel, -10);
+    	
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);
         setSize(size);

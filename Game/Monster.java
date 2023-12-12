@@ -146,7 +146,7 @@ class LouseRed extends Monster {   // 빨간 공벌레
 
     public void continuePattern() {
         // 공벌레의 패턴 진행, 공격 스킬과 상태이상 부여하는 스킬 중 정해진 확률대로 사용
-    	initShield();
+       initShield();
         if (nextMove == 0) {
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
@@ -266,6 +266,7 @@ class SpikeSlimeM extends Monster {
         health = Rand.randInt(28, 32);
         name = "가시 슬라임(중)";
         moveSet = new int[] { 50, 50 };
+        dmg = 8;
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -280,13 +281,14 @@ class SpikeSlimeM extends Monster {
     public void continuePattern() {
        initShield();
         if (nextMove == 0) {
-            dmg = 8;
+            
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
             Slimed(1);
         } else if (nextMove == 1) {
             Effects.weakenShield(1);
         }
+        dmg = 8;
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -294,7 +296,7 @@ class SpikeSlimeM extends Monster {
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "가시슬라임(중)은 8의 피해를 주려 합니다.";
+            return "가시슬라임(중)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
             return "가시슬라임(중)은 당신에게 손상 디버프(1)을 주려 합니다.";
         }
@@ -309,6 +311,7 @@ class SpikeSlimeL extends Monster {
         health = Rand.randInt(64, 70);
         name = "가시 슬라임(대)";
         moveSet = new int[] { 50, 50 };
+        dmg = 16;
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -337,7 +340,6 @@ class SpikeSlimeL extends Monster {
              split();
           }
           else {
-             dmg = 16;
              int damage = getCalculatedDamage();
              Effects.attack(damage, Player.getInstance());
              Slimed(2);
@@ -350,6 +352,7 @@ class SpikeSlimeL extends Monster {
                 Effects.weakenShield(2);
              }
         }
+       dmg = 16;
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -362,7 +365,7 @@ class SpikeSlimeL extends Monster {
                return "분열하려 합니다!";
             }
             else {
-               return "가시슬라임(대) 는 16의 데미지를 주려 합니다.";
+               return "가시슬라임(대) 는 " + getCalculatedDamage() + "의 데미지를 주려 합니다.";
             }
         } else if (nextMove == 1) {
            if (health <= maxHealth / 2) {
@@ -382,6 +385,7 @@ class AcidSlimeS extends Monster {   // 산성 슬라임
         health = Rand.randInt(8, 12);
         name = "산성 슬라임(소)";
         moveSet = new int[] { 50, 50 };
+        dmg = 3;
         status = new BuffStatus();
         maxHealth = health;
        initTurn();
@@ -392,12 +396,12 @@ class AcidSlimeS extends Monster {   // 산성 슬라임
     public void continuePattern() {
        initShield();
         if (nextMove == 0) {
-            dmg = 3;
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
         }
+        dmg = 3;
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -405,7 +409,7 @@ class AcidSlimeS extends Monster {   // 산성 슬라임
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "산성슬라임(소)은 3의 피해를 주려 합니다.";
+            return "산성슬라임(소)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
             return "산성슬라임(소)은 당신에게 약화 디버프(1)을 주려 합니다.";
         }
@@ -418,6 +422,11 @@ class AcidSlimeM extends Monster {
         health = Rand.randInt(28, 32);
         name = "산성 슬라임(중)";
         moveSet = new int[] { 30, 40, 30};
+        if(nextMove == 0) {
+           dmg = 7;
+        } else if (nextMove == 1) {
+           dmg = 10;
+        }
         status = new BuffStatus();
         maxHealth = health;
        initTurn();
@@ -432,16 +441,19 @@ class AcidSlimeM extends Monster {
     public void continuePattern() {
        initShield();
         if (nextMove == 0) {
-            dmg = 7;
             int damage = dmg;
             Effects.attack(damage, Player.getInstance());
             Slimed(1);
         } else if (nextMove == 1) {
-           dmg = 10;
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 2) {
            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
+        }
+        if(nextMove == 0) {
+           dmg = 7;
+        } else if (nextMove == 1) {
+           dmg = 10;
         }
         super.continuePattern();
         setNextMove();
@@ -450,9 +462,9 @@ class AcidSlimeM extends Monster {
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "산성슬라임(중)은 7의 피해를 주려 합니다.";
+            return "산성슬라임(중)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
-            return "산성슬라임(중)은 10의 피해를 주려 합니다.";
+            return "산성슬라임(중)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 2) {
             return "산성슬라임(중)은 약화(1) 디버프를 주려 합니다.";
         }
@@ -465,6 +477,12 @@ class AcidSlimeL extends Monster {
         health = Rand.randInt(65, 69);
         name = "산성 슬라임(대)";
         moveSet = new int[] { 30, 40, 30};
+        if (nextMove == 0) {
+           dmg = 11;
+        }
+        else if (nextMove == 0) {
+           dmg = 16;
+        }
         status = new BuffStatus();
         maxHealth = health;
        initTurn();
@@ -494,7 +512,6 @@ class AcidSlimeL extends Monster {
               split();
            }
            else {
-              dmg = 11;
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
                 Slimed(2);
@@ -504,7 +521,6 @@ class AcidSlimeL extends Monster {
               split();
            }
            else {
-              dmg = 16;
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
            }
@@ -516,6 +532,12 @@ class AcidSlimeL extends Monster {
               Effects.addStatus(Player.getInstance(), STATUS.WEAK, 2);
            }
         }
+        if (nextMove == 0) {
+           dmg = 11;
+        }
+        else if (nextMove == 0) {
+           dmg = 16;
+        }
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -523,9 +545,9 @@ class AcidSlimeL extends Monster {
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "산성슬라임(대)은 11의 피해를 주려 합니다.";
+            return "산성슬라임(대)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
-            return "산성슬라임(대)은 16의 피해를 주려 합니다.";
+            return "산성슬라임(대)은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 2) {
             return "산성슬라임(대)은 약화(1) 디버프를 주려 합니다.";
         }
@@ -538,6 +560,22 @@ class Looter extends Monster {   // 도적
         health = Rand.randInt(44, 48);
         name = "도적";
         moveSet = new int[] { 50, 50 };
+        if (nextMove == 0) {
+           if (Field.getInstance().currentTurn <= 2) {
+              dmg = 11;
+           }
+           else {
+              dfd = 6;
+            }
+            
+        } else if (nextMove == 1) {
+           if (Field.getInstance().currentTurn <= 2) {
+              dmg = 11;
+           }
+           else {
+                dmg = 12;
+           }
+        }
         status = new BuffStatus();
         maxHealth = health;
         imagePath = "resource/Looter.png"; // 이미지 경로 추가 - 승훈
@@ -555,13 +593,11 @@ class Looter extends Monster {   // 도적
        initShield();
        if (nextMove == 0) {
           if (Field.getInstance().currentTurn <= 2) {
-                dmg = 11;
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
                 Thievery();
             }
           else {
-             dfd = 6;
             int defend = dfd;
             addShield(defend);
             for(int i = 0; i < 5;i++) {
@@ -573,18 +609,32 @@ class Looter extends Monster {   // 도적
           
         } else if (nextMove == 1) {
            if (Field.getInstance().currentTurn <= 2) {
-                dmg = 11;
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
                 Thievery();
             }
            else {
-              dmg = 12;
              int damage = getCalculatedDamage();
              Effects.attack(damage, Player.getInstance());
              Thievery();
            }
         }
+       if (nextMove == 0) {
+          if (Field.getInstance().currentTurn <= 2) {
+             dmg = 11;
+          }
+          else {
+             dfd = 6;
+           }
+           
+       } else if (nextMove == 1) {
+          if (Field.getInstance().currentTurn <= 2) {
+             dmg = 11;
+          }
+          else {
+               dmg = 12;
+          }
+       }
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -593,7 +643,7 @@ class Looter extends Monster {   // 도적
     public String getIntentionText() {
         if (nextMove == 0) {
            if (Field.getInstance().currentTurn <= 2) {
-                return "도적은 11의 피해를 입히려 합니다.";
+                return "도적은 " + getCalculatedDamage() + "의 피해를 입히려 합니다.";
             }
           else {
              return "도적은 6의 방어도를 얻으려 합니다.";
@@ -601,10 +651,10 @@ class Looter extends Monster {   // 도적
 
         } else if (nextMove == 1) {
            if (Field.getInstance().currentTurn <= 2) {
-                return "도적은 11의 피해를 입히려 합니다.";
+                return "도적은 " + getCalculatedDamage() + "의 피해를 입히려 합니다.";
             }
            else {
-               return "도적은 12의 피해를 입히고 도망칠 준비를 합니다!";
+               return "도적은 " + getCalculatedDamage() + "의 피해를 입히고 도망칠 준비를 합니다!";
            }
         }
         return "???";
@@ -616,6 +666,14 @@ class JawWorm extends Monster {   // 턱벌레
         health = Rand.randInt(40, 44);
         name = "턱벌레";
         moveSet = new int[] { 45, 30, 25};
+        if (nextMove == 0) {
+            dmg = 11;
+         } else if (nextMove == 1) {
+            dmg = 7;
+            dfd = 5;
+         } else if(nextMove == 2) {
+            dfd = 3;
+         }
         status = new BuffStatus();
         maxHealth = health;
        initTurn();
@@ -627,21 +685,25 @@ class JawWorm extends Monster {   // 턱벌레
     public void continuePattern() {
        initShield();
        if (nextMove == 0) {
-           dmg = 11;
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
-           dmg = 7;
             int damage = getCalculatedDamage();
-           dfd = 5;
            int defend = dfd;
            Effects.attack(damage, Player.getInstance());
            addShield(defend);
         } else if(nextMove == 2) {
-           dfd = 3;
            int defend = dfd;
            addShield(defend);
            Effects.addStatus(this, STATUS.STRENGTH, 3);
+        }
+       if (nextMove == 0) {
+           dmg = 11;
+        } else if (nextMove == 1) {
+           dmg = 7;
+           dfd = 5;
+        } else if(nextMove == 2) {
+           dfd = 3;
         }
           super.continuePattern();
           setNextMove();
@@ -650,9 +712,9 @@ class JawWorm extends Monster {   // 턱벌레
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "턱벌레는 11의 피해를 주려 합니다.";
+            return "턱벌레는 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
-            return "턱벌레는 7의 피해를 주고 5의 방어도를 얻으려 합니다.";
+            return "턱벌레는 " + getCalculatedDamage() + "의 피해를 주고 5의 방어도를 얻으려 합니다.";
         } else if (nextMove == 2) {
             return "턱벌레는 3의 방어도를 얻고 3의 힘을 증가시키려 합니다.";
         }
@@ -665,6 +727,11 @@ class BlueSlaver extends Monster {   // 파랑 노예상인
         health = Rand.randInt(46, 50);
         name = "노예 상인 (파랑)";
         moveSet = new int[] { 60, 40 };
+        if (nextMove == 0) {
+            dmg = 12;
+          } else if (nextMove == 1) {
+             dmg = 7;   
+          }
         status = new BuffStatus();
         maxHealth = health;
        initTurn();
@@ -675,16 +742,19 @@ class BlueSlaver extends Monster {   // 파랑 노예상인
     public void continuePattern() {
        initShield();
        if (nextMove == 0) {
-          dmg = 12;
            int damage = getCalculatedDamage();
            Effects.attack(damage, Player.getInstance());
-        } else if (nextMove == 1) {
-           dmg = 7;   
+        } else if (nextMove == 1) {   
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
             Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
            
         }
+       if (nextMove == 0) {
+           dmg = 12;
+         } else if (nextMove == 1) {
+            dmg = 7;   
+         }
           super.continuePattern();
           setNextMove();
           turnPlus();
@@ -692,9 +762,9 @@ class BlueSlaver extends Monster {   // 파랑 노예상인
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "파랑 노예상인은 12의 피해를 주려 합니다.";
+            return "파랑 노예상인은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
-            return "파랑 노예상인은 7의 피해를 주며 당신에게 약화(1)의 디버프를 걸려 합니다.";
+            return "파랑 노예상인은 " + getCalculatedDamage() + "의 피해를 주며 당신에게 약화(1)의 디버프를 걸려 합니다.";
         } 
         return "???";
     }
@@ -705,6 +775,17 @@ class RedSlaver extends Monster { // 빨강 노예상인
         health = Rand.randInt(46, 50);
         name = "노예 상인 (빨강)";
         moveSet = new int[] { 60, 40};
+        if (nextMove == 0) {
+            dmg = 13;
+         }
+         else if (nextMove == 1) {
+            if(Field.getInstance().currentTurn == 1) {
+               dmg = 13;
+            }
+            else {
+               dmg = 8;   
+            }
+         }
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -715,23 +796,31 @@ class RedSlaver extends Monster { // 빨강 노예상인
     public void continuePattern() {
        initShield();
        if (nextMove == 0) {
-          dmg = 13;
            int damage = getCalculatedDamage();
            Effects.attack(damage, Player.getInstance());
        }
        else if (nextMove == 1) {
           if(Field.getInstance().currentTurn == 1) {
-             dmg = 13;
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
           }
           else {
-             dmg = 8;   
                 int damage = getCalculatedDamage();
                 Effects.attack(damage, Player.getInstance());
                 Effects.addStatus(Player.getInstance(), STATUS.VULNERABLE, 1);
           }
        }
+       if (nextMove == 0) {
+           dmg = 13;
+        }
+        else if (nextMove == 1) {
+           if(Field.getInstance().currentTurn == 1) {
+              dmg = 13;
+           }
+           else {
+              dmg = 8;   
+           }
+        }
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -739,15 +828,14 @@ class RedSlaver extends Monster { // 빨강 노예상인
     
     public String getIntentionText() {
            if (nextMove == 0) {
-                return "빨강 노예상인은 13의 피해를 입히려 합니다.";
+                return "빨강 노예상인은 " + getCalculatedDamage() + "의 피해를 입히려 합니다.";
            } 
-           
            else if (nextMove == 1) {
               if (Field.getInstance().currentTurn == 1) {
-                  return "빨강 노예상인은 13의 피해를 입히려 합니다.";
+                  return "빨강 노예상인은 " + getCalculatedDamage() + "의 피해를 입히려 합니다.";
               }
               else {
-                  return "빨강 노예사인은 8의 피해를 입히고 취약(1)의 디버프를 걸려 합니다!";
+                  return "빨강 노예사인은 " + getCalculatedDamage() + "의 피해를 입히고 취약(1)의 디버프를 걸려 합니다!";
               }
            }
            
@@ -809,6 +897,9 @@ class FungiBeast extends Monster {   // 동물하초
         health = Rand.randInt(22, 28);
         name = "동물하초";
         moveSet = new int[] { 60, 40 };
+        if (nextMove == 0) {
+            dmg = 6;
+           }
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -825,6 +916,9 @@ class FungiBeast extends Monster {   // 동물하초
         } else if (nextMove == 1) {
            Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
+       if (nextMove == 0) {
+           dmg = 6;
+          }
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -832,7 +926,7 @@ class FungiBeast extends Monster {   // 동물하초
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "동물하초는 6의 피해를 주려 합니다.";
+            return "동물하초는 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
             return "동물하초는 힘(3) 의 버프를 사용하려 합니다.";
         }
@@ -844,6 +938,9 @@ class ShieldGremlin extends Monster {   // 방패 그렘린
    public ShieldGremlin() {
         health = Rand.randInt(12, 15);
         name = "방패 그렘린";
+        if (nextMove == 0) {
+            dmg = 6;
+           }
         moveSet = new int[] { 50, 50 };
         status = new BuffStatus();
         maxHealth = health;
@@ -863,6 +960,7 @@ class ShieldGremlin extends Monster {   // 방패 그렘린
            int defend = dfd;
            addShield(defend);
         }
+       dmg = 6;
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -870,7 +968,7 @@ class ShieldGremlin extends Monster {   // 방패 그렘린
     
     public String getIntentionText() {
         if (nextMove == 0) {
-            return "방패 그램린은 6의 피해를 주려 합니다.";
+            return "방패 그램린은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
         } else if (nextMove == 1) {
             return "방패 그램린은 방어도 7을 얻으려 합니다.";
         }
@@ -883,6 +981,7 @@ class GremlinWizard extends Monster {   // 마법사 그렘린
         health = Rand.randInt(23, 25);
         name = "마법사 그렘린";
         moveSet = new int[] { 100 };
+        dmg = 25;
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -900,11 +999,12 @@ class GremlinWizard extends Monster {   // 마법사 그렘린
        if (Field.getInstance().currentTurn <= 3) {
           Charging();
         } else if (Field.getInstance().currentTurn == 4) {
-           dmg = 25;
+           
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
             initTurn();
         }
+       dmg = 25;
         super.continuePattern();
         setNextMove();
         turnPlus();
@@ -915,8 +1015,8 @@ class GremlinWizard extends Monster {   // 마법사 그렘린
        if (Field.getInstance().currentTurn <= 3) {
             return "마법사 그램린은 강력한 공격을 차징중입니다!";
        } else if (Field.getInstance().currentTurn == 4) {
-    	   initTurn();
-           return "마법사 그램린은 25의 데미지를 주려합니다!!";
+          initTurn();
+           return "마법사 그램린은 "+ getCalculatedDamage() + "의 데미지를 주려합니다!!";
         }
         return "???";
     }
@@ -962,6 +1062,7 @@ class FatGremlin extends Monster {   // 뚱뚱한 그렘린
         health = Rand.randInt(13, 17);
         name = "뚱뚱한 그렘린";
         moveSet = new int[] { 100 };
+        dmg = 4;
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -971,16 +1072,16 @@ class FatGremlin extends Monster {   // 뚱뚱한 그렘린
     
     public void continuePattern() {
        initShield();
-       dmg = 4;
         int damage = getCalculatedDamage();
         Effects.attack(damage, Player.getInstance());
         Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
+        dmg = 4;
         super.continuePattern();
         setNextMove();
     }
     
     public String getIntentionText() {
-            return "뚱뚱한 그램린은 4의 피해를 주며 약화(1)의 디버프를 걸려 합니다.";
+            return "뚱뚱한 그램린은 " + getCalculatedDamage() + "의 피해를 주며 약화(1)의 디버프를 걸려 합니다.";
     }
 }
 
@@ -989,6 +1090,7 @@ class SneakyGremlin extends Monster {   // 교활한 그렘린
         health = Rand.randInt(10, 14);
         name = "교활한 그렘린";
         moveSet = new int[] { 100 };
+        dmg = 9;
         status = new BuffStatus();
         maxHealth = health;
         initTurn();
@@ -999,43 +1101,43 @@ class SneakyGremlin extends Monster {   // 교활한 그렘린
     
     public void continuePattern() {
        initShield();
-       dmg = 9;
         int damage = getCalculatedDamage();
         Effects.attack(damage, Player.getInstance());
+        dmg = 9;
         super.continuePattern();
         setNextMove();
         turnPlus();
     }
     
     public String getIntentionText() {
-        return "교활한 그램린은 9의 피해를 주려 합니다.";
+        return "교활한 그램린은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
     }
 }
 
 class TestMonster extends Monster {   // 교활한 그렘린
-	   public TestMonster() {
-	        health = 50;
-	        name = "교활한 그렘린";
-	        moveSet = new int[] { 100 };
-	        status = new BuffStatus();
-	        maxHealth = health;
-	        initTurn();
-	        setNextMove();
-	        turnPlus();
-	    }
-	    
-	    public void continuePattern() {
-	       initShield();
-	       dmg = 10;
-	        int damage = getCalculatedDamage();
-	        Effects.attack(damage, Player.getInstance());
-	        Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
-	        super.continuePattern();
-	        setNextMove();
-	        turnPlus();
-	    }
-	    
-	    public String getIntentionText() {
-	        return "약화를 걸려고 합니다";
-	    }
-	}
+      public TestMonster() {
+           health = 50;
+           name = "교활한 그렘린";
+           moveSet = new int[] { 100 };
+           status = new BuffStatus();
+           maxHealth = health;
+           initTurn();
+           setNextMove();
+           turnPlus();
+       }
+       
+       public void continuePattern() {
+          initShield();
+          dmg = 10;
+           int damage = getCalculatedDamage();
+           Effects.attack(damage, Player.getInstance());
+           Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
+           super.continuePattern();
+           setNextMove();
+           turnPlus();
+       }
+       
+       public String getIntentionText() {
+           return "약화를 걸려고 합니다";
+       }
+   }

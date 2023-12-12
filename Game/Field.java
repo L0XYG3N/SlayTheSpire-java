@@ -53,7 +53,7 @@ public class Field {
                 //
 
                 GUI.changeScreen(ScreenState.REWARD);
-                
+                Player.getInstance().status.init();
                 //GUI.updateScreen();
                 break;
         }

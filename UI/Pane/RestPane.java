@@ -1,6 +1,8 @@
 package UI.Pane;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import Game.Player;
@@ -21,6 +23,13 @@ public class RestPane extends JLayeredPane{
     private RestPane() {
         
         player = Player.getInstance();
+
+    	// 배경 이미지 추가 - 승훈
+    	ImageIcon backgroundImage = new ImageIcon("resource/rest.png"); // 실제 이미지 경로로 대체하세요
+    	JLabel backgroundLabel = new JLabel(backgroundImage);
+    	backgroundLabel.setBounds(0, 0, MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
+    	add(backgroundLabel);
+    	setLayer(backgroundLabel, -10);
 
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);

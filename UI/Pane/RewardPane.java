@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import Game.CardGetter;
@@ -16,6 +18,7 @@ import UI.GUI;
 import UI.MainFrame;
 import UI.RewardCardButton;
 import UI.GUI.ScreenState;
+import UI.Listener.CardButtonListener;
 
 public class RewardPane extends JLayeredPane{
     JButton goldReward;
@@ -55,9 +58,15 @@ public class RewardPane extends JLayeredPane{
         
         goldReward.setSize(buttonSize);
         confirmButton.setSize(buttonSize);
+        // 배경 이미지 추가 - 승훈
+    	ImageIcon backgroundImage = new ImageIcon("resource/rewardRoom.jpg"); // 실제 이미지 경로로 대체하세요
+    	JLabel backgroundLabel = new JLabel(backgroundImage);
+    	backgroundLabel.setBounds(0, 0, MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
+    	add(backgroundLabel);
+    	setLayer(backgroundLabel, -10);
 
         for(int i = 0; i < 3;i++) {
-            cardButton[i] = new RewardCardButton();
+            cardButton[i] = new RewardCardButton(cardButton);
             cardButton[i].setLocation(MainFrame.SCREEN_WIDTH/2 + (i-1) * 200 - 75,MainFrame.SCREEN_HEIGHT/5*2);
             add(cardButton[i]);
         }
@@ -72,6 +81,8 @@ public class RewardPane extends JLayeredPane{
                 goldReward.setEnabled(false);
             }
         });
+
+
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

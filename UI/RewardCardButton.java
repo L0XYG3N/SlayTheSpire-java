@@ -7,13 +7,16 @@ import UI.Listener.CardButtonListener;
 import UI.Pane.CardPane;
 
 public class RewardCardButton extends JButton{
-    CardPane cardPane;
+    public CardPane cardPane;
     CardButtonListener listener;
-    public RewardCardButton() {
+    
+    public RewardCardButton(RewardCardButton [] b) {
         setLayout(null);
         setSize(150,220);
+        setOpaque(true);
         //setLocation(x,y);
         listener = new CardButtonListener(cardPane, this);
+        listener.setButtonArray(b);
         addActionListener(listener);
         
         //setCard(CardGetter.GetCardById(1));

@@ -39,14 +39,18 @@ public class BuffStatus {
     public Stat steelArmor; // 판금갑옷, 턴이 끝날때 stack만큼 방어도 추가 후 1 감소
 
     public BuffStatus() {
-        strength = new Stat(INTENSITY);
-        vulnerable = new Stat(DURATION);
-        weak = new Stat(DURATION);
-        dexterity = new Stat(INTENSITY);
-        regeneration = new Stat(DURATION);
-        steelArmor = new Stat(DURATION);
+    	init();
     }
 
+    public String getPlayerStatus() {
+        return "Strength: " + strength.getStack() +
+               " | Vulnerable: " + vulnerable.getStack() +
+               " | Weak: " + weak.getStack() +
+               " | Dexterity: " + dexterity.getStack() +
+               " | Regeneration: " + regeneration.getStack() +
+               " | SteelArmor: " + steelArmor.getStack();
+    }
+    
     public void updateEffects() {
         // 매 턴이 끝날때 실행되며, 모든 스탯의 지속시간을 1씩 감소시킨다.
         strength.update();
@@ -55,6 +59,15 @@ public class BuffStatus {
         dexterity.update();
         regeneration.update();
         steelArmor.update();
+    }
+
+    public void init() {
+        strength = new Stat(INTENSITY);
+        vulnerable = new Stat(DURATION);
+        weak = new Stat(DURATION);
+        dexterity = new Stat(INTENSITY);
+        regeneration = new Stat(DURATION);
+        steelArmor = new Stat(DURATION);
     }
 
 }
