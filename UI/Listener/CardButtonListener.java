@@ -22,7 +22,6 @@ public class CardButtonListener implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         Player.getInstance().addCard(card.card);
-        //card.disable();
         parent.setEnabled(false);
         parent.remove(card);
         parent.repaint();

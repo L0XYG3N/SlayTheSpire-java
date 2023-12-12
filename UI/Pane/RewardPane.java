@@ -52,12 +52,13 @@ public class RewardPane extends JLayeredPane{
         
         cardButton = new RewardCardButton[3];
         card = new CardPane[3];
-
+        
         goldReward.setSize(buttonSize);
         confirmButton.setSize(buttonSize);
 
         for(int i = 0; i < 3;i++) {
-            cardButton[i] = new RewardCardButton(MainFrame.SCREEN_WIDTH/2 + (i-1) * 200- 75,MainFrame.SCREEN_HEIGHT/5*2);
+            cardButton[i] = new RewardCardButton();
+            cardButton[i].setLocation(MainFrame.SCREEN_WIDTH/2 + (i-1) * 200 - 75,MainFrame.SCREEN_HEIGHT/5*2);
             add(cardButton[i]);
         }
         
@@ -84,6 +85,8 @@ public class RewardPane extends JLayeredPane{
 
         add(goldReward);
         add(confirmButton);
+
+        
         
         setGoldReward(1);
     }
@@ -107,13 +110,9 @@ public class RewardPane extends JLayeredPane{
     }
 
     public void setRandomCardReward() {
-        // for(int i = 0; i < 3;i++) {
-        //     cardReward[i].remove(card[i]);
-        // }
         for(int i = 0; i < 3;i++) {
             cardButton[i].setCard(CardGetter.getRandomCard(CardType.ATTACK));
             cardButton[i].setEnabled(true);
         }
-        
     }
 }
