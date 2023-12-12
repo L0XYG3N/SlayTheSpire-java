@@ -182,6 +182,9 @@ class Strike extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         player.attack(damage, obj);
     }
 
@@ -230,6 +233,9 @@ class Bash extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         player.attack(damage, obj);
         Effects.addStatus(obj, STATUS.VULNERABLE, effectDuration);
     }
@@ -251,31 +257,13 @@ class Bash extends Card {
     }
 }
 
-class Anger extends Card {
-    public Anger() {
-        cardTarget = CardTarget.ENEMY;
-        cost = 0;
-        cardID = 3;
-        cardType = CardType.ATTACK;
-    }
-
-    public void use(BaseObject obj) {
-    }
-
-    public void toggleUpgrade() {
-    }
-
-    public void updateDescription() {
-    }
-}
-
 class BodySlam extends Card {
     private int damage;
 
     public BodySlam() {
         cardTarget = CardTarget.ENEMY;
-        cost = 0;
-        cardID = 4;
+        cost = 1;
+        cardID = 3;
         cardName = "몸통 박치기";
         cardDescription = "현재 <font color='orange'>방어도</font> 만큼의<br>피해를 줍니다.";
         cardType = CardType.ATTACK;
@@ -283,6 +271,9 @@ class BodySlam extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         damage = Player.getInstance().getShield();
         player.attack(damage, obj);
     }
@@ -301,24 +292,6 @@ class BodySlam extends Card {
     }
 }
 
-class Clash extends Card {
-    public Clash() {
-        cardTarget = CardTarget.ENEMY;
-        cost = 0;
-        cardID = 5;
-    }
-
-    public void use(BaseObject obj) {
-
-    }
-
-    public void toggleUpgrade() {
-
-    }
-
-    public void updateDescription() {
-    }
-}
 
 class Cleave extends Card {
     private int damage;
@@ -336,9 +309,15 @@ class Cleave extends Card {
         cardDescription = "적 전체에게 피해를 " + damage + " 줍니다.";
         imagePath = "Img/red/attack/cleave.png";
         isUpgrade = false;
+        
+        // player 필드 초기화 추가
+        player = Player.getInstance();
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         player.attack(damage, obj);  
     }
 
@@ -357,289 +336,307 @@ class Cleave extends Card {
 }
 
 class Clothesline extends Card {
-	 private int damage;
-	 private int damageOrigin;
-	 private int damageUpgraded;
-	
-	 private int effectDuration;
-	 private int effectOrigin;
-	 private int effectUpgraded;
-	
-	 public Clothesline() {
-	     cardTarget = CardTarget.ENEMY;
-	     cardType = CardType.ATTACK;
-	     cost = 2;
-	     cardID = 5;
-	     damageOrigin =12;
-	     damageUpgraded = 14;
-	     effectOrigin = 2;
-	     effectUpgraded = 3;
-	
-	     damage = damageOrigin;
-	     effectDuration = effectOrigin;
-	
-	     cardName = "클로스라인";
-	     cardDescription = "피해를 " + damage + " 줍니다.<br>" + "<font color='orange'>약화</font>를 " + effectDuration + " 부여합니다.";
-	     imagePath = "Img/red/attack/clothesline.png";
-	 }
-	
-	 public void use(BaseObject obj) {
-	        player.attack(damage, obj);
-	        Effects.addStatus(obj, STATUS.WEAK, effectDuration);
-	    }
-	
-	 public void toggleUpgrade() {
-	     if (isUpgrade) {
-	         damage = damageOrigin;
-	         effectDuration = effectOrigin;
-	     } else {
-	         damage = damageUpgraded;
-	         effectDuration = effectUpgraded;
-	     }
-	     isUpgrade = !isUpgrade;
-	 }
-	
-	 public void updateDescription() {
-		 cardDescription = "피해를 " + damage + " 줍니다.<br>" + "<font color='orange'>약화</font>를 " + effectDuration + " 부여합니다.";
-	 }
-	}
-	
-	class IronWave extends Card {
-	    private int damage;
-	    private int damageOrigin;
-	    private int damageUpgraded;
+    private int damage;
+    private int damageOrigin;
+    private int damageUpgraded;
+   
+    private int effectDuration;
+    private int effectOrigin;
+    private int effectUpgraded;
+   
+    public Clothesline() {
+        cardTarget = CardTarget.ENEMY;
+        cardType = CardType.ATTACK;
+        cost = 2;
+        cardID = 5;
+        damageOrigin =12;
+        damageUpgraded = 14;
+        effectOrigin = 2;
+        effectUpgraded = 3;
+   
+        damage = damageOrigin;
+        effectDuration = effectOrigin;
+   
+        cardName = "클로스라인";
+        cardDescription = "피해를 " + damage + " 줍니다.<br>" + "<font color='orange'>약화</font>를 " + effectDuration + " 부여합니다.";
+        imagePath = "Img/red/attack/clothesline.png";
+    }
+   
+    public void use(BaseObject obj) {
+       if (player == null) {
+              player = Player.getInstance();
+          }
+           player.attack(damage, obj);
+           Effects.addStatus(obj, STATUS.WEAK, effectDuration);
+       }
+   
+    public void toggleUpgrade() {
+        if (isUpgrade) {
+            damage = damageOrigin;
+            effectDuration = effectOrigin;
+        } else {
+            damage = damageUpgraded;
+            effectDuration = effectUpgraded;
+        }
+        isUpgrade = !isUpgrade;
+    }
+   
+    public void updateDescription() {
+       cardDescription = "피해를 " + damage + " 줍니다.<br>" + "<font color='orange'>약화</font>를 " + effectDuration + " 부여합니다.";
+    }
+   }
+   
+   class IronWave extends Card {
+       private int damage;
+       private int damageOrigin;
+       private int damageUpgraded;
 
-	    private int defend;
-	    private int defendOrigin;
-	    private int defendUpgraded;
+       private int defend;
+       private int defendOrigin;
+       private int defendUpgraded;
 
-	    public IronWave() {
-	        cardTarget = CardTarget.ENEMY;
-	        cardType = CardType.ATTACK;
-	        cost = 1;
-	        cardID = 6;
-	        damageOrigin = 5;
-	        damageUpgraded = 7;
-	        damage = damageOrigin;
+       public IronWave() {
+           cardTarget = CardTarget.ENEMY;
+           cardType = CardType.ATTACK;
+           cost = 1;
+           cardID = 6;
+           damageOrigin = 5;
+           damageUpgraded = 7;
+           damage = damageOrigin;
 
-	        defendOrigin = 5;
-	        defendUpgraded = 7;
-	        defend = defendOrigin;
+           defendOrigin = 5;
+           defendUpgraded = 7;
+           defend = defendOrigin;
 
-	        cardName = "철의 파동";
-	        cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다. <br>" + "피해를" + damage + " 줍니다.";
-	        imagePath = "Img/red/attack/iron_wave.png";
-	    }
+           cardName = "철의 파동";
+           cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다. <br>" + "피해를" + damage + " 줍니다.";
+           imagePath = "Img/red/attack/iron_wave.png";
+       }
 
-	    public void use(BaseObject obj) {
-	        player.attack(damage, obj);
-	        Player.getInstance().addShield(defend);
-	        PlayerPane.getInstance().updateLabel();
-	    }
+       public void use(BaseObject obj) {
+          if (player == null) {
+               player = Player.getInstance();
+           }
+           player.attack(damage, obj);
+           Player.getInstance().addShield(defend);
+           PlayerPane.getInstance().updateLabel();
+       }
 
-	    public void toggleUpgrade() {
-	        if (isUpgrade) {
-	            damage = damageOrigin;
-	            defend = defendOrigin;
-	        } else {
-	            damage = damageUpgraded;
-	            defend = defendUpgraded;
-	        }
-	        isUpgrade = !isUpgrade;
-	    }
+       public void toggleUpgrade() {
+           if (isUpgrade) {
+               damage = damageOrigin;
+               defend = defendOrigin;
+           } else {
+               damage = damageUpgraded;
+               defend = defendUpgraded;
+           }
+           isUpgrade = !isUpgrade;
+       }
 
-	    public void updateDescription() {
-	    	cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다. <br>" + "피해를" + damage + " 줍니다.";
-	    }
-	}
-	
-	class Thunderclap extends Card {
-	    private int damage;
-	    private int damageOrigin;
-	    private int damageUpgraded;
+       public void updateDescription() {
+          cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다. <br>" + "피해를" + damage + " 줍니다.";
+       }
+   }
+   
+   class Thunderclap extends Card {
+       private int damage;
+       private int damageOrigin;
+       private int damageUpgraded;
 
-	    private int effectDuration;
-	    private int effectOrigin;
-	    private int effectUpgraded;
+       private int effectDuration;
+       private int effectOrigin;
+       private int effectUpgraded;
 
-	    public Thunderclap() {
-	        cardTarget = CardTarget.ENEMYALL;
-	        cardType = CardType.ATTACK;
-	        cost = 1;
-	        cardID = 7;
-	        damageOrigin = 4;
-	        damageUpgraded = 6;
-	        damage = damageOrigin;
+       public Thunderclap() {
+           cardTarget = CardTarget.ENEMYALL;
+           cardType = CardType.ATTACK;
+           cost = 1;
+           cardID = 7;
+           damageOrigin = 4;
+           damageUpgraded = 6;
+           damage = damageOrigin;
 
-	        effectOrigin = 1;
-	        effectUpgraded = 2;
-	        effectDuration = effectOrigin;
+           effectOrigin = 1;
+           effectUpgraded = 2;
+           effectDuration = effectOrigin;
 
-	        cardName = "천둥";
-	        cardDescription = "적 전체에게 피해를 " + damage + "<br>"+" 주고 <font color='orange'>취약</font>을" +effectDuration+"<br>" +" 부여합니다.";
-	        imagePath = "Img/red/attack/thunder_clap.png";
-	    }
+           cardName = "천둥";
+           cardDescription = "적 전체에게 피해를 " + damage + "<br>"+" 주고 <font color='orange'>취약</font>을" +effectDuration+"<br>" +" 부여합니다.";
+           imagePath = "Img/red/attack/thunder_clap.png";
+       }
 
-	    public void use(BaseObject enemy) {
+       public void use(BaseObject enemy) {
+          if (player == null) {
+               player = Player.getInstance();
+           }
             player.attack(damage, enemy);
             Effects.addStatus(enemy, STATUS.VULNERABLE, effectDuration);
-	    }
+       }
 
-	    public void toggleUpgrade() {
-	        if (isUpgrade) {
-	            damage = damageOrigin;
-	            effectDuration = effectOrigin;
-	        } else {
-	            damage = damageUpgraded;
-	            effectDuration = effectUpgraded;
-	        }
-	        isUpgrade = !isUpgrade;
-	    }
+       public void toggleUpgrade() {
+           if (isUpgrade) {
+               damage = damageOrigin;
+               effectDuration = effectOrigin;
+           } else {
+               damage = damageUpgraded;
+               effectDuration = effectUpgraded;
+           }
+           isUpgrade = !isUpgrade;
+       }
 
-	    public void updateDescription() {
-	    	cardDescription = "적 전체에게 피해를 " + damage + "<br>"+" 주고 <font color='orange'>취약</font>을" +effectDuration+"<br>" +" 부여합니다.";
-	    }
-	}
-	
-	class Hemokinesis extends Card {
-	    private int damage;
-	    private int damageOrigin;
-	    private int damageUpgraded;
-	    private int health;
+       public void updateDescription() {
+          cardDescription = "적 전체에게 피해를 " + damage + "<br>"+" 주고 <font color='orange'>취약</font>을" +effectDuration+"<br>" +" 부여합니다.";
+       }
+   }
+   
+   class Hemokinesis extends Card {
+       private int damage;
+       private int damageOrigin;
+       private int damageUpgraded;
+       private int health;
 
-	    public Hemokinesis() {
-	        cardTarget = CardTarget.ENEMY;
-	        cardType = CardType.ATTACK;
-	        cost = 1;
-	        cardID = 8;
-	        health = 2;
-	        damageOrigin = 15;
-	        damageUpgraded = 20;
-	        damage = damageOrigin;
-	        cardName = "혈류";
-	        updateDescription();
-	        imagePath = "Img/red/attack/hemokinesis.png";
-	    }
+       public Hemokinesis() {
+           cardTarget = CardTarget.ENEMY;
+           cardType = CardType.ATTACK;
+           cost = 1;
+           cardID = 8;
+           health = 2;
+           damageOrigin = 15;
+           damageUpgraded = 20;
+           damage = damageOrigin;
+           cardName = "혈류";
+           updateDescription();
+           imagePath = "Img/red/attack/hemokinesis.png";
+       }
 
-	    public void use(BaseObject obj) {
-	        Player.getInstance().loseHealth(health);
-	        player.attack(damage, obj);
-	        PlayerPane.getInstance().updateLabel();
-	    }
+       public void use(BaseObject obj) {
+          if (player == null) {
+               player = Player.getInstance();
+           }
+           Player.getInstance().loseHealth(health);
+           player.attack(damage, obj);
+           PlayerPane.getInstance().updateLabel();
+       }
 
-	    public void toggleUpgrade() {
-	        if (isUpgrade) {
-	            damage = damageOrigin;
-	        } else {
-	            damage = damageUpgraded;
-	        }
-	        isUpgrade = !isUpgrade;
-	        updateDescription();
-	    }
+       public void toggleUpgrade() {
+           if (isUpgrade) {
+               damage = damageOrigin;
+           } else {
+               damage = damageUpgraded;
+           }
+           isUpgrade = !isUpgrade;
+           updateDescription();
+       }
 
-	    public void updateDescription() {
-	        cardDescription = "체력을" + health + " 잃습니다.<br>" +"피해를 " + damage + " 줍니다.";
-	    }
-	}
+       public void updateDescription() {
+           cardDescription = "체력을" + health + " 잃습니다.<br>" +"피해를 " + damage + " 줍니다.";
+       }
+   }
 
-	class Uppercut extends Card {
-	    private int damage;
-	    private int damageOrigin;
-	    private int damageUpgraded;
+   class Uppercut extends Card {
+       private int damage;
+       private int damageOrigin;
+       private int damageUpgraded;
 
-	    private int effectDurationWeak;
-	    private int effectOriginWeak;
-	    private int effectUpgradedWeak;
+       private int effectDurationWeak;
+       private int effectOriginWeak;
+       private int effectUpgradedWeak;
 
-	    private int effectDurationVulnerable;
-	    private int effectOriginVulnerable;
-	    private int effectUpgradedVulnerable;
+       private int effectDurationVulnerable;
+       private int effectOriginVulnerable;
+       private int effectUpgradedVulnerable;
 
-	    public Uppercut() {
-	        cardTarget = CardTarget.ENEMY;
-	        cardType = CardType.ATTACK;
-	        cost = 2;
-	        cardID = 9;
-	        damageOrigin = 13;
-	        damageUpgraded = 16;
-	        effectOriginWeak = 1;
-	        effectUpgradedWeak = 2;
-	        effectOriginVulnerable = 1;
-	        effectUpgradedVulnerable = 2;
+       public Uppercut() {
+           cardTarget = CardTarget.ENEMY;
+           cardType = CardType.ATTACK;
+           cost = 2;
+           cardID = 9;
+           damageOrigin = 13;
+           damageUpgraded = 16;
+           effectOriginWeak = 1;
+           effectUpgradedWeak = 2;
+           effectOriginVulnerable = 1;
+           effectUpgradedVulnerable = 2;
 
-	        damage = damageOrigin;
-	        effectDurationWeak = effectOriginWeak;
-	        effectDurationVulnerable = effectOriginVulnerable;
+           damage = damageOrigin;
+           effectDurationWeak = effectOriginWeak;
+           effectDurationVulnerable = effectOriginVulnerable;
 
-	        cardName = "어퍼컷";
-	        cardDescription = "피해를 " + damage + " 줍니다. <br>" +
-	                "<font color='orange'>약화</font>를 " + effectDurationWeak + ",<font color='orange'> 취약</font>을" + effectDurationVulnerable + "<br> 부여합니다.";
+           cardName = "어퍼컷";
+           cardDescription = "피해를 " + damage + " 줍니다. <br>" +
+                   "<font color='orange'>약화</font>를 " + effectDurationWeak + ",<font color='orange'> 취약</font>을" + effectDurationVulnerable + "<br> 부여합니다.";
 
-	        imagePath = "Img/red/attack/uppercut.png";
-	    }
+           imagePath = "Img/red/attack/uppercut.png";
+       }
 
-	    public void use(BaseObject obj) {
-	        player.attack(damage, obj);
-	        Effects.addStatus(obj, STATUS.WEAK, effectDurationWeak);
-	        Effects.addStatus(obj, STATUS.VULNERABLE, effectDurationVulnerable);
-	    }
+       public void use(BaseObject obj) {
+          if (player == null) {
+               player = Player.getInstance();
+           }
+           player.attack(damage, obj);
+           Effects.addStatus(obj, STATUS.WEAK, effectDurationWeak);
+           Effects.addStatus(obj, STATUS.VULNERABLE, effectDurationVulnerable);
+       }
 
-	    public void toggleUpgrade() {
-	        if (isUpgrade) {
-	            damage = damageOrigin;
-	            effectDurationWeak = effectOriginWeak;
-	            effectDurationVulnerable = effectOriginVulnerable;
-	        } else {
-	            damage = damageUpgraded;
-	            effectDurationWeak = effectUpgradedWeak;
-	            effectDurationVulnerable = effectUpgradedVulnerable;
-	        }
-	        isUpgrade = !isUpgrade;
-	    }
+       public void toggleUpgrade() {
+           if (isUpgrade) {
+               damage = damageOrigin;
+               effectDurationWeak = effectOriginWeak;
+               effectDurationVulnerable = effectOriginVulnerable;
+           } else {
+               damage = damageUpgraded;
+               effectDurationWeak = effectUpgradedWeak;
+               effectDurationVulnerable = effectUpgradedVulnerable;
+           }
+           isUpgrade = !isUpgrade;
+       }
 
-	    public void updateDescription() {
-	    	cardDescription = "피해를 " + damage + " 줍니다. <br>" +
-	                "<font color='orange'>약화</font>를 " + effectDurationWeak + ", <font color='orange'> 취약</font>을" + effectDurationVulnerable + "<br> 부여합니다.";
-	    }
-	}
-	
-	class Bludgeon extends Card {
-	    private int damage;
-	    private int damageOrigin;
-	    private int damageUpgraded;
+       public void updateDescription() {
+          cardDescription = "피해를 " + damage + " 줍니다. <br>" +
+                   "<font color='orange'>약화</font>를 " + effectDurationWeak + ", <font color='orange'> 취약</font>을" + effectDurationVulnerable + "<br> 부여합니다.";
+       }
+   }
+   
+   class Bludgeon extends Card {
+       private int damage;
+       private int damageOrigin;
+       private int damageUpgraded;
 
-	    public Bludgeon() {
-	        cardTarget = CardTarget.ENEMY;
-	        cardType = CardType.ATTACK;
-	        cost = 3;
-	        cardID = 10;
-	        damageOrigin = 32;
-	        damageUpgraded = 42;
-	        damage = damageOrigin;
+       public Bludgeon() {
+           cardTarget = CardTarget.ENEMY;
+           cardType = CardType.ATTACK;
+           cost = 0;
+           cardID = 10;
+           damageOrigin = 32;
+           damageUpgraded = 42;
+           damage = damageOrigin;
 
-	        cardName = "몽둥이질";
-	        cardDescription = "피해를 " + damage + " 줍니다.";
+           cardName = "몽둥이질";
+           cardDescription = "피해를 " + damage + " 줍니다.";
 
-	        imagePath = "Img/red/attack/bludgeon.png";
-	    }
+           imagePath = "Img/red/attack/bludgeon.png";
+       }
 
-	    public void use(BaseObject obj) {
-	        player.attack(damage, obj);
-	    }
+       public void use(BaseObject obj) {
+          if (player == null) {
+               player = Player.getInstance();
+           }
+           player.attack(damage, obj);
+       }
 
-	    public void toggleUpgrade() {
-	    	if (isUpgrade) {
-	            damage = damageOrigin;
-	        } else {
-	            damage = damageUpgraded;
-	        }
-	        isUpgrade = !isUpgrade;
-	    }
+       public void toggleUpgrade() {
+          if (isUpgrade) {
+               damage = damageOrigin;
+           } else {
+               damage = damageUpgraded;
+           }
+           isUpgrade = !isUpgrade;
+       }
 
-	    public void updateDescription() {
-	    	cardDescription = "피해를 " + damage + " 줍니다.";
-	    }
-	}
+       public void updateDescription() {
+          cardDescription = "피해를 " + damage + " 줍니다.";
+       }
+   }
 
 class Defend extends Card {
     private int defend;
@@ -664,6 +661,9 @@ class Defend extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         obj.addShield(defend);
     }
 
@@ -680,51 +680,6 @@ class Defend extends Card {
         cardDescription = "<font color='orange'>방어도</font>를 " + defend + " 얻습니다.";
     }
 }
-
-class Armaments extends Card {
-    public void use(BaseObject obj) {
-    }
-
-    public void toggleUpgrade() {
-    }
-
-    public void updateDescription() {
-    }
-}
-
-class Flex extends Card {
-    public void use(BaseObject obj) {
-    }
-
-    public void toggleUpgrade() {
-    }
-
-    public void updateDescription() {
-    }
-}
-
-class Havoc extends Card {
-    public void use(BaseObject obj) {
-    }
-
-    public void toggleUpgrade() {
-    }
-
-    public void updateDescription() {
-    }
-}
-
-class ShrugOff extends Card {
-    public void use(BaseObject obj) {
-    }
-
-    public void toggleUpgrade() {
-    }
-
-    public void updateDescription() {
-    }
-}
-
 
 class Bloodletting extends Card {
     private Player player = Player.getInstance();
@@ -746,6 +701,9 @@ class Bloodletting extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         player.loseHealth(health);
         PlayerPane.getInstance().updateLabel();
         player.addMana(mana);
@@ -788,6 +746,9 @@ class Entrench extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         int currentBlock = Player.getInstance().getShield();
         Player.getInstance().addShield(currentBlock * (blockMultiplier - 1));
         PlayerPane.getInstance().updateLabel();
@@ -830,12 +791,14 @@ class IntimidateCard extends Card {
     }
 
     public void use(BaseObject obj) {
-    	Effects.addStatus(obj, STATUS.WEAK, effectDuration);
+       if (player == null) {
+            player = Player.getInstance();
+        }
+       Effects.addStatus(obj, STATUS.WEAK, effectDuration);
     }
     
-
     public void toggleUpgrade() {
-        if (isUpgrade) {
+        if (isUpgrade) {   
             effectDuration = effectOrigin;
         } else {
             effectDuration = effectUpgraded;
@@ -849,7 +812,7 @@ class IntimidateCard extends Card {
 }
 
 class Shockwave extends Card {
-	private int effectDurationWeak;
+   private int effectDurationWeak;
     private int effectOriginWeak;
     private int effectUpgradedWeak;
 
@@ -877,6 +840,9 @@ class Shockwave extends Card {
     }
     
     public void use(BaseObject enemy) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         Effects.addStatus(enemy, STATUS.WEAK, effectDurationWeak);
         Effects.addStatus(enemy, STATUS.VULNERABLE, effectDurationVulnerable);
     }
@@ -893,7 +859,7 @@ class Shockwave extends Card {
     }
 
     public void updateDescription() {
-    	 cardDescription = "적 전체에게 <font color='orange'>약화</font>" + effectDurationWeak+ "<br>"+ "<font color='orange'>취약</font> " + effectDurationVulnerable + " 부여합니다.";
+        cardDescription = "적 전체에게 <font color='orange'>약화</font>" + effectDurationWeak+ "<br>"+ "<font color='orange'>취약</font> " + effectDurationVulnerable + " 부여합니다.";
     }
 }
 
@@ -920,6 +886,9 @@ class Barricade extends Card {
     }
 
     public void use(BaseObject obj) {
+       if (player == null) {
+            player = Player.getInstance();
+        }
         obj.addShield(defend);
     }
 
@@ -941,12 +910,14 @@ class Combust extends Card {
     private int damage;
     private int damageOrigin;
     private int damageUpgraded;
+    private int health;
 
     public Combust() {
         cardTarget = CardTarget.ENEMYALL;
         cardType = CardType.POWER;
         cost = 1;
         cardID = 200;
+        health = 1;
 
         damageOrigin = 5;
         damageUpgraded = 7;
@@ -959,7 +930,7 @@ class Combust extends Card {
     }
 
     public void use(BaseObject obj) {
-    	
+       
     }
     
     public void use(BaseObject[] enemies) {
@@ -981,6 +952,6 @@ class Combust extends Card {
     }
 
     public void updateDescription() {
-    	cardDescription = "턴 종료 시 체력을 1 <br>" + "잃고 적 전체에게 <br>" + "피해를 " + damage + " 줍니다.";
+       cardDescription = "턴 종료 시 체력을" + health +"<br>" + "잃고 적 전체에게 <br>" + "피해를 " + damage + " 줍니다.";
     }
 }

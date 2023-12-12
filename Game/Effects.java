@@ -25,27 +25,27 @@ public class Effects {
         switch (stat) {
 
             case STRENGTH:
-                target.status.strength.stack = stack;
+                target.status.strength.stack += stack;
                 break;
 
             case VULNERABLE:
-                target.status.vulnerable.stack = stack;
+                target.status.vulnerable.stack += stack;
                 break;
 
             case WEAK:
-                target.status.weak.stack = stack;
+                target.status.weak.stack += stack;
                 break;
 
             case DEXTERITY:
-                target.status.dexterity.stack = stack;
+                target.status.dexterity.stack += stack;
                 break;
 
             case REGENERATION:
-                target.status.regeneration.stack = stack;
+                target.status.regeneration.stack += stack;
                 break;
 
             case STEELARMOR:
-                target.status.steelArmor.stack = stack;
+                target.status.steelArmor.stack += stack;
                 break;
         }
     }

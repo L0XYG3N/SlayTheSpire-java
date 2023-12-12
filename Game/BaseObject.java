@@ -1,13 +1,27 @@
 package Game;
 
-public class BaseObject {
+import UI.Pane.BattlePane; 
+
+public abstract class BaseObject { // Bass
     /*
      * 플레이어와 보스의 기본적인 기능을 구현한 클래스,
      * 모든 보스가 이 클래스를 상속해서 배열로 묶기 쉽게 만들었다.
      */
+	private String intentionText;
+
+    public void setIntentionText(String intentionText) {
+        this.intentionText = intentionText;
+    }
+
+    public String getIntentionText() {
+        return intentionText;
+    }
+	
     public int maxHealth;
     public int health;
 
+    public abstract String getImagePath();
+    
     public int shield; // 캐릭터의 방어막
 
     // 캐릭터의 상태(힘,취약 등등의 스탯이 담겨있다.)
@@ -43,6 +57,21 @@ public class BaseObject {
         amount += status.dexterity.stack;
 
         shield += amount;
+        
+        for(int i = 0; i < 5;i++) {
+            if(BattlePane.monsters[i] != null) {
+                BattlePane.monsters[i].updateLabel();
+            }
+        }
+    }
+    
+    public void initShield() {
+        shield = 0; // shield 초기화
+        for(int i = 0; i < 5;i++) {
+            if(BattlePane.monsters[i] != null) {
+                BattlePane.monsters[i].updateLabel();
+            }
+        }
     }
 
     public void addHealth(int amount) {

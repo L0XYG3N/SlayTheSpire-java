@@ -30,10 +30,17 @@ public class MapPane extends JLayeredPane{
         gameMap = Game.getInstance().gameMap;
 
         MapPaneListener listener = new MapPaneListener(this);
-        addMouseListener(listener);
-        addMouseMotionListener(listener);
+        // addMouseListener(listener);
+        // addMouseMotionListener(listener);
         addMouseWheelListener(listener);
         
+        drawingPanel = new MapDrawingPanel(gameMap);
+        add(drawingPanel);
+    }
+
+    public void resetMap() {
+        gameMap = Game.getInstance().gameMap;
+        remove(drawingPanel);
         drawingPanel = new MapDrawingPanel(gameMap);
         add(drawingPanel);
     }

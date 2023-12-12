@@ -19,7 +19,7 @@ class Stat {
     public void update() {
         switch (stackingBehavior) {
             case INTENSITY:
-
+            		break;
             case DURATION:
                 stack = Math.max(0, --stack);
         }

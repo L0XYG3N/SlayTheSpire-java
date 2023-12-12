@@ -7,8 +7,12 @@ import javax.swing.*;
 
 import Game.Field;
 
+import java.util.Map;
+import java.util.Random;
+
 public class GUI{
 
+	private static int randomID1, randomID2;
     private static MainFrame frame;
     private static BattlePane battlePane;
     private static ShopPane shopPane;
@@ -16,8 +20,9 @@ public class GUI{
     private static MainMenuPane mainMenuPane;
     private static RewardPane rewardPane;
     private static RestPane restPane;
+    private static DeathPane deathPane; // 사망시 화면 추가 - 승훈
 
-    public enum ScreenState {MAIN,BATTLE,SHOP,MAP,REWARD,REST};
+    public enum ScreenState {MAIN,BATTLE,SHOP,MAP,REWARD,REST,Death};
 
     public GUI() {
         initAllPanes();
@@ -34,12 +39,14 @@ public class GUI{
         rewardPane = RewardPane.getInstance();
         shopPane = ShopPane.getInstance();
         restPane = RestPane.getInstance();
+        deathPane = new DeathPane(); // 추가 - 스훈
     }
 
     public static void changeScreen(ScreenState s) {
         switch(s) {
             case BATTLE:
             frame.updatePane(battlePane);
+            battlePane.revalidate();
             break;
             case SHOP:
             frame.updatePane(shopPane);
@@ -59,33 +66,48 @@ public class GUI{
             case REST:
             frame.updatePane(restPane);
             break;
+            case Death:
+            frame.updatePane(deathPane);
+            break;
         }
         frame.repaint();
     }
 
     public static void startBattle(int floor, MapLocation loc) {
-        switch(loc) {
-            case BOSS:
-            case ENEMY:
-            case ELITE:
-            Field.getInstance().initStage(3);
-            break;
-            case REST, TREASURE, MERCHANT, UNKNOWN:
-            //경고 제거용 더미 케이스, 이 4가지 케이스는 호출될일 없음
-            return;
-            
+        Random random = new Random();
+        randomID1 = random.nextInt(5) + 1;
+        randomID2 = random.nextInt(12) + 1;
+         switch(loc) {
+             case BOSS:
+             case ENEMY:
+             case ELITE:
+                switch(2) {
+                   case 1:
+                      Field.getInstance().initEasyStage(randomID1);
+                   case 2:
+                      Field.getInstance().initStage(13);
+                }
+                break;
+             case REST, TREASURE, MERCHANT, UNKNOWN:
+             //경고 제거용 더미 케이스, 이 4가지 케이스는 호출될일 없음
+             return;
+             
 
-        }
-        changeScreen(ScreenState.BATTLE);
-        battlePane.initBattlePane();
+         }
+         changeScreen(ScreenState.BATTLE);
+         battlePane.initBattlePane();
 
-    }
+     }
 
     public static void updateScreen() {
         battlePane.drawMonsters();
         //mainMenuPane.
         //battlePane.
         
+    }
+
+    public static void redrawMap() {
+        mapPane.resetMap();
     }
 
 }

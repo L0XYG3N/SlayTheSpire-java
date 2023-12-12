@@ -45,7 +45,7 @@ public class RestPane extends JLayeredPane{
         rest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //체력 20퍼센트 회복 후 다시 지도 표시
-                player.addHealth((int)(player.maxHealth * 0.25));
+                player.addHealth((int)(player.maxHealth * 0.3));
                 GUI.changeScreen(ScreenState.MAP);
             }
         });

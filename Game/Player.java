@@ -11,25 +11,43 @@ public class Player extends BaseObject {
     private int gold;
     public int weakenShield;
 
+	private String imagePath = "resource/Player.png";	// 플레이어 이미지 추가 - 승훈	
+    
     // 싱글톤 기법
     private static Player instance = new Player();
 
     private Player() {
+        initPlayer();
+    }
+
+    public void initPlayer() {
         potions = new int[4];
         cards = new Deck();
         maxMana = 3;
         mana = maxMana;
         maxHealth = 70;
         health = maxHealth;
-        gold=999;
+        gold=99;
         status = new BuffStatus();
     }
-    
+
+    public void Thievery() {
+        gold = gold - 15;
+    }
+
+    public void initShield() {
+        shield = 0; // shield 초기화
+    }
 
     public static Player getInstance() {
         return instance;
     }
 
+    @Override
+    public String getImagePath() { // PlayerPane 에 이미지를 전달할 함수 추가 - 승훈
+        return imagePath;	//	변수에서 미리 지정해줘서 패스 , 클랫스 더 생기면 바꿔야함 
+    }
+    
     public void init() {
         mana = maxMana;
     }
@@ -70,15 +88,22 @@ public class Player extends BaseObject {
     //     cards.discard.add(card);
     //     return true;
     // }
-
+    
     public void usePotion(int index) {
         // 포션 사용할때 실행되는 코드인데 다른거 다하고 만들기
-
+    	
     }
 
     public void addMana(int amount) {
         // 마나 추가
         mana += amount;
+    }
+    
+    public void addShield(int amount) {
+    	if(weakenShield > 0) {
+    		amount *= 0.75;
+    	}
+    	super.addShield(amount);
     }
 
     public void takeMana(int amount) {
@@ -121,6 +146,10 @@ public class Player extends BaseObject {
             amount = (int)(amount * 0.75);
         }
         obj.damage(amount);
+    }
+
+    public void addCard(Card card) {
+        cards.cardList.add(card);
     }
 
 }

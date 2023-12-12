@@ -3,6 +3,8 @@ package Game;
 import java.util.ArrayList;
 import java.util.Random;
 
+import UI.Pane.PlayerPane;
+
 public class Deck {
     private Random random;
 
@@ -36,21 +38,15 @@ public class Deck {
 
 
         cardList.add(new Bash());
-        cardList.add(new Defend());
         cardList.add(new Strike());
-        cardList.add(new BodySlam());
-        cardList.add(new Bash());
-        cardList.add(new Defend());
         cardList.add(new Strike());
-        cardList.add(new BodySlam());
-        cardList.add(new Bash());
-        cardList.add(new Defend());
         cardList.add(new Strike());
-        cardList.add(new BodySlam());
-        cardList.add(new Bash());
-        cardList.add(new Defend());
         cardList.add(new Strike());
-        cardList.add(new BodySlam());
+        cardList.add(new Strike());
+        cardList.add(new Defend());
+        cardList.add(new Defend());
+        cardList.add(new Defend());
+        cardList.add(new Defend());
 
         for(Card card : cardList) {
             field.add(card);
@@ -72,6 +68,8 @@ public class Deck {
         shuffle();
 
         drawCard(drawCount);
+        Player.getInstance().initShield(); // 이 부분을 추가
+        PlayerPane.getInstance().updateLabel();
     }
 
     public void shuffle() {

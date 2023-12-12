@@ -24,9 +24,15 @@ public class Game {
             if (field.enemies[i] != null) {
                 field.enemies[i].continuePattern();
                 field.enemies[i].status.updateEffects();
+                field.enemies[i].monsterIntention();
             }
         }
         player.turnEnd();
+    }
+
+    public void resetGame() {
+        player.initPlayer();
+        gameMap = new GameMap();
     }
 
 }

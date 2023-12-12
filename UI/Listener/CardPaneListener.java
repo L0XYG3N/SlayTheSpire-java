@@ -10,6 +10,11 @@ import Game.*;
 import UI.Pane.*;
 import Util.CollideChecker;
 
+import javax.sound.sampled.*;	//	카드 사용 효과를 추가하기 위해 임포트 - 승훈
+import java.io.File;	//	파일 경로 찾기 위해 임포트 - 승훈
+import java.util.Random;	//	사운드중 랜덤하게 하나의 사운드를 재생시키기 위하여 사용 - 승훈
+
+
 public class CardPaneListener extends MouseAdapter {
     public CardPaneListener(CardPane pane) {
         this.pane = pane;
@@ -34,14 +39,18 @@ public class CardPaneListener extends MouseAdapter {
                 selectEnemy();
                 break;
             case ENEMYALL:
-                if(CollideChecker.getCollidedMonster(pane, BattlePane.monsters) != null) {
-                    for(int i = 0; i < 5;i++) {
-                        if(BattlePane.monsters[i] != null) {
+                for (int i = 0; i < 5; i++) {
+                    if (BattlePane.monsters[i] != null) {
+                        BattlePane.monsters[i].deHighlight();
+                    }
+                }
+                if (CollideChecker.getCollidedMonster(pane, BattlePane.monsters) != null) {
+                    for (int i = 0; i < 5; i++) {
+                        if (BattlePane.monsters[i] != null) {
                             BattlePane.monsters[i].highlight();
                         }
                     }
                 }
-                
                 break;
             case PLAYER:
                 selectPlayer();
@@ -76,24 +85,28 @@ public class CardPaneListener extends MouseAdapter {
                         ((MonsterPane)collidedPane).updateLabel();
                         battlePane.updateCardPane();
                         c.repaint();
+                        playSoloATKSound();
                         return;
                     }
                 }
                 break;
             case ENEMYALL:
-                for(int i = 0; i < 5;i++) {
-                    if(BattlePane.monsters[i] != null) {
-                        BattlePane.monsters[i].deHighlight();
+                if (CollideChecker.getCollidedMonster(pane, BattlePane.monsters) != null) {
+                    for (int i = 0; i < 5; i++) {
+                        if (BattlePane.monsters[i] != null) {
+                            BattlePane.monsters[i].deHighlight();
+                        }
                     }
-                }
-                if(pane.useCard(Field.getInstance().enemies) == false) {
-                    break;
-                }
-                battlePane.updateCardPane();
-                c.repaint();
-                for(int i = 0; i < 5;i++) {
-                    if(BattlePane.monsters[i] != null) {
-                        BattlePane.monsters[i].updateLabel();
+                    if (pane.useCard(Field.getInstance().enemies) == false) {
+                        break;
+                    }
+                    battlePane.updateCardPane();
+                    c.repaint();
+                    for (int i = 0; i < 5; i++) {
+                        if (BattlePane.monsters[i] != null) {
+                            BattlePane.monsters[i].updateLabel();
+                            playGroupATKSound();
+                        }
                     }
                 }
                 break;
@@ -104,6 +117,8 @@ public class CardPaneListener extends MouseAdapter {
                     playerPane.updateLabel();
                     battlePane.updateCardPane();
                     c.repaint();
+                    playSKILLSound();	//	스킬 사용 사운드 추가 - 승훈
+                    return;
                 }
         }
         pane.moveBack();
@@ -136,6 +151,76 @@ public class CardPaneListener extends MouseAdapter {
             playerPane.highlight();
         } else {
             playerPane.deHighlight();
+        }
+    }
+    
+    private void playSoloATKSound() {
+        try {
+            // 랜덤 객체 생성
+            Random random = new Random();
+
+            // 랜덤하게 사운드 선택
+            String[] soundPaths = {
+                "resource/sword1.wav",
+                "resource/sword2.wav",
+                "resource/sword3.wav"
+            };
+            String selectedSoundPath = soundPaths[random.nextInt(soundPaths.length)];
+
+            // 사운드 파일 경로를 적절히 수정
+            File soundFile = new File(selectedSoundPath);
+
+            // 오디오 입력 스트림 생성
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+
+            // Clip 생성 및 열기
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+
+            // 사운드 재생
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void playGroupATKSound() {	//	복수 대상 공격 사운드 추가 - 승훈
+        try {
+            // 사운드 파일 경로를 적절히 수정
+            File soundFile = new File("resource/sword.wav");
+
+            // 오디오 입력 스트림 생성
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+
+            // Clip 생성 및 열기
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+
+            // 사운드 재생
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    private void playSKILLSound() {	//	단일 대상 공격 사운드 추가 - 승훈
+        try {
+            // 사운드 파일 경로를 적절히 수정
+            File soundFile = new File("resource/shield.wav");
+
+            // 오디오 입력 스트림 생성
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+
+            // Clip 생성 및 열기
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+
+            // 사운드 재생
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

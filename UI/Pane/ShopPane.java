@@ -107,11 +107,10 @@ public class ShopPane extends JLayeredPane {
     public void buyItem(int i) {
         Card card = displayCard.get(i).card;
         player.cards.cardList.add(card);
+        updateGoldLabel();  // 골드 라벨 업데이트
         remove(displayCard.get(i));
         remove(displayLabel.get(i));
         repaint();
-
-        
     }
 
 }
