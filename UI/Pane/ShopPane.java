@@ -1,5 +1,7 @@
 package UI.Pane;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -34,14 +36,14 @@ public class ShopPane extends JLayeredPane {
     ArrayList<JLabel> displayLabel = new ArrayList<JLabel>(); 
 
     private ShopPane() {
-    	
-    	// 배경 이미지 추가 - 승훈
-    	ImageIcon backgroundImage = new ImageIcon("resource/shop.png"); // 실제 이미지 경로로 대체하세요
-    	JLabel backgroundLabel = new JLabel(backgroundImage);
-    	backgroundLabel.setBounds(0, 0, MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
-    	add(backgroundLabel);
-    	setLayer(backgroundLabel, -10);
-    	
+       
+       // 배경 이미지 추가 - 승훈
+       ImageIcon backgroundImage = new ImageIcon("resource/shop.png"); // 실제 이미지 경로로 대체하세요
+       JLabel backgroundLabel = new JLabel(backgroundImage);
+       backgroundLabel.setBounds(0, 0, MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
+       add(backgroundLabel);
+       setLayer(backgroundLabel, -10);
+       
         Dimension size = new Dimension(MainFrame.SCREEN_WIDTH, MainFrame.SCREEN_HEIGHT);
         setLocation(0,0);
         setSize(size);
@@ -57,7 +59,14 @@ public class ShopPane extends JLayeredPane {
         skipButton = new JButton();
 
         goldLabel.setText(Integer.toString(player.getGold()));
+        goldLabel.setFont(new Font("gothic",Font.PLAIN,40));
+        goldLabel.setForeground(Color.black);
         goldLabel.setBounds(MainFrame.SCREEN_WIDTH/2-50,50,100,30);
+        goldLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        goldLabel.setVerticalAlignment(SwingConstants.CENTER);
+        goldLabel.setOpaque(true);
+        goldLabel.setBackground(Color.DARK_GRAY);
+        goldLabel.setForeground(Color.white);
         add(goldLabel);
 
         skipButton.setText("넘어가기");
@@ -100,9 +109,16 @@ public class ShopPane extends JLayeredPane {
             int y = (CardPane.HEIGHT + 40) * (i / 5)+ 100;
             CardPane pane = new CardPane(x, y, randomCard, i, false);
             int price = new Random().nextInt(60)+35;
-            JLabel priceLabel = new JLabel(Integer.toString(price),SwingConstants.CENTER);
-            priceLabel.setBounds(x, y+CardPane.HEIGHT, CardPane.WIDTH, 20);
+            // 수정된 코드
             
+            
+            JLabel priceLabel = new JLabel(Integer.toString(price), SwingConstants.CENTER);
+            priceLabel.setBounds(x, y + CardPane.HEIGHT, CardPane.WIDTH, 20);
+            priceLabel.setFont(new Font("gothic", Font.PLAIN, 16)); // 폰트 크기 조정
+            priceLabel.setForeground(Color.WHITE); // 글자색을 흰색으로 변경
+            priceLabel.setOpaque(true); // 배경색을 사용하도록 설정
+            priceLabel.setBackground(new Color(0, 0, 0, 180)); // 검정색 배경, 불투명도 100
+
 
             displayCard.add(pane);
             displayLabel.add(priceLabel);
@@ -116,6 +132,7 @@ public class ShopPane extends JLayeredPane {
     public void buyItem(int i) {
         Card card = displayCard.get(i).card;
         player.cards.cardList.add(card);
+        //player.addCard(card);
         updateGoldLabel();  // 골드 라벨 업데이트
         remove(displayCard.get(i));
         remove(displayLabel.get(i));

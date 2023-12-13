@@ -61,9 +61,11 @@ public class MapNodeButtonListener implements ActionListener {
             if (randomValue < 0.5) { // 50% 확률
                rewardPane.setGoldReward(1);
                 GUI.startBattle(button.floor, MapLocation.ENEMY);
+                System.out.print("언노운이자 ");
             } else if (randomValue < 0.75) { // 25% 확률
                rewardPane.setGoldReward(2);
                 GUI.startBattle(button.floor, MapLocation.ELITE);
+                System.out.print("언노운이자 ");
             } else if (randomValue < 0.9) { // 15% 확률
                 GUI.changeScreen(ScreenState.REST);
             } else { // 나머지 10% 확률

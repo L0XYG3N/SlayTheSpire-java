@@ -2,12 +2,12 @@ package Game;
 import java.util.Random;
 
 public class MonsterSelector {
-   private static int randomID1, randomID2;
+   private static int randomID1, randomID2, randomID3;
     public static Monster[] easyGetEnemies(int stageID) {
         /*
-         * 정해진 대로 적을 생성해주는 클래스.
-         * 스테이지 id별로 적 배열을 생성해 리턴한다.
-         * 쉬운 적 (전투 3회 이후는 안나오게)
+          정해진 대로 적을 생성해주는 클래스.
+          스테이지 id별로 적 배열을 생성해 리턴한다.
+          쉬운 적 (전투 3회 이후는 안나오게)
          */
         Monster[] easyEnemyList = new Monster[5];
         switch (stageID) {
@@ -29,7 +29,6 @@ public class MonsterSelector {
                easyEnemyList[0] = new AcidSlimeM();
                easyEnemyList[1] = new AcidSlimeS();
                break;
-
         }
         return easyEnemyList;
     }
@@ -38,9 +37,9 @@ public class MonsterSelector {
        randomID1 = random.nextInt(16) + 1;
        randomID2 = random.nextInt(8) + 1;
         /*
-         * 정해진 대로 적을 생성해주는 클래스.
-         * 스테이지 id별로 적 배열을 생성해 리턴한다.
-         * 일반전투
+          정해진 대로 적을 생성해주는 클래스.
+          스테이지 id별로 적 배열을 생성해 리턴한다.
+          일반전투
          */
         Monster[] enemyList = new Monster[5];
         switch (stageID) {
@@ -83,13 +82,8 @@ public class MonsterSelector {
                enemyList[0] = new FungiBeast();
                enemyList[1] = new FungiBeast();
                break;
+               
             case 9:
-               enemyList[0] = new SpikeSlimeL();
-               break;
-            case 10:
-               enemyList[0] = new AcidSlimeL();
-               break;
-            case 11:
                switch (randomID1) {
                case 1:
                    enemyList[0] = new LouseRed();
@@ -155,9 +149,10 @@ public class MonsterSelector {
                    enemyList[0] = new AcidSlimeM();
                    enemyList[1] = new Looter();
                    break;
-               };
+               }
                break;
-            case 12:
+               
+            case 10:
                switch (randomID2) {
                case 1:
                    enemyList[0] = new LouseRed();
@@ -193,14 +188,39 @@ public class MonsterSelector {
                    break;
                }
                break;
-            case 13:
-               enemyList[0] = new SpikeSlimeM();
-               break;
-
         }
         return enemyList;
     }
     
+    //앨리트 몬스터 리스트
+    public static Monster[] eliteGetEnemies(int stageID) { 
+        Monster[] eliteEnemyList = new Monster[5];
+        switch (stageID) {
+        case 1:
+           eliteEnemyList[0] = new SpikeSlimeL();
+           break;
+        case 2:
+           eliteEnemyList[1] = new AcidSlimeL();
+           break;
+        }
+        return eliteEnemyList;
+    }
+    
+    //보스 몬스터 리스트
+    public static Monster[] bossGetEnemies(int stageID) { 
+        Monster[] bossEnemyList = new Monster[5];
+        switch (stageID) {
+        case 1:
+           bossEnemyList[0] = new GremlinNob();
+           break;
+        case 2:
+           bossEnemyList[1] = new Lagavulin();
+           break;
+        }
+        return bossEnemyList;
+    }
+    
+    //분열 시 사용되는 슬라임
     public static Monster[] getSplit(int stageID) {
       Monster[] split = new Monster[5];
       switch (stageID) {

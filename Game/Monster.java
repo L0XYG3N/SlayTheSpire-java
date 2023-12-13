@@ -154,10 +154,10 @@ class LouseRed extends Monster {   // 빨간 공벌레
         } else if (nextMove == 1) {
             Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
-        dmg = Rand.randInt(5, 7);
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = Rand.randInt(5, 7);
     }
     
     public String getIntentionText() {
@@ -209,10 +209,10 @@ class LouseGreen extends Monster {   // 초록 공벌레
         } else if (nextMove == 1) {
             Effects.addStatus(Player.getInstance(), STATUS.WEAK, 3);
         }
-        dmg = Rand.randInt(5, 7);
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = Rand.randInt(5, 7);
     }
     
     public String getIntentionText() {
@@ -246,10 +246,10 @@ class SpikeSlimeS extends Monster {   // 가시 슬라임 소
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         }
-        dmg = 5;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 5;
     }
     
     public String getIntentionText() {
@@ -288,10 +288,10 @@ class SpikeSlimeM extends Monster {
         } else if (nextMove == 1) {
             Effects.weakenShield(1);
         }
-        dmg = 8;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 8;
     }
     
     public String getIntentionText() {
@@ -352,10 +352,10 @@ class SpikeSlimeL extends Monster {
                 Effects.weakenShield(2);
              }
         }
-       dmg = 16;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 16;
         
     }
 
@@ -401,10 +401,10 @@ class AcidSlimeS extends Monster {   // 산성 슬라임
         } else if (nextMove == 1) {
            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
         }
-        dmg = 3;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 3;
     }
     
     public String getIntentionText() {
@@ -450,14 +450,14 @@ class AcidSlimeM extends Monster {
         } else if (nextMove == 2) {
            Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
         }
-        if(nextMove == 0) {
+        super.continuePattern();
+        setNextMove();
+       turnPlus();
+       if(nextMove == 0) {
            dmg = 7;
         } else if (nextMove == 1) {
            dmg = 10;
         }
-        super.continuePattern();
-        setNextMove();
-       turnPlus();
     }
     
     public String getIntentionText() {
@@ -532,15 +532,15 @@ class AcidSlimeL extends Monster {
               Effects.addStatus(Player.getInstance(), STATUS.WEAK, 2);
            }
         }
-        if (nextMove == 0) {
-           dmg = 11;
-        }
-        else if (nextMove == 0) {
-           dmg = 16;
-        }
         super.continuePattern();
         setNextMove();
         turnPlus();
+        if (nextMove == 0) {
+            dmg = 11;
+         }
+         else if (nextMove == 0) {
+            dmg = 16;
+         }
     }
     
     public String getIntentionText() {
@@ -619,25 +619,25 @@ class Looter extends Monster {   // 도적
              Thievery();
            }
         }
-       if (nextMove == 0) {
-          if (Field.getInstance().currentTurn <= 2) {
-             dmg = 11;
-          }
-          else {
-             dfd = 6;
-           }
-           
-       } else if (nextMove == 1) {
-          if (Field.getInstance().currentTurn <= 2) {
-             dmg = 11;
-          }
-          else {
-               dmg = 12;
-          }
-       }
         super.continuePattern();
         setNextMove();
         turnPlus();
+        if (nextMove == 0) {
+            if (Field.getInstance().currentTurn <= 2) {
+               dmg = 11;
+            }
+            else {
+               dfd = 6;
+             }
+             
+         } else if (nextMove == 1) {
+            if (Field.getInstance().currentTurn <= 2) {
+               dmg = 11;
+            }
+            else {
+                 dmg = 12;
+            }
+         }
     }
     
     public String getIntentionText() {
@@ -697,17 +697,17 @@ class JawWorm extends Monster {   // 턱벌레
            addShield(defend);
            Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
-       if (nextMove == 0) {
-           dmg = 11;
-        } else if (nextMove == 1) {
-           dmg = 7;
-           dfd = 5;
-        } else if(nextMove == 2) {
-           dfd = 3;
-        }
           super.continuePattern();
           setNextMove();
           turnPlus();
+          if (nextMove == 0) {
+              dmg = 11;
+           } else if (nextMove == 1) {
+              dmg = 7;
+              dfd = 5;
+           } else if(nextMove == 2) {
+              dfd = 3;
+           }
     }
     
     public String getIntentionText() {
@@ -750,14 +750,14 @@ class BlueSlaver extends Monster {   // 파랑 노예상인
             Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
            
         }
-       if (nextMove == 0) {
-           dmg = 12;
-         } else if (nextMove == 1) {
-            dmg = 7;   
-         }
           super.continuePattern();
           setNextMove();
           turnPlus();
+          if (nextMove == 0) {
+              dmg = 12;
+            } else if (nextMove == 1) {
+               dmg = 7;   
+            }
     }
     
     public String getIntentionText() {
@@ -810,20 +810,20 @@ class RedSlaver extends Monster { // 빨강 노예상인
                 Effects.addStatus(Player.getInstance(), STATUS.VULNERABLE, 1);
           }
        }
-       if (nextMove == 0) {
-           dmg = 13;
-        }
-        else if (nextMove == 1) {
-           if(Field.getInstance().currentTurn == 1) {
-              dmg = 13;
-           }
-           else {
-              dmg = 8;   
-           }
-        }
         super.continuePattern();
         setNextMove();
         turnPlus();
+        if (nextMove == 0) {
+            dmg = 13;
+         }
+         else if (nextMove == 1) {
+            if(Field.getInstance().currentTurn == 1) {
+               dmg = 13;
+            }
+            else {
+               dmg = 8;   
+            }
+         }
     }
     
     public String getIntentionText() {
@@ -872,10 +872,10 @@ class Cultist extends Monster {   // 광신자
              Effects.attack(damage, Player.getInstance());
           }
        }
-       dmg = 3;
        super.continuePattern();
        setNextMove();
        turnPlus();
+       dmg = 3;
     }
     
     public String getIntentionText() {
@@ -910,18 +910,15 @@ class FungiBeast extends Monster {   // 동물하초
     public void continuePattern() {
        initShield();
        if (nextMove == 0) {
-         dmg = 6;
             int damage = getCalculatedDamage();
             Effects.attack(damage, Player.getInstance());
         } else if (nextMove == 1) {
            Effects.addStatus(this, STATUS.STRENGTH, 3);
         }
-       if (nextMove == 0) {
-           dmg = 6;
-          }
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 6;
     }
     
     public String getIntentionText() {
@@ -960,10 +957,10 @@ class ShieldGremlin extends Monster {   // 방패 그렘린
            int defend = dfd;
            addShield(defend);
         }
-       dmg = 6;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 6;
     }
     
     public String getIntentionText() {
@@ -1004,10 +1001,10 @@ class GremlinWizard extends Monster {   // 마법사 그렘린
             Effects.attack(damage, Player.getInstance());
             initTurn();
         }
-       dmg = 25;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 25;
         
     }
     
@@ -1046,10 +1043,10 @@ class MadGremlin extends Monster {   // 화난 그렘린
        initShield();
         int damage = getCalculatedDamage();
         Effects.attack(damage, Player.getInstance());
-        dmg = 4;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 4;
     }
     
     public String getIntentionText() {
@@ -1075,9 +1072,10 @@ class FatGremlin extends Monster {   // 뚱뚱한 그렘린
         int damage = getCalculatedDamage();
         Effects.attack(damage, Player.getInstance());
         Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
-        dmg = 4;
         super.continuePattern();
         setNextMove();
+        turnPlus();
+        dmg = 4;
     }
     
     public String getIntentionText() {
@@ -1096,17 +1094,16 @@ class SneakyGremlin extends Monster {   // 교활한 그렘린
         initTurn();
         imagePath = "resource/SneakyGremlin.png"; // 이미지 경로 추가 - 승훈
         setNextMove();
-        turnPlus();
     }
     
     public void continuePattern() {
        initShield();
         int damage = getCalculatedDamage();
         Effects.attack(damage, Player.getInstance());
-        dmg = 9;
         super.continuePattern();
         setNextMove();
         turnPlus();
+        dmg = 9;
     }
     
     public String getIntentionText() {
@@ -1114,30 +1111,127 @@ class SneakyGremlin extends Monster {   // 교활한 그렘린
     }
 }
 
-class TestMonster extends Monster {   // 교활한 그렘린
-      public TestMonster() {
-           health = 50;
-           name = "교활한 그렘린";
-           moveSet = new int[] { 100 };
+class GremlinNob extends Monster {   // 귀족 그렘린
+      public GremlinNob() {
+           health = Rand.randInt(82, 86);
+           name = "귀족 그램린";
+           moveSet = new int[] { 33, 67 };
+           if (nextMove == 0) {
+              dmg = 6;
+              
+           } else if (nextMove == 1) {
+              dmg = 14;
+           }
            status = new BuffStatus();
            maxHealth = health;
            initTurn();
+           imagePath = "resource/GremlinNob.png"; // 이미지 경로 추가 - 승훈
            setNextMove();
-           turnPlus();
        }
+      
+      public void damage(int amount) { // 데미지를 받을시 힘 1증가
+          super.damage(amount);
+          Effects.addStatus(this, STATUS.STRENGTH, 1);
+      }
        
        public void continuePattern() {
           initShield();
-          dmg = 10;
-           int damage = getCalculatedDamage();
-           Effects.attack(damage, Player.getInstance());
-           Effects.addStatus(Player.getInstance(), STATUS.WEAK, 1);
+          if (nextMove == 0) {
+             if (Field.getInstance().currentTurn == 1) {
+                
+             }
+             else {
+                int damage = getCalculatedDamage();
+                Effects.attack(damage, Player.getInstance());
+                Effects.addStatus(Player.getInstance(), STATUS.VULNERABLE, 2);
+             }
+             
+          } else if (nextMove == 1) {
+             if (Field.getInstance().currentTurn == 1) {
+                   
+             }
+                else {
+                   int damage = getCalculatedDamage();
+                   Effects.attack(damage, Player.getInstance()); 
+                }
+          }
            super.continuePattern();
            setNextMove();
            turnPlus();
+           if (nextMove == 0) {
+              dmg = 6;
+              
+           } else if (nextMove == 1) {
+              dmg = 14;
+           }
+           
        }
        
        public String getIntentionText() {
-           return "약화를 걸려고 합니다";
+          if (nextMove == 0) {
+              if (Field.getInstance().currentTurn == 1) {
+                return "귀족 그램린은 격분(데미지를 입을때 마다 힘 1증가)을 사용하고 쉬고있습니다.";
+              }
+              else {
+                return "귀족 그램린은 " + getCalculatedDamage() + "의 피해를 주며 취약(2)의 디버프를 걸려 합니다.";
+              }
+                  
+              } else if (nextMove == 1) {
+                 if (Field.getInstance().currentTurn == 1) {
+                   return "귀족 그램린은 격분(데미지를 입을때 마다 힘 1증가)을 사용하고 쉬고있습니다.";
+                   }
+                 else {
+                    return "귀족 그램린은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
+                 }
+              }
+          return "???";
        }
    }
+
+class Lagavulin extends Monster {   // 라가불린
+    public Lagavulin() {
+         health = Rand.randInt( 109, 111 );
+         name = "라가불린";
+         moveSet = new int[] { 100 };
+         if (nextMove == 0) {
+            dmg = 18;
+         }
+         status = new BuffStatus();
+         maxHealth = health;
+         initTurn();
+         imagePath = "resource/Lagavulin.png"; // 이미지 경로 추가 - 승훈
+         setNextMove();
+     }
+    
+     public void continuePattern() {
+        initShield();
+        if (nextMove == 0) {
+           if (Field.getInstance().currentTurn <= 3) {
+              int damage = getCalculatedDamage();
+              Effects.attack(damage, Player.getInstance());
+           } else if (Field.getInstance().currentTurn == 4) {
+              Effects.addStatus(Player.getInstance(), STATUS.STRENGTH, -1);
+              Effects.weakenShield(1);
+              initTurn();
+           }
+           
+        }
+         super.continuePattern();
+         setNextMove();
+         turnPlus();
+         if (nextMove == 0) {
+              dmg = 18;
+         }
+     }
+     
+     public String getIntentionText() {
+        if (nextMove == 0) {
+           if (Field.getInstance().currentTurn <= 3) {
+              return "라가불린은 " + getCalculatedDamage() + "의 피해를 주려 합니다.";
+           } else if (Field.getInstance().currentTurn == 4) {
+              return "라가불린은 힘을 1 감소시키고 손상 (1) 디버프를 걸려 합니다.";
+        }
+        }
+        return "???";
+     }
+ }

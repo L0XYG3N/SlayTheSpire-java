@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class GUI{
 
-	private static int randomID1, randomID2;
+   private static int randomID1, randomID2 ,randomID3, randomID4;
     private static MainFrame frame;
     private static BattlePane battlePane;
     private static ShopPane shopPane;
@@ -76,29 +76,37 @@ public class GUI{
 
     public static void startBattle(int floor, MapLocation loc) {
         Random random = new Random();
-        randomID1 = random.nextInt(5) + 1;
-        randomID2 = random.nextInt(12) + 1;
-         switch(loc) {
-             case BOSS:
-             case ENEMY:
-             case ELITE:
-                switch(2) {
-                   case 1:
-                      Field.getInstance().initEasyStage(randomID1);
-                   case 2:
-                      Field.getInstance().initStage(randomID2);
+        randomID1 = random.nextInt(5) + 1;  //easy ENEMY
+        randomID2 = random.nextInt(10) + 1; //일반 ENEMY
+        randomID3 = random.nextInt(1) + 1; //앨리트 ENEMY
+        randomID4 = random.nextInt(2) + 1; //보스 BOSS
+        switch(loc) {
+            case ENEMY:
+                if(floor == 0 || floor == 1 || floor == 2) {
+                    Field.getInstance().initEasyStage(randomID1);
+                    System.out.println("이지요");
+                }
+                else {
+                    Field.getInstance().initStage(randomID2);
+                    System.out.println("에너미요");
                 }
                 break;
-             case REST, TREASURE, MERCHANT, UNKNOWN:
-             //경고 제거용 더미 케이스, 이 4가지 케이스는 호출될일 없음
-             return;
-             
+            case ELITE:
+                Field.getInstance().initEliteStage(randomID3);
+                System.out.println("앨리트요");
+                break;
+            case BOSS:
+                Field.getInstance().initBossStage(randomID4);
+                System.out.println("보스요");
+                break;
+            case REST, TREASURE, MERCHANT, UNKNOWN:
+                // 경고 제거용 더미 케이스, 이 4가지 케이스는 호출될일 없음
+               return;
+        }
+        changeScreen(ScreenState.BATTLE);
+        battlePane.initBattlePane();
+    }
 
-         }
-         changeScreen(ScreenState.BATTLE);
-         battlePane.initBattlePane();
-
-     }
 
     public static void updateScreen() {
         battlePane.drawMonsters();

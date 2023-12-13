@@ -3,6 +3,7 @@ package UI.Pane;
 import javax.swing.*;
 import java.awt.*;
 
+import Game.Monster;
 import Game.*;
 import Game.Field.endState;
 
@@ -11,9 +12,10 @@ import java.awt.event.MouseEvent;
 
 public class MonsterPane extends JLayeredPane{
     public static final int WIDTH = 160;
-    public static final int HEIGHT = 260;
+    public static final int HEIGHT = 275;
     public static final int barHeight = 15;
-    public static final int TOOLTIP = 260;
+    public static final int TOOLTIP = 245;
+    public static final int statusHeight = 40;
     public final int arrayIndex;
 
     private BaseObject monster;
@@ -26,7 +28,9 @@ public class MonsterPane extends JLayeredPane{
     private JLabel currentHealthBar;
     private JLabel healthText;
     private JLabel shield;
+    private JLabel statusBar;
     private Field field = Field.getInstance();
+    private BattlePane parent = BattlePane.getInstance();
 
     private JLabel monsterImage;	//	몬스터 이미지 불러오기 위한 Jlabel 추가 - 승훈
     
@@ -43,17 +47,30 @@ public class MonsterPane extends JLayeredPane{
         this.arrayIndex = arrayIndex;
         
         tooltipLabel = new JLabel();
-        tooltipLabel.setBounds(0, 0, WIDTH, TOOLTIP);
+        tooltipLabel.setBounds(0, statusHeight , WIDTH, TOOLTIP);
         tooltipLabel.setFont(new Font("Arial", Font.PLAIN, 8));
         tooltipLabel.setForeground(Color.BLACK);
         tooltipLabel.setBackground(Color.WHITE);
         tooltipLabel.setOpaque(false);
         add(tooltipLabel);
         
+        // 레이어드 패널의 배경 설정
+        setOpaque(true);
+        Color layeredPaneBackgroundColor = new Color(255, 255, 255, 0); // RGB 값과 알파 값(0~255) 설정
+        setBackground(layeredPaneBackgroundColor);
+        
+        //상태바
+        statusBar = new JLabel("", SwingConstants.CENTER);
+        Font koreanFont = new Font("궁서", Font.PLAIN, 15);
+        statusBar.setFont(koreanFont);
+        statusBar.setBounds(0, 0, WIDTH, statusHeight);
+        statusBar.setForeground(Color.WHITE);  // 예시로 빨간색으로 설정
+        
+        add(statusBar);
         
         //몬스터 이름
         name = new JLabel(monster.getName(),SwingConstants.CENTER);
-        name.setBounds(0,0,WIDTH,barHeight);
+        name.setBounds(0, statusHeight ,WIDTH , barHeight);
         name.setBackground(Color.black);
         name.setOpaque(true);
         name.setForeground(Color.white);
@@ -61,13 +78,11 @@ public class MonsterPane extends JLayeredPane{
 
         // 몬스터 이미지 추가 - 승훈
         monsterImage = new JLabel(new ImageIcon(monster.getImagePath()));
-        monsterImage.setBounds(0, barHeight, WIDTH, HEIGHT - ( barHeight * 2));
+        monsterImage.setBounds(0, (statusHeight + barHeight) , WIDTH, HEIGHT - 15);
         add(monsterImage);
 
         // 빨간색 테두리 추가 - 승훈
         monsterImage.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-        
-
         
         //체력바 배경
         healthBar = new JLabel();
@@ -78,7 +93,7 @@ public class MonsterPane extends JLayeredPane{
 
         //현재 체력 체력바
         currentHealthBar = new JLabel();
-        currentHealthBar.setBounds(0, HEIGHT-barHeight, WIDTH, barHeight);
+        currentHealthBar.setBounds(0, 0, WIDTH, barHeight);
         currentHealthBar.setBackground(new Color(80,0,0));
         currentHealthBar.setOpaque(true);
         add(currentHealthBar);
@@ -102,6 +117,7 @@ public class MonsterPane extends JLayeredPane{
         setLayer(healthBar, 1);
         setLayer(currentHealthBar, 2);
         setLayer(healthText, 3);
+        setLayer(statusBar, 0);
         updateLabel();
 
         // 마우스 이벤트 추가
@@ -142,7 +158,6 @@ public class MonsterPane extends JLayeredPane{
         // 체력 텍스트, 체력바, 방어막 등 label 업데이트 함수
         int health = monster.getHealth();
         if(health<=0) {
-            Container parent = getParent();
             parent.remove(this);
             BattlePane.monsters[arrayIndex] = null;
             Field.getInstance().enemies[arrayIndex] = null;
@@ -161,6 +176,10 @@ public class MonsterPane extends JLayeredPane{
 
         int shieldAmount = monster.getShield();
         shield.setText(Integer.toString(shieldAmount));
+        
+        // 여기서 getPlayerStatus 메서드를 이용하여 BuffStatus의 상태 정보를 가져옵니다.
+        String monsterStatus = monster.getStatus().getPlayerStatus();
+        statusBar.setText(monsterStatus);
         
         // 몬스터 이미지 업데이트 추가 - 승훈
         monsterImage.setIcon(new ImageIcon(monster.getImagePath()));

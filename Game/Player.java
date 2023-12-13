@@ -79,6 +79,10 @@ public class Player extends BaseObject {
 
     }
 
+    public BuffStatus getStatus() {
+        return status;
+    }
+    
     // public boolean useCard(int index, BaseObject obj) {
     //     // 필드에 나와있는 카드들에 각각 인덱스를 부여해 코드면에서 선택이 쉽게 할 예정
     //     Card card = cards.field.get(index);

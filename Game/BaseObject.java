@@ -80,7 +80,6 @@ public abstract class BaseObject { // Bass
 
     public void loseHealth(int amount) {
         health -= amount;
-        // Add any additional logic for handling health loss, such as checking for defeat
     }
 
     public int getHealth() {
@@ -94,5 +93,9 @@ public abstract class BaseObject { // Bass
 
     public int getShield() {
         return shield;
+    }
+    
+    public BuffStatus getStatus() {
+        return status;
     }
 }

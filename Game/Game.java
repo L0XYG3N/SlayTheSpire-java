@@ -37,5 +37,5 @@ public class Game {
         player.initPlayer();
         gameMap = new GameMap();
     }
-
+    
 }

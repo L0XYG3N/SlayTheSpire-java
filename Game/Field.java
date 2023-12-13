@@ -18,13 +18,24 @@ public class Field {
         // enemies = new Enemies[5]; // 필드에 최대 5마리의 몬스터가 나타날 예정
     }
 
-    public void initEasyStage(int stageID) {
+    public void initEasyStage(int stageID) { //EasyENEMY
         enemies = MonsterSelector.easyGetEnemies(stageID);
         Player.getInstance().cards.initBattle();
     }
-    public void initStage(int stageID) {
+    
+    public void initStage(int stageID) { //ENEMY
         enemies = MonsterSelector.getEnemies(stageID);
         Player.getInstance().cards.initBattle();
+    }
+    
+    public void initEliteStage(int stageID) { //ELITE
+       enemies = MonsterSelector.eliteGetEnemies(stageID);
+       Player.getInstance().cards.initBattle();
+    }
+    
+    public void initBossStage(int stageID) { //BOSS
+       enemies = MonsterSelector.bossGetEnemies(stageID);
+       Player.getInstance().cards.initBattle();
     }
     
     public void split(int stageID) {

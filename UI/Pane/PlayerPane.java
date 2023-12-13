@@ -48,7 +48,7 @@ public class PlayerPane extends JLayeredPane{
     	
         setBounds(X,Y,WIDTH,HEIGHT);
         setOpaque(true);
-        setBackground(Color.GREEN);
+        setBackground(Color.WHITE);
         setAlignmentX(Component.CENTER_ALIGNMENT); 
 
         player = Player.getInstance();
@@ -67,11 +67,17 @@ public class PlayerPane extends JLayeredPane{
         currentHealthBar.setOpaque(true);
         add(currentHealthBar);
 
-        //상태바
+        // 레이어드 패널의 배경 설정
+        setOpaque(true);
+        Color layeredPaneBackgroundColor = new Color(255, 255, 255, 0); // RGB 값과 알파 값(0~255) 설정
+        setBackground(layeredPaneBackgroundColor);
+
+        // 상태바
         statusBar = new JLabel("", SwingConstants.CENTER);
-        statusBar.setFont(new Font("Arial", Font.PLAIN, 15));
+        Font koreanFont = new Font("궁서", Font.PLAIN, 15);
+        statusBar.setFont(koreanFont);
         statusBar.setBounds(0, 0, WIDTH, statusHeight);
-        statusBar.setForeground(Color.RED);  // 예시로 빨간색으로 설정
+        statusBar.setForeground(Color.white); // 텍스트 색상 설정
         add(statusBar);
         
         //체력 텍스트
@@ -99,11 +105,9 @@ public class PlayerPane extends JLayeredPane{
     }
 
     public void updateLabel() {
-        //System.out.println(player.getHealth());
-        
         int health = player.getHealth();
-        health = Math.max(0, health);    // 체력이 0 미만으로 내려가지 않게 고정
-        
+        health = Math.max(0, health);
+
         int maxHealth = player.getMaxHealth();
         int healthBarSize = (int)(((double)health / maxHealth) * WIDTH);
         currentHealthBar.setBounds(0, HEIGHT - barHeight, healthBarSize, barHeight);
@@ -111,13 +115,16 @@ public class PlayerPane extends JLayeredPane{
 
         int shieldAmount = player.getShield();
         shield.setText(Integer.toString(shieldAmount));
-        
+
+        // 여기서 getPlayerStatus 메서드를 이용하여 BuffStatus의 상태 정보를 가져옵니다.
+        String playerStatus = player.getStatus().getPlayerStatus();
+        statusBar.setText(playerStatus);
+
         if (health <= 0) {
             GUI.changeScreen(ScreenState.Death);
-            //GUI.updateScreen();
-            //resetGame();
         }
     }
+
     public void highlight() {
         // 배경색 대신 외곽선 변경
         playerImage.setBorder(BorderFactory.createLineBorder(Color.MAGENTA, 3));

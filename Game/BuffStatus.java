@@ -43,12 +43,12 @@ public class BuffStatus {
     }
 
     public String getPlayerStatus() {
-        return "Strength: " + strength.getStack() +
-               " | Vulnerable: " + vulnerable.getStack() +
-               " | Weak: " + weak.getStack() +
-               " | Dexterity: " + dexterity.getStack() +
-               " | Regeneration: " + regeneration.getStack() +
-               " | SteelArmor: " + steelArmor.getStack();
+        return "힘: " + strength.getStack() + 
+               "  취약: " + vulnerable.getStack() +
+               "  약화: " + weak.getStack();
+               //"  Dexterity: " + dexterity.getStack() +
+               //"  Regeneration: " + regeneration.getStack() +
+               //"  SteelArmor: " + steelArmor.getStack();
     }
     
     public void updateEffects() {
