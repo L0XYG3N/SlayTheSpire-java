@@ -21,6 +21,7 @@ public class Game {
 
     public void turnEnd() {
         player.updatePlayerStatus();
+
         
         for (int i = 0; i < 5; i++) {
             if (field.enemies[i] != null) {

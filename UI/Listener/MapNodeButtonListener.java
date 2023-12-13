@@ -33,14 +33,17 @@ public class MapNodeButtonListener implements ActionListener {
         switch (button.node.mapLocation) {
         case BOSS:
             rewardPane.setGoldReward(3);
+            rewardPane.setRandomCardReward(3);
             GUI.startBattle(button.floor, button.node.mapLocation);
             break;
         case ELITE:
             rewardPane.setGoldReward(2);
+            rewardPane.setRandomCardReward(2);
             GUI.startBattle(button.floor, button.node.mapLocation);
             break;
         case ENEMY:
             rewardPane.setGoldReward(1);
+            rewardPane.setRandomCardReward(1);
             GUI.startBattle(button.floor, button.node.mapLocation);
             break;
         case MERCHANT:
@@ -60,10 +63,12 @@ public class MapNodeButtonListener implements ActionListener {
 
             if (randomValue < 0.5) { // 50% 확률
                rewardPane.setGoldReward(1);
+                rewardPane.setRandomCardReward(1);
                 GUI.startBattle(button.floor, MapLocation.ENEMY);
                 System.out.print("언노운이자 ");
             } else if (randomValue < 0.75) { // 25% 확률
                rewardPane.setGoldReward(2);
+                rewardPane.setRandomCardReward(2);
                 GUI.startBattle(button.floor, MapLocation.ELITE);
                 System.out.print("언노운이자 ");
             } else if (randomValue < 0.9) { // 15% 확률

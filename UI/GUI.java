@@ -62,7 +62,6 @@ public class GUI{
             break;
             case REWARD:
             frame.updatePane(rewardPane);
-            rewardPane.setRandomCardReward();
             break;
             case REST:
             frame.updatePane(restPane);
@@ -90,6 +89,7 @@ public class GUI{
                     Field.getInstance().initStage(randomID2);
                     System.out.println("에너미요");
                 }
+
                 break;
             case ELITE:
                 Field.getInstance().initEliteStage(randomID3);

@@ -43,13 +43,13 @@ public class RestPane extends JLayeredPane{
         setOpaque(true);
 
         JButton rest = new JButton("휴식")
-            , upgrade = new JButton("강화");
+            , reward = new JButton("아이템 획득");
 
 
         rest.setBounds(300,334,200,100);
-        upgrade.setBounds(866,334,200,100);
+        reward.setBounds(866,334,200,100);
         add(rest);
-        add(upgrade);
+        add(reward);
 
         rest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -59,9 +59,12 @@ public class RestPane extends JLayeredPane{
             }
         });
 
-        upgrade.addActionListener(new ActionListener() {
+        reward.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                RewardPane rewardPane = RewardPane.getInstance();
+                rewardPane.setGoldReward(1);
+                rewardPane.setRandomCardReward(1);
+                GUI.changeScreen(ScreenState.REWARD);
             }
         });
 

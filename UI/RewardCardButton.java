@@ -32,8 +32,11 @@ public class RewardCardButton extends JButton{
         revalidate();
     }
 
-    public void disable() {
-        //cardPane.disable();
+    public void setEliteReward() {
+        listener.setEliteReward();
     }
 
+    public void setNormalReward() {
+        listener.setNormalReward();
+    }
 }

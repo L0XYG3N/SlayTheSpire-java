@@ -26,6 +26,7 @@ public class RewardPane extends JLayeredPane{
     JButton confirmButton;
     RewardCardButton [] cardButton;
     Dimension buttonSize = new Dimension(200,30);
+    public int cardClicked = 0;
 
     CardPane[] card;
 
@@ -121,10 +122,15 @@ public class RewardPane extends JLayeredPane{
         goldReward.setEnabled(true);
     }
 
-    public void setRandomCardReward() {
+    public void setRandomCardReward(int battleType) {
+        
         for(int i = 0; i < 3;i++) {
             cardButton[i].setCard(CardGetter.getRandomCard(CardType.ATTACK));
             cardButton[i].setEnabled(true);
+            if(battleType > 1) {
+                cardButton[i].setEliteReward();
+            } else cardButton[i].setNormalReward();
         }
+        cardClicked = 0;
     }
 }

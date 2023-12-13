@@ -72,7 +72,6 @@ public class BattlePane extends JLayeredPane {
                 game.turnEnd();
                 updateCardPane();
                 playerPane.updateLabel();
-
                 // 턴 종료 사운드 재생
                 playTurnEndSound();
             }
